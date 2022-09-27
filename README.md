@@ -1,2 +1,3 @@
-# revalida-cams
-Online Curriculum and Attendance Management System
+# Online Curriculum and Attendance Management System
+
+place project description here
