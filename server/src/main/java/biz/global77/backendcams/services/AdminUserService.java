@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+/* CRUD functions for Admin */
 @Service
 public class AdminUserService {
 
@@ -59,4 +60,5 @@ public class AdminUserService {
                 .where(Tables.ADMIN_USER.ADMIN_ID.eq(adminId))
                 .execute();
     }
+
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+/* CRUD functions for professor */
 @Service
 public class ProfessorService {
 
@@ -42,7 +43,7 @@ public class ProfessorService {
     }
 
     /* get professor by ID */
-    public Professor getProfessor(Integer professorId) {
+    public Professor getProfessorById(Integer professorId) {
         return dsl.selectFrom(Tables.PROFESSOR)
                 .where(Tables.PROFESSOR.PROFESSOR_ID.eq(professorId))
                 .fetchOneInto(Professor.class);
