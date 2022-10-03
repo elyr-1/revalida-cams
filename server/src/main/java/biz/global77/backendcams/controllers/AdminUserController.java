@@ -33,12 +33,13 @@ public class AdminUserController {
     @DeleteMapping("/delete/{adminId}")
     public String deleteAdminUser(@RequestBody @PathVariable(value = "adminId") Integer adminId) {
         adminUserService.deleteAdminUserById(adminId);
-        return "Admin deleted successfully";
+        return "Admin user deleted successfully.";
     }
 
     @PutMapping("/update/{adminId}")
     public String updateAdminUser(@PathVariable Integer adminId, @RequestBody AdminUser admin) {
         adminUserService.updateAdminUser(adminId, admin);
-        return "Admin details updated successfully";
+        return "Admin user details updated successfully.";
     }
+
 }

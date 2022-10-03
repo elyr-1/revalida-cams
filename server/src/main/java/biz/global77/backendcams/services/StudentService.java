@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+/* CRUD functions for student */
 @Service
 public class StudentService {
 
@@ -66,5 +67,23 @@ public class StudentService {
     }
 
     /* update student details */
+    public void updateStudent(Integer studentId, Student student) {
+        dsl.update(Tables.STUDENT)
+                .set(Tables.STUDENT.STUDENT_NO, student.getStudentNo())
+                .set(Tables.STUDENT.PASSWORD, student.getPassword())
+                .set(Tables.STUDENT.FIRSTNAME, student.getFirstname())
+                .set(Tables.STUDENT.MIDDLENAME, student.getMiddlename())
+                .set(Tables.STUDENT.LASTNAME, student.getLastname())
+                .set(Tables.STUDENT.PROGRAM, student.getProgram())
+                .set(Tables.STUDENT.BIRTHDATE, student.getBirthdate())
+                .set(Tables.STUDENT.GENDER, student.getGender())
+                .set(Tables.STUDENT.SEM, student.getSem())
+                .set(Tables.STUDENT.YEARLEVEL, student.getYearlevel())
+                .set(Tables.STUDENT.ACADEMIC_YEAR, student.getAcademicYear())
+                .set(Tables.STUDENT.STATUS, student.getStatus())
+                .set(Tables.STUDENT.ACTIVE_INACTIVE, student.getActiveInactive())
+                .where(Tables.STUDENT.STUDENT_ID.eq(studentId))
+                .execute();
+    }
 
 }

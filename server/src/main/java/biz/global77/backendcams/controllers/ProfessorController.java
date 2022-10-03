@@ -19,10 +19,27 @@ public class ProfessorController {
         return professorService.getProfessors();
     }
 
+    @GetMapping("/{professorId}")
+    public Professor getProfessor(@PathVariable(value = "professorId") Integer professorId) {
+        return professorService.getProfessorById(professorId);
+    }
+
     @PostMapping("/add")
     public String addProfessor(@RequestBody Professor professor) {
         professorService.insertProfessor(professor);
         return "Professor added successfully.";
+    }
+
+    @DeleteMapping("/delete/{professorId}")
+    public String deleteProfessor(@PathVariable(value = "professorId") Integer professorId) {
+        professorService.deleteProfessorById(professorId);
+        return "Professor deleted successfully.";
+    }
+
+    @PutMapping("/update/{professorId}")
+    public String updateProfessor(@PathVariable(value = "professorId") Integer professorId, @RequestBody Professor professor) {
+        professorService.updateProfessor(professorId, professor);
+        return "Professor details updated successfully.";
     }
 
 }
