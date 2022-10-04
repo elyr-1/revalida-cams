@@ -1,5 +1,6 @@
 package biz.global77.backendcams.services;
 
+import biz.global77.backendcams.interfaces.ProgramInterface;
 import com.tej.JooQDemo.jooq.sample.model.Tables;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.Program;
 import org.jooq.DSLContext;
@@ -9,13 +10,15 @@ import java.util.List;
 
 /* CRUD functions for program */
 @Service
-public class ProgramService {
+public class ProgramService implements ProgramInterface {
 
+    /* DSL - Domain Specific Language; emulates SQL in Java */
     @Autowired
     private DSLContext dsl;
 
     /* add a program */
-    public void insertProgram(Program program) {
+    @Override
+    public Program insertProgram(Program program) {
         dsl.insertInto(Tables.PROGRAM,
                 Tables.PROGRAM.PROGRAM_CODE,
                 Tables.PROGRAM.PROGRAM_TITLE,
@@ -25,33 +28,39 @@ public class ProgramService {
                 program.getProgramTitle(),
                 program.getMajor())
         .execute();
+        return program;
     }
 
     /* get all programs */
+    @Override
     public List<Program> getPrograms() {
         return dsl.selectFrom(Tables.PROGRAM).fetchInto(Program.class);
     }
 
     /* get a program by ID */
+    @Override
     public Program getProgramById(Integer programId) {
         return dsl.selectFrom(Tables.PROGRAM)
                 .where(Tables.PROGRAM.PROGRAM_ID.eq(programId))
                 .fetchOneInto(Program.class);
     }
 
-    /* delete a program */
-    public void deleteProgramById(Integer programId) {
-        dsl.deleteFrom(Tables.PROGRAM)
-                .where(Tables.PROGRAM.PROGRAM_ID.eq(programId))
-                .execute();
-    }
-
     /* update program detail(s) */
-    public void updateProgram(Integer programId, Program program) {
+    @Override
+    public Program updateProgram(Integer programId, Program program) {
         dsl.update(Tables.PROGRAM)
                 .set(Tables.PROGRAM.PROGRAM_CODE, program.getProgramCode())
                 .set(Tables.PROGRAM.PROGRAM_TITLE, program.getProgramTitle())
                 .set(Tables.PROGRAM.MAJOR, program.getMajor())
+                .where(Tables.PROGRAM.PROGRAM_ID.eq(programId))
+                .execute();
+        return program;
+    }
+
+    /* delete a program */
+    @Override
+    public void deleteProgramById(Integer programId) {
+        dsl.deleteFrom(Tables.PROGRAM)
                 .where(Tables.PROGRAM.PROGRAM_ID.eq(programId))
                 .execute();
     }

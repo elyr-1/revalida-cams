@@ -3,7 +3,11 @@ package biz.global77.backendcams.controllers;
 import biz.global77.backendcams.services.SubjectDetailService;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.SubjectDetailHistory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -15,31 +19,30 @@ public class SubjectDetailController {
     private SubjectDetailService subjectDetailService;
 
     @GetMapping
-    public List<SubjectDetailHistory> getSubjectDetails() {
-        return subjectDetailService.getSubjectDetails();
+    public ResponseEntity<List<SubjectDetailHistory>> getSubjectDetails() {
+        return ResponseEntity.ok().body(subjectDetailService.getSubjectDetails());
     }
 
     @GetMapping("/{sessionId}")
-    public SubjectDetailHistory getSubjectDetail(@PathVariable(value = "sessionId") Integer sessionId) {
-        return subjectDetailService.getSubjectDetailById(sessionId);
+    public ResponseEntity<SubjectDetailHistory> getSubjectDetail(@PathVariable(value = "sessionId") Integer sessionId) {
+        return ResponseEntity.ok().body(subjectDetailService.getSubjectDetailById(sessionId));
     }
 
     @PostMapping("/add")
-    public String addSubjectDetail(@RequestBody SubjectDetailHistory subjectDetail) {
-        subjectDetailService.insertSubjectDetail(subjectDetail);
-        return "Subject detail added successfully.";
+    public ResponseEntity<SubjectDetailHistory> addSubjectDetail(@RequestBody SubjectDetailHistory subjectDetail) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/subject-detail-history/add").toUriString());
+        return ResponseEntity.created(uri).body(subjectDetailService.insertSubjectDetail(subjectDetail));
     }
 
     @DeleteMapping("/delete/{sessionId}")
-    public String deleteSubjectDetail(@PathVariable(value = "sessionId") Integer sessionId) {
+    public ResponseEntity<Void> deleteSubjectDetail(@PathVariable(value = "sessionId") Integer sessionId) {
         subjectDetailService.deleteSubjectDetailById(sessionId);
-        return "Subject detail deleted successfully";
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/update/{sessionId}")
-    public String updateSubjectDetail(@PathVariable(value = "sessionId") Integer sessionId, @RequestBody SubjectDetailHistory subjectDetail) {
-        subjectDetailService.updateSubjectDetail(sessionId, subjectDetail);
-        return "Subject detail updated successfully.";
+    public ResponseEntity<SubjectDetailHistory> updateSubjectDetail(@PathVariable(value = "sessionId") Integer sessionId, @RequestBody SubjectDetailHistory subjectDetail) {
+        return ResponseEntity.ok().body(subjectDetailService.updateSubjectDetail(sessionId, subjectDetail));
     }
 
 }
