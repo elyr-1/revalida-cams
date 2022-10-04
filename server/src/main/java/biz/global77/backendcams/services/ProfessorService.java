@@ -1,5 +1,6 @@
 package biz.global77.backendcams.services;
 
+import biz.global77.backendcams.interfaces.ProfessorInterface;
 import com.tej.JooQDemo.jooq.sample.model.Tables;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.Professor;
 import org.jooq.DSLContext;
@@ -9,13 +10,15 @@ import java.util.List;
 
 /* CRUD functions for professor */
 @Service
-public class ProfessorService {
+public class ProfessorService implements ProfessorInterface {
 
+    /* DSL - Domain Specific Language; emulates SQL in Java */
     @Autowired
     private DSLContext dsl;
 
     /* add a professor */
-    public void insertProfessor(Professor professor) {
+    @Override
+    public Professor insertProfessor(Professor professor) {
         dsl.insertInto(Tables.PROFESSOR,
                 Tables.PROFESSOR.PROFESSOR_NO,
                 Tables.PROFESSOR.PROFESSOR_NAME,
@@ -35,29 +38,26 @@ public class ProfessorService {
                 professor.getStatus(),
                 professor.getActiveInactive())
         .execute();
+        return professor;
     }
 
     /* get all professors */
+    @Override
     public List<Professor> getProfessors() {
         return dsl.selectFrom(Tables.PROFESSOR).fetchInto(Professor.class);
     }
 
     /* get professor by ID */
+    @Override
     public Professor getProfessorById(Integer professorId) {
         return dsl.selectFrom(Tables.PROFESSOR)
                 .where(Tables.PROFESSOR.PROFESSOR_ID.eq(professorId))
                 .fetchOneInto(Professor.class);
     }
 
-    /* delete professor by ID */
-    public void deleteProfessorById(Integer professorId) {
-        dsl.deleteFrom(Tables.PROFESSOR)
-                .where(Tables.PROFESSOR.PROFESSOR_ID.eq(professorId))
-                .execute();
-    }
-
     /* update professor detail(s) */
-    public void updateProfessor(Integer professorId, Professor professor) {
+    @Override
+    public Professor updateProfessor(Integer professorId, Professor professor) {
         dsl.update(Tables.PROFESSOR)
                 .set(Tables.PROFESSOR.PROFESSOR_NO, professor.getProfessorNo())
                 .set(Tables.PROFESSOR.PROFESSOR_NAME, professor.getProfessorName())
@@ -67,6 +67,15 @@ public class ProfessorService {
                 .set(Tables.PROFESSOR.BIRTHDATE, professor.getBirthdate())
                 .set(Tables.PROFESSOR.STATUS, professor.getStatus())
                 .set(Tables.PROFESSOR.ACTIVE_INACTIVE, professor.getActiveInactive())
+                .where(Tables.PROFESSOR.PROFESSOR_ID.eq(professorId))
+                .execute();
+        return professor;
+    }
+
+    /* delete professor by ID */
+    @Override
+    public void deleteProfessorById(Integer professorId) {
+        dsl.deleteFrom(Tables.PROFESSOR)
                 .where(Tables.PROFESSOR.PROFESSOR_ID.eq(professorId))
                 .execute();
     }

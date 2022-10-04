@@ -1,16 +1,20 @@
 package biz.global77.backendcams.services;
 
-import biz.global77.backendcams.interfaces.AdminInterface;
+import biz.global77.backendcams.interfaces.AdminUserInterface;
 import com.tej.JooQDemo.jooq.sample.model.Tables;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.AdminUser;
 import org.jooq.DSLContext;
+import org.jooq.Record;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 /* CRUD functions for Admin */
 @Service
-public class AdminUserService implements AdminInterface {
+public class AdminUserUserService implements AdminUserInterface, UserDetailsService {
 
     /* DSL - Domain Specific Language; emulates SQL in Java */
     @Autowired
@@ -70,4 +74,12 @@ public class AdminUserService implements AdminInterface {
                 .execute();
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        User user = dsl.select(Tables.ADMIN_USER.USERNAME).from(Tables.ADMIN_USER).where(Tables.ADMIN_USER.USERNAME.eq(username)).fetchOneInto(AdminUser.class);
+        Record record = dsl.select().from(Tables.ADMIN_USER)
+                .where(Tables.ADMIN_USER.USERNAME.eq(username)).fetchAny();
+        UserDetails userDetails = (record != null) ? record.into(UserDetails.class) : null;
+        return userDetails;
+    }
 }

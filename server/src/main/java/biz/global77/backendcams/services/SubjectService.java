@@ -1,5 +1,6 @@
 package biz.global77.backendcams.services;
 
+import biz.global77.backendcams.interfaces.SubjectInterface;
 import com.tej.JooQDemo.jooq.sample.model.Tables;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.Subject;
 import org.jooq.DSLContext;
@@ -9,13 +10,15 @@ import java.util.List;
 
 /* CRUD functions for subject */
 @Service
-public class SubjectService {
+public class SubjectService implements SubjectInterface {
 
+    /* DSL - Domain Specific Language; emulates SQL in Java */
     @Autowired
     private DSLContext dsl;
 
     /* add a subject */
-    public void insertSubject(Subject subject) {
+    @Override
+    public Subject insertSubject(Subject subject) {
         dsl.insertInto(Tables.SUBJECT,
                 Tables.SUBJECT.SUBJECT_CODE,
                 Tables.SUBJECT.SUBJECT_TITLE,
@@ -29,35 +32,41 @@ public class SubjectService {
                 subject.getPreRequisites(),
                 subject.getActiveInactive())
         .execute();
+        return subject;
     }
 
     /* get all subjects */
+    @Override
     public List<Subject> getSubjects() {
         return dsl.selectFrom(Tables.SUBJECT).fetchInto(Subject.class);
     }
 
     /* get subject by ID */
+    @Override
     public Subject getSubjectById(Integer subjectId) {
         return dsl.selectFrom(Tables.SUBJECT)
                 .where(Tables.SUBJECT.SUBJECT_ID.eq(subjectId))
                 .fetchOneInto(Subject.class);
     }
 
-    /* delete subject by ID */
-    public void deleteSubjectById(Integer subjectId) {
-        dsl.deleteFrom(Tables.SUBJECT)
-                .where(Tables.SUBJECT.SUBJECT_ID.eq(subjectId))
-                .execute();
-    }
-
     /* update subject detail(s) */
-    public void updateSubject(Integer subjectId, Subject subject) {
+    @Override
+    public Subject updateSubject(Integer subjectId, Subject subject) {
         dsl.update(Tables.SUBJECT)
                 .set(Tables.SUBJECT.SUBJECT_CODE, subject.getSubjectCode())
                 .set(Tables.SUBJECT.SUBJECT_TITLE, subject.getSubjectTitle())
                 .set(Tables.SUBJECT.UNITS, subject.getUnits())
                 .set(Tables.SUBJECT.PRE_REQUISITES, subject.getPreRequisites())
                 .set(Tables.SUBJECT.ACTIVE_INACTIVE, subject.getActiveInactive())
+                .where(Tables.SUBJECT.SUBJECT_ID.eq(subjectId))
+                .execute();
+        return subject;
+    }
+
+    /* delete subject by ID */
+    @Override
+    public void deleteSubjectById(Integer subjectId) {
+        dsl.deleteFrom(Tables.SUBJECT)
                 .where(Tables.SUBJECT.SUBJECT_ID.eq(subjectId))
                 .execute();
     }

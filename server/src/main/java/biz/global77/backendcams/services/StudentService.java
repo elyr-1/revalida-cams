@@ -1,5 +1,6 @@
 package biz.global77.backendcams.services;
 
+import biz.global77.backendcams.interfaces.StudentInterface;
 import com.tej.JooQDemo.jooq.sample.model.Tables;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.Student;
 import org.jooq.DSLContext;
@@ -9,13 +10,15 @@ import java.util.List;
 
 /* CRUD functions for student */
 @Service
-public class StudentService {
+public class StudentService implements StudentInterface {
 
+    /* DSL - Domain Specific Language; emulates SQL in Java */
     @Autowired
     private DSLContext dsl;
 
     /* add a student */
-    public void insertStudent(Student student) {
+    @Override
+    public Student insertStudent(Student student) {
         dsl.insertInto(Tables.STUDENT,
                 Tables.STUDENT.STUDENT_NO,
                 Tables.STUDENT.PASSWORD,
@@ -45,29 +48,26 @@ public class StudentService {
                 student.getStatus(),
                 student.getActiveInactive())
         .execute();
+        return student;
     }
 
     /* get all students */
+    @Override
     public List<Student> getStudents() {
         return dsl.selectFrom(Tables.STUDENT).fetchInto(Student.class);
     }
 
     /* get a student by ID */
+    @Override
     public Student getStudentById(Integer studentId) {
         return dsl.selectFrom(Tables.STUDENT)
                 .where(Tables.STUDENT.STUDENT_ID.eq(studentId))
                 .fetchOneInto(Student.class);
     }
 
-    /* delete a student by ID */
-    public void deleteStudentById(Integer studentId) {
-        dsl.deleteFrom(Tables.STUDENT)
-                .where(Tables.STUDENT.STUDENT_ID.eq(studentId))
-                .execute();
-    }
-
     /* update student details */
-    public void updateStudent(Integer studentId, Student student) {
+    @Override
+    public Student updateStudent(Integer studentId, Student student) {
         dsl.update(Tables.STUDENT)
                 .set(Tables.STUDENT.STUDENT_NO, student.getStudentNo())
                 .set(Tables.STUDENT.PASSWORD, student.getPassword())
@@ -82,6 +82,15 @@ public class StudentService {
                 .set(Tables.STUDENT.ACADEMIC_YEAR, student.getAcademicYear())
                 .set(Tables.STUDENT.STATUS, student.getStatus())
                 .set(Tables.STUDENT.ACTIVE_INACTIVE, student.getActiveInactive())
+                .where(Tables.STUDENT.STUDENT_ID.eq(studentId))
+                .execute();
+        return student;
+    }
+
+    /* delete a student by ID */
+    @Override
+    public void deleteStudentById(Integer studentId) {
+        dsl.deleteFrom(Tables.STUDENT)
                 .where(Tables.STUDENT.STUDENT_ID.eq(studentId))
                 .execute();
     }
