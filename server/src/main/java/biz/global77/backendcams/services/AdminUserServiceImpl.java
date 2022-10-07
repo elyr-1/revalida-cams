@@ -14,11 +14,19 @@ import java.util.List;
 
 /* CRUD functions for Admin */
 @Service
-public class AdminUserUserService implements AdminUserInterface, UserDetailsService {
+public class AdminUserService implements AdminUserInterface, UserDetailsService {
 
     /* DSL - Domain Specific Language; emulates SQL in Java */
     @Autowired
     private DSLContext dsl;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Record record = dsl.select().from(Tables.ADMIN_USER)
+                .where(Tables.ADMIN_USER.USERNAME.eq(username)).fetchAny();
+        UserDetails userDetails = (record != null) ? record.into(UserDetails.class) : null;
+        return userDetails;
+    }
 
     /* add an admin */
     @Override
@@ -74,12 +82,4 @@ public class AdminUserUserService implements AdminUserInterface, UserDetailsServ
                 .execute();
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        User user = dsl.select(Tables.ADMIN_USER.USERNAME).from(Tables.ADMIN_USER).where(Tables.ADMIN_USER.USERNAME.eq(username)).fetchOneInto(AdminUser.class);
-        Record record = dsl.select().from(Tables.ADMIN_USER)
-                .where(Tables.ADMIN_USER.USERNAME.eq(username)).fetchAny();
-        UserDetails userDetails = (record != null) ? record.into(UserDetails.class) : null;
-        return userDetails;
-    }
 }
