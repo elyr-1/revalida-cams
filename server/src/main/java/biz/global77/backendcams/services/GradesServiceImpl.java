@@ -1,6 +1,5 @@
 package biz.global77.backendcams.services;
 
-import biz.global77.backendcams.interfaces.GradesInterface;
 import com.tej.JooQDemo.jooq.sample.model.Tables;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.Grades;
 import org.jooq.DSLContext;
@@ -10,7 +9,7 @@ import java.util.List;
 
 /* CRUD function for grades */
 @Service
-public class GradesService implements GradesInterface {
+public class GradesServiceImpl implements GradesService {
 
     /* DSL - Domain Specific Language; emulates SQL in Java */
     @Autowired

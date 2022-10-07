@@ -1,6 +1,6 @@
 package biz.global77.backendcams.controllers;
 
-import biz.global77.backendcams.services.ProfessorLoadService;
+import biz.global77.backendcams.services.ProfessorLoadServiceImpl;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.ProfessorLoad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,33 +15,33 @@ import java.util.List;
 public class ProfessorLoadController {
 
     @Autowired
-    private ProfessorLoadService professorLoadService;
+    private ProfessorLoadServiceImpl professorLoadServiceImpl;
 
     @GetMapping
     public ResponseEntity<List<ProfessorLoad>> getProfessorLoads() {
-        return ResponseEntity.ok().body(professorLoadService.getProfessorLoads());
+        return ResponseEntity.ok().body(professorLoadServiceImpl.getProfessorLoads());
     }
 
     @GetMapping("/{loadId}")
     public ResponseEntity<ProfessorLoad> getProfessorLoad(@PathVariable(value = "loadId") Integer loadId) {
-        return ResponseEntity.ok().body(professorLoadService.getProfessorLoadById(loadId));
+        return ResponseEntity.ok().body(professorLoadServiceImpl.getProfessorLoadById(loadId));
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<ProfessorLoad> addProfessorLoad(@RequestBody ProfessorLoad professorLoad) {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/professor-load/add").toUriString());
-        return ResponseEntity.created(uri).body(professorLoadService.insertProfessorLoad(professorLoad));
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/professor-load").toUriString());
+        return ResponseEntity.created(uri).body(professorLoadServiceImpl.insertProfessorLoad(professorLoad));
     }
 
-    @DeleteMapping("/delete/{loadId}")
+    @DeleteMapping("/{loadId}")
     public ResponseEntity<Void> deleteProfessorLoad(@PathVariable(value = "loadId") Integer loadId) {
-        professorLoadService.deleteProfessorLoadById(loadId);
+        professorLoadServiceImpl.deleteProfessorLoadById(loadId);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/update/{loadId}")
+    @PutMapping("/{loadId}")
     public ResponseEntity<ProfessorLoad> updateProfessorLoad(@PathVariable(value = "loadId") Integer loadId, @RequestBody ProfessorLoad professorLoad) {
-        return ResponseEntity.ok().body(professorLoadService.updateProfessorLoad(loadId, professorLoad));
+        return ResponseEntity.ok().body(professorLoadServiceImpl.updateProfessorLoad(loadId, professorLoad));
     }
 
 }

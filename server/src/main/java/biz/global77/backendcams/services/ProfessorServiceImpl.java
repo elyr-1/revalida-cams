@@ -1,6 +1,5 @@
 package biz.global77.backendcams.services;
 
-import biz.global77.backendcams.interfaces.ProfessorInterface;
 import com.tej.JooQDemo.jooq.sample.model.Tables;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.Professor;
 import org.jooq.DSLContext;
@@ -10,7 +9,7 @@ import java.util.List;
 
 /* CRUD functions for professor */
 @Service
-public class ProfessorService implements ProfessorInterface {
+public class ProfessorServiceImpl implements ProfessorService {
 
     /* DSL - Domain Specific Language; emulates SQL in Java */
     @Autowired

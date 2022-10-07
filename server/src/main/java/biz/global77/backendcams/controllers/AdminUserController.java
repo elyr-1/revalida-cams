@@ -1,6 +1,6 @@
 package biz.global77.backendcams.controllers;
 
-import biz.global77.backendcams.services.AdminUserUserService;
+import biz.global77.backendcams.services.AdminUserServiceImpl;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.AdminUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,33 +15,33 @@ import java.util.List;
 public class AdminUserController {
 
     @Autowired
-    private AdminUserUserService adminUserService;
+    private AdminUserServiceImpl adminUserServiceImpl;
 
     @GetMapping
     public ResponseEntity<List<AdminUser>> getAdminUsers() {
-        return ResponseEntity.ok().body(adminUserService.getAdminUsers());
+        return ResponseEntity.ok().body(adminUserServiceImpl.getAdminUsers());
     }
 
     @GetMapping("/{adminId}")
     public ResponseEntity<AdminUser> getAdminUser(@PathVariable(value = "adminId") Integer adminId) {
-        return ResponseEntity.ok().body(adminUserService.getAdminById(adminId));
+        return ResponseEntity.ok().body(adminUserServiceImpl.getAdminById(adminId));
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<AdminUser> addAdminUser(@RequestBody AdminUser admin) {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/admin/add").toUriString());
-        return ResponseEntity.created(uri).body(adminUserService.insertAdminUser(admin));
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/admin").toUriString());
+        return ResponseEntity.created(uri).body(adminUserServiceImpl.insertAdminUser(admin));
     }
 
-    @DeleteMapping("/delete/{adminId}")
+    @DeleteMapping("/{adminId}")
     public ResponseEntity<Void> deleteAdminUser(@RequestBody @PathVariable(value = "adminId") Integer adminId) {
-        adminUserService.deleteAdminUserById(adminId);
+        adminUserServiceImpl.deleteAdminUserById(adminId);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/update/{adminId}")
+    @PutMapping("/{adminId}")
     public ResponseEntity<AdminUser> updateAdminUser(@PathVariable Integer adminId, @RequestBody AdminUser admin) {
-        return ResponseEntity.ok().body(adminUserService.updateAdminUser(adminId, admin));
+        return ResponseEntity.ok().body(adminUserServiceImpl.updateAdminUser(adminId, admin));
     }
 
 }

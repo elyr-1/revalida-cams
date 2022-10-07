@@ -1,6 +1,5 @@
 package biz.global77.backendcams.services;
 
-import biz.global77.backendcams.interfaces.StudentInterface;
 import com.tej.JooQDemo.jooq.sample.model.Tables;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.Student;
 import org.jooq.DSLContext;
@@ -10,7 +9,7 @@ import java.util.List;
 
 /* CRUD functions for student */
 @Service
-public class StudentService implements StudentInterface {
+public class StudentServiceImpl implements StudentService {
 
     /* DSL - Domain Specific Language; emulates SQL in Java */
     @Autowired

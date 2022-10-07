@@ -1,6 +1,5 @@
 package biz.global77.backendcams.services;
 
-import biz.global77.backendcams.interfaces.ProgramInterface;
 import com.tej.JooQDemo.jooq.sample.model.Tables;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.Program;
 import org.jooq.DSLContext;
@@ -10,7 +9,7 @@ import java.util.List;
 
 /* CRUD functions for program */
 @Service
-public class ProgramService implements ProgramInterface {
+public class ProgramServiceImpl implements ProgramService {
 
     /* DSL - Domain Specific Language; emulates SQL in Java */
     @Autowired

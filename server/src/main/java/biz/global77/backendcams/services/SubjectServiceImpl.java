@@ -1,6 +1,5 @@
 package biz.global77.backendcams.services;
 
-import biz.global77.backendcams.interfaces.SubjectInterface;
 import com.tej.JooQDemo.jooq.sample.model.Tables;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.Subject;
 import org.jooq.DSLContext;
@@ -10,7 +9,7 @@ import java.util.List;
 
 /* CRUD functions for subject */
 @Service
-public class SubjectService implements SubjectInterface {
+public class SubjectServiceImpl implements SubjectService {
 
     /* DSL - Domain Specific Language; emulates SQL in Java */
     @Autowired
