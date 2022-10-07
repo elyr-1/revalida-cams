@@ -1,6 +1,6 @@
 package biz.global77.backendcams.controllers;
 
-import biz.global77.backendcams.services.ProgramService;
+import biz.global77.backendcams.services.ProgramServiceImpl;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.Program;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,33 +15,33 @@ import java.util.List;
 public class ProgramController {
 
     @Autowired
-    private ProgramService programService;
+    private ProgramServiceImpl programServiceImpl;
 
     @GetMapping
     public ResponseEntity<List<Program>> getPrograms() {
-        return ResponseEntity.ok().body(programService.getPrograms());
+        return ResponseEntity.ok().body(programServiceImpl.getPrograms());
     }
 
     @GetMapping("/{programId}")
     public ResponseEntity<Program> getProgram(@PathVariable(value = "programId") Integer programId) {
-        return ResponseEntity.ok().body(programService.getProgramById(programId));
+        return ResponseEntity.ok().body(programServiceImpl.getProgramById(programId));
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<Program> addProgram(@RequestBody Program program) {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/program/add").toUriString());
-        return ResponseEntity.created(uri).body(programService.insertProgram(program));
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/program").toUriString());
+        return ResponseEntity.created(uri).body(programServiceImpl.insertProgram(program));
     }
 
-    @DeleteMapping("/delete/{programId}")
+    @DeleteMapping("/{programId}")
     public ResponseEntity<Void> deleteProgram(@PathVariable(value = "programId") Integer programId) {
-        programService.deleteProgramById(programId);
+        programServiceImpl.deleteProgramById(programId);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/update/{programId}")
+    @PutMapping("/{programId}")
     public ResponseEntity<Program> updateProgram(@PathVariable(value = "programId") Integer programId, @RequestBody Program program) {
-        return ResponseEntity.ok().body(programService.updateProgram(programId, program));
+        return ResponseEntity.ok().body(programServiceImpl.updateProgram(programId, program));
     }
 
 }

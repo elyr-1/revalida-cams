@@ -1,98 +1,14 @@
 package biz.global77.backendcams.services;
 
-import biz.global77.backendcams.interfaces.StudentInterface;
-import com.tej.JooQDemo.jooq.sample.model.Tables;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.Student;
-import org.jooq.DSLContext;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.util.List;
 
-/* CRUD functions for student */
-@Service
-public class StudentService implements StudentInterface {
+public interface StudentService {
 
-    /* DSL - Domain Specific Language; emulates SQL in Java */
-    @Autowired
-    private DSLContext dsl;
-
-    /* add a student */
-    @Override
-    public Student insertStudent(Student student) {
-        dsl.insertInto(Tables.STUDENT,
-                Tables.STUDENT.STUDENT_NO,
-                Tables.STUDENT.PASSWORD,
-                Tables.STUDENT.FIRSTNAME,
-                Tables.STUDENT.MIDDLENAME,
-                Tables.STUDENT.LASTNAME,
-                Tables.STUDENT.PROGRAM,
-                Tables.STUDENT.BIRTHDATE,
-                Tables.STUDENT.GENDER,
-                Tables.STUDENT.SEM,
-                Tables.STUDENT.YEARLEVEL,
-                Tables.STUDENT.ACADEMIC_YEAR,
-                Tables.STUDENT.STATUS,
-                Tables.STUDENT.ACTIVE_INACTIVE)
-        .values(
-                student.getStudentNo(),
-                student.getPassword(),
-                student.getFirstname(),
-                student.getMiddlename(),
-                student.getLastname(),
-                student.getProgram(),
-                student.getBirthdate(),
-                student.getGender(),
-                student.getSem(),
-                student.getYearlevel(),
-                student.getAcademicYear(),
-                student.getStatus(),
-                student.getActiveInactive())
-        .execute();
-        return student;
-    }
-
-    /* get all students */
-    @Override
-    public List<Student> getStudents() {
-        return dsl.selectFrom(Tables.STUDENT).fetchInto(Student.class);
-    }
-
-    /* get a student by ID */
-    @Override
-    public Student getStudentById(Integer studentId) {
-        return dsl.selectFrom(Tables.STUDENT)
-                .where(Tables.STUDENT.STUDENT_ID.eq(studentId))
-                .fetchOneInto(Student.class);
-    }
-
-    /* update student details */
-    @Override
-    public Student updateStudent(Integer studentId, Student student) {
-        dsl.update(Tables.STUDENT)
-                .set(Tables.STUDENT.STUDENT_NO, student.getStudentNo())
-                .set(Tables.STUDENT.PASSWORD, student.getPassword())
-                .set(Tables.STUDENT.FIRSTNAME, student.getFirstname())
-                .set(Tables.STUDENT.MIDDLENAME, student.getMiddlename())
-                .set(Tables.STUDENT.LASTNAME, student.getLastname())
-                .set(Tables.STUDENT.PROGRAM, student.getProgram())
-                .set(Tables.STUDENT.BIRTHDATE, student.getBirthdate())
-                .set(Tables.STUDENT.GENDER, student.getGender())
-                .set(Tables.STUDENT.SEM, student.getSem())
-                .set(Tables.STUDENT.YEARLEVEL, student.getYearlevel())
-                .set(Tables.STUDENT.ACADEMIC_YEAR, student.getAcademicYear())
-                .set(Tables.STUDENT.STATUS, student.getStatus())
-                .set(Tables.STUDENT.ACTIVE_INACTIVE, student.getActiveInactive())
-                .where(Tables.STUDENT.STUDENT_ID.eq(studentId))
-                .execute();
-        return student;
-    }
-
-    /* delete a student by ID */
-    @Override
-    public void deleteStudentById(Integer studentId) {
-        dsl.deleteFrom(Tables.STUDENT)
-                .where(Tables.STUDENT.STUDENT_ID.eq(studentId))
-                .execute();
-    }
+    List<Student> getStudents();
+    Student getStudentById(Integer studentId);
+    Student insertStudent(Student student);
+    Student updateStudent(Integer studentId, Student student);
+    void deleteStudentById(Integer studentId);
 
 }

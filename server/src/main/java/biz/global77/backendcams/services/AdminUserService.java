@@ -1,9 +1,9 @@
-package biz.global77.backendcams.interfaces;
+package biz.global77.backendcams.services;
 
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.AdminUser;
 import java.util.List;
 
-public interface AdminUserInterface {
+public interface AdminUserService {
 
     List<AdminUser> getAdminUsers();
     AdminUser getAdminById(Integer adminId);
