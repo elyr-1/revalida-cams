@@ -16,7 +16,7 @@ import DataTable from "examples/Tables/DataTable";
 // Data
 import data from "layouts/dashboard/components/Projects/data";
 
-function Projects() {
+function Subjects() {
   const { columns, rows } = data();
   const [menu, setMenu] = useState(null);
 
@@ -38,9 +38,7 @@ function Projects() {
       open={Boolean(menu)}
       onClose={closeMenu}
     >
-      <MenuItem onClick={closeMenu}>Action</MenuItem>
-      <MenuItem onClick={closeMenu}>Another action</MenuItem>
-      <MenuItem onClick={closeMenu}>Something else</MenuItem>
+      <MenuItem onClick={closeMenu}>View Subjects</MenuItem>
     </Menu>
   );
 
@@ -52,17 +50,8 @@ function Projects() {
             Subjects
           </MDTypography>
           <MDBox display="flex" alignItems="center" lineHeight={0}>
-            <Icon
-              sx={{
-                fontWeight: "bold",
-                color: ({ palette: { info } }) => info.main,
-                mt: -0.5,
-              }}
-            >
-              done
-            </Icon>
             <MDTypography variant="button" fontWeight="regular" color="text">
-              &nbsp;<strong>30 done</strong> this month
+              Enrolled Subjects
             </MDTypography>
           </MDBox>
         </MDBox>
@@ -86,4 +75,4 @@ function Projects() {
   );
 }
 
-export default Projects;
+export default Subjects;
