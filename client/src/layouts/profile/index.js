@@ -27,6 +27,7 @@ import Footer from "examples/Footer";
 // Overview page components
 import Header from "layouts/profile/components/Header";
 import PlatformSettings from "layouts/profile/components/PlatformSettings";
+import MDButton from "components/MDButton";
 
 function Overview() {
   return (
@@ -40,6 +41,11 @@ function Overview() {
               <PlatformSettings />
             </Grid>
           </Grid>
+        </MDBox>
+        <MDBox>
+          <MDButton variant="outlined" color="info" size="small">
+            Save
+          </MDButton>
         </MDBox>
       </Header>
       <Footer />
