@@ -2,13 +2,13 @@ import { useState } from "react";
 
 // @mui material components
 import Card from "@mui/material/Card";
-import Icon from "@mui/material/Icon";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
 // Material Dashboard 2 React examples
 import DataTable from "examples/Tables/DataTable";
@@ -20,7 +20,6 @@ function Subjects() {
   const { columns, rows } = data();
   const [menu, setMenu] = useState(null);
 
-  const openMenu = ({ currentTarget }) => setMenu(currentTarget);
   const closeMenu = () => setMenu(null);
 
   const renderMenu = (
@@ -56,9 +55,9 @@ function Subjects() {
           </MDBox>
         </MDBox>
         <MDBox color="text" px={2}>
-          <Icon sx={{ cursor: "pointer", fontWeight: "bold" }} fontSize="small" onClick={openMenu}>
-            more_vert
-          </Icon>
+          <MDButton variant="outlined" color="info" size="small">
+            view grades
+          </MDButton>
         </MDBox>
         {renderMenu}
       </MDBox>
