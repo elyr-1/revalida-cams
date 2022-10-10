@@ -2,13 +2,13 @@ import { useState } from "react";
 
 // @mui material components
 import Card from "@mui/material/Card";
-import Icon from "@mui/material/Icon";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
 // Material Dashboard 2 React examples
 import DataTable from "examples/Tables/DataTable";
@@ -16,11 +16,10 @@ import DataTable from "examples/Tables/DataTable";
 // Data
 import data from "layouts/dashboard/components/Projects/data";
 
-function Projects() {
+function Subjects() {
   const { columns, rows } = data();
   const [menu, setMenu] = useState(null);
 
-  const openMenu = ({ currentTarget }) => setMenu(currentTarget);
   const closeMenu = () => setMenu(null);
 
   const renderMenu = (
@@ -38,9 +37,7 @@ function Projects() {
       open={Boolean(menu)}
       onClose={closeMenu}
     >
-      <MenuItem onClick={closeMenu}>Action</MenuItem>
-      <MenuItem onClick={closeMenu}>Another action</MenuItem>
-      <MenuItem onClick={closeMenu}>Something else</MenuItem>
+      <MenuItem onClick={closeMenu}>View Subjects</MenuItem>
     </Menu>
   );
 
@@ -52,24 +49,15 @@ function Projects() {
             Subjects
           </MDTypography>
           <MDBox display="flex" alignItems="center" lineHeight={0}>
-            <Icon
-              sx={{
-                fontWeight: "bold",
-                color: ({ palette: { info } }) => info.main,
-                mt: -0.5,
-              }}
-            >
-              done
-            </Icon>
             <MDTypography variant="button" fontWeight="regular" color="text">
-              &nbsp;<strong>30 done</strong> this month
+              Enrolled Subjects
             </MDTypography>
           </MDBox>
         </MDBox>
         <MDBox color="text" px={2}>
-          <Icon sx={{ cursor: "pointer", fontWeight: "bold" }} fontSize="small" onClick={openMenu}>
-            more_vert
-          </Icon>
+          <MDButton variant="outlined" color="info" size="small">
+            view grades
+          </MDButton>
         </MDBox>
         {renderMenu}
       </MDBox>
@@ -86,4 +74,4 @@ function Projects() {
   );
 }
 
-export default Projects;
+export default Subjects;
