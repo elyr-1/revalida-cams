@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState } from "react";
 
 // @mui material components
@@ -22,6 +7,7 @@ import Switch from "@mui/material/Switch";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDInput from "components/MDInput";
 
 function PlatformSettings() {
   const [followsMe, setFollowsMe] = useState(true);
@@ -37,6 +23,30 @@ function PlatformSettings() {
         <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
           Account Settings
         </MDTypography>
+      </MDBox>
+      <MDBox p={2}>
+        <MDTypography variant="caption" fontWeight="bold" color="text" textTransform="uppercase">
+          Full Name
+        </MDTypography>
+        <MDBox pt={1} px={2}>
+          <MDInput type="text" label="Full Name" fullWidth />
+        </MDBox>
+      </MDBox>
+      <MDBox p={2}>
+        <MDTypography variant="caption" fontWeight="bold" color="text" textTransform="uppercase">
+          Email
+        </MDTypography>
+        <MDBox pt={1} px={2}>
+          <MDInput type="email" label="Email" fullWidth />
+        </MDBox>
+      </MDBox>
+      <MDBox p={2}>
+        <MDTypography variant="caption" fontWeight="bold" color="text" textTransform="uppercase">
+          Password
+        </MDTypography>
+        <MDBox pt={1} px={2}>
+          <MDInput type="password" label="Password" fullWidth />
+        </MDBox>
       </MDBox>
       <MDBox pt={1} pb={2} px={2} lineHeight={1.25}>
         <MDTypography variant="caption" fontWeight="bold" color="text" textTransform="uppercase">
