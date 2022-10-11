@@ -1,5 +1,5 @@
 package biz.global77.backendcams.security;
-
+/*
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.proxy.NoOp;
@@ -20,10 +20,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.*;
-
+*/
 /* WebSecurityConfigurerAdapter in deprecated in Spring Security 5.7
 * For Spring Security without the WebSecurityConfigurerAdapter, refer to
-* https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter */
+* https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
 @SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
@@ -44,26 +44,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     /* handle http security; configure AUTHORIZATION */
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-            .authorizeRequests()
-            .anyRequest()
-            .authenticated()
-            .and()
-            .formLogin();
-    }
+//    @Override
+//    protected void configure(HttpSecurity httpSecurity) throws Exception {
+//        httpSecurity
+//            .authorizeRequests()
+//            .anyRequest()
+//            .authenticated()
+//            .and()
+//            .formLogin();
+//    }
 
     /* handle web security; configure AUTHENTICATION */
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    }
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//    }
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
-}
+//    @Bean
+//    @Override
+//    public AuthenticationManager authenticationManagerBean() throws Exception {
+//        return super.authenticationManagerBean();
+//    }
+//
+//}

@@ -1,13 +1,14 @@
 package biz.global77.backendcams.security;
-
+/*
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.AdminUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
-
+*/
 /* This class inherits from AdminUser pojo
 * and implements methods from UserDetails interface
 * related to basic user information and login authentication */
+/*
 public class AdminUserDetails extends AdminUser implements UserDetails {
 
     @Override
@@ -36,3 +37,4 @@ public class AdminUserDetails extends AdminUser implements UserDetails {
     }
 
 }
+*/
