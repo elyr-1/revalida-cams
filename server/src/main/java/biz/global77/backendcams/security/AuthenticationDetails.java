@@ -1,5 +1,5 @@
 package biz.global77.backendcams.security;
-
+/*
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import lombok.Getter;
@@ -19,8 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 import java.util.stream.Collectors;
-
+*/
 /* This class is used to obtain the form information submitted by the user login */
+/*
 @Getter
 public class AuthenticationDetails extends WebAuthenticationDetails {
 
@@ -66,6 +67,6 @@ public class AuthenticationDetails extends WebAuthenticationDetails {
         response.setHeader("access_token", accessToken);
         response.setHeader("refresh_token", refreshToken);
     }
-    */
 
 }
+*/
