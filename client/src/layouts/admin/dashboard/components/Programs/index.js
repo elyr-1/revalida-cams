@@ -4,7 +4,6 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
 import DataTable from "examples/Tables/DataTable";
 import data from "./data";
 
@@ -38,18 +37,13 @@ function Programs() {
       <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
         <MDBox>
           <MDTypography variant="h6" gutterBottom>
-            Subjects
+            Top Programs
           </MDTypography>
           <MDBox display="flex" alignItems="center" lineHeight={0}>
             <MDTypography variant="button" fontWeight="regular" color="text">
-              Enrolled Subjects
+              Programs with most students
             </MDTypography>
           </MDBox>
-        </MDBox>
-        <MDBox color="text" px={2}>
-          <MDButton variant="outlined" color="info" size="small">
-            view grades
-          </MDButton>
         </MDBox>
         {renderMenu}
       </MDBox>

@@ -16,13 +16,13 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="dark"
-                icon="weekend"
-                title="Attendance"
-                count={281}
+                icon="workspace_premium"
+                title="All Programs"
+                count={20}
                 percentage={{
                   color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
+                  amount: "+5%",
+                  label: "more than last academic year",
                 }}
               />
             </MDBox>
@@ -30,13 +30,13 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                icon="leaderboard"
-                title="Tasks Completed"
-                count="2,300"
+                icon="library_books"
+                title="All Courses"
+                count="200"
                 percentage={{
                   color: "success",
-                  amount: "+3%",
-                  label: "than last month",
+                  amount: "+5%",
+                  label: "more than last academic year",
                 }}
               />
             </MDBox>
@@ -45,13 +45,13 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="success"
-                icon="store"
-                title="Projects Completed"
-                count="34k"
+                icon="supervisor_account"
+                title="Faculty Members"
+                count="100"
                 percentage={{
                   color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
+                  amount: "+10%",
+                  label: "more than last semester",
                 }}
               />
             </MDBox>
@@ -60,13 +60,13 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="primary"
-                icon="person_add"
-                title="Missing"
-                count="+91"
+                icon="school"
+                title="Students"
+                count="3000"
                 percentage={{
                   color: "success",
-                  amount: "",
-                  label: "Just updated",
+                  amount: "+20%",
+                  label: "more than last semester",
                 }}
               />
             </MDBox>

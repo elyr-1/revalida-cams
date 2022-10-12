@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
@@ -5,13 +6,24 @@ import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-import DataTable from "examples/Tables/DataTable";
-
+import Table from "@mui/material/Table";
+import TableContainer from "@mui/material/TableContainer";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
 // Data
-import adminData from "./data/adminData";
+import * as adminService from "services/admin";
 
 function AdminUsers() {
-  const { columns, rows } = adminData();
+  const [adminUsers, setAdminUsers] = useState([]);
+
+  // Fetch data from server
+  useEffect(async () => {
+    await adminService.getAdminUsers().then((response) => {
+      // console.log(response);
+      setAdminUsers(response.data);
+    });
+  }, []);
 
   return (
     <DashboardLayout>
@@ -35,13 +47,113 @@ function AdminUsers() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                <DataTable
-                  table={{ columns, rows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
+                <TableContainer>
+                  <Table>
+                    <MDBox component="thead">
+                      <TableRow>
+                        <TableCell>
+                          <MDTypography
+                            display="block"
+                            variant="caption"
+                            color="text"
+                            fontWeight="medium"
+                            fontSize="0.7rem"
+                            textTransform="uppercase"
+                          >
+                            Username
+                          </MDTypography>
+                        </TableCell>
+                        <TableCell>
+                          <MDTypography
+                            display="block"
+                            variant="caption"
+                            color="text"
+                            fontWeight="medium"
+                            fontSize="0.7rem"
+                            textTransform="uppercase"
+                          >
+                            First Name
+                          </MDTypography>
+                        </TableCell>
+                        <TableCell>
+                          <MDTypography
+                            display="block"
+                            variant="caption"
+                            color="text"
+                            fontWeight="medium"
+                            fontSize="0.7rem"
+                            textTransform="uppercase"
+                          >
+                            Last Name
+                          </MDTypography>
+                        </TableCell>
+                        <TableCell>
+                          <MDTypography
+                            display="block"
+                            variant="caption"
+                            color="text"
+                            fontWeight="medium"
+                            fontSize="0.7rem"
+                            textTransform="uppercase"
+                          >
+                            User Type
+                          </MDTypography>
+                        </TableCell>
+                      </TableRow>
+                    </MDBox>
+                    <TableBody>
+                      {adminUsers.map((adminUser) => (
+                        <TableRow
+                          key={adminUser.adminId}
+                          sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                        >
+                          <TableCell>
+                            <MDTypography
+                              display="block"
+                              variant="button"
+                              color="text"
+                              fontWeight="medium"
+                            >
+                              {adminUser.username}
+                            </MDTypography>
+                          </TableCell>
+                          <TableCell>
+                            {" "}
+                            <MDTypography
+                              display="block"
+                              variant="button"
+                              color="text"
+                              fontWeight="medium"
+                            >
+                              {adminUser.firstname}
+                            </MDTypography>
+                          </TableCell>
+                          <TableCell>
+                            {" "}
+                            <MDTypography
+                              display="block"
+                              variant="button"
+                              color="text"
+                              fontWeight="medium"
+                            >
+                              {adminUser.lastname}
+                            </MDTypography>
+                          </TableCell>
+                          <TableCell>
+                            <MDTypography
+                              display="block"
+                              variant="button"
+                              color="text"
+                              fontWeight="medium"
+                            >
+                              {adminUser.type}
+                            </MDTypography>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </MDBox>
             </Card>
           </Grid>
