@@ -1,5 +1,5 @@
 package biz.global77.backendcams.security;
-
+/*
 import biz.global77.backendcams.services.AdminUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -23,3 +23,4 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         return true;
     }
 }
+*/

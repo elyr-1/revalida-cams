@@ -1,5 +1,5 @@
 package biz.global77.backendcams.security;
-
+/*
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
@@ -11,3 +11,4 @@ public class AuthenticationDetailsService implements AuthenticationDetailsSource
         return new AuthenticationDetails(context);
     }
 }
+*/
