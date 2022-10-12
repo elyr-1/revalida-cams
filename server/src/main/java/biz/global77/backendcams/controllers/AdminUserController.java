@@ -1,9 +1,12 @@
 package biz.global77.backendcams.controllers;
 
-import biz.global77.backendcams.services.AdminUserService;
+import biz.global77.backendcams.services.AdminUserServiceImpl;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.AdminUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -12,33 +15,33 @@ import java.util.List;
 public class AdminUserController {
 
     @Autowired
-    private AdminUserService adminUserService;
+    private AdminUserServiceImpl adminUserServiceImpl;
 
     @GetMapping
-    public List<AdminUser> getAdminUsers() {
-        return adminUserService.getAdminUsers();
+    public ResponseEntity<List<AdminUser>> getAdminUsers() {
+        return ResponseEntity.ok().body(adminUserServiceImpl.getAdminUsers());
     }
 
     @GetMapping("/{adminId}")
-    public AdminUser getAdminUser(@PathVariable(value = "adminId") Integer adminId) {
-        return adminUserService.getAdminById(adminId);
+    public ResponseEntity<AdminUser> getAdminUser(@PathVariable(value = "adminId") Integer adminId) {
+        return ResponseEntity.ok().body(adminUserServiceImpl.getAdminById(adminId));
     }
 
-    @PostMapping("/add")
-    public String addAdminUser(@RequestBody AdminUser admin) {
-        adminUserService.insertAdminUser(admin);
-        return "Admin user added successfully.";
+    @PostMapping
+    public ResponseEntity<AdminUser> addAdminUser(@RequestBody AdminUser admin) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/admin").toUriString());
+        return ResponseEntity.created(uri).body(adminUserServiceImpl.insertAdminUser(admin));
     }
 
-    @DeleteMapping("/delete/{adminId}")
-    public String deleteAdminUser(@RequestBody @PathVariable(value = "adminId") Integer adminId) {
-        adminUserService.deleteAdminUserById(adminId);
-        return "Admin deleted successfully";
+    @DeleteMapping("/{adminId}")
+    public ResponseEntity<Void> deleteAdminUser(@RequestBody @PathVariable(value = "adminId") Integer adminId) {
+        adminUserServiceImpl.deleteAdminUserById(adminId);
+        return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/update/{adminId}")
-    public String updateAdminUser(@PathVariable Integer adminId, @RequestBody AdminUser admin) {
-        adminUserService.updateAdminUser(adminId, admin);
-        return "Admin details updated successfully";
+    @PutMapping("/{adminId}")
+    public ResponseEntity<AdminUser> updateAdminUser(@PathVariable Integer adminId, @RequestBody AdminUser admin) {
+        return ResponseEntity.ok().body(adminUserServiceImpl.updateAdminUser(adminId, admin));
     }
+
 }
