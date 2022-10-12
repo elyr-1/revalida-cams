@@ -8,7 +8,7 @@ export default function courseData() {
   return {
     columns: [
       { Header: "subject code", accessor: "subjectCode", width: "15%", align: "left" },
-      { Header: "title", accessor: "title", align: "left" },
+      { Header: "subject name", accessor: "subjectName", align: "left" },
       { Header: "units", accessor: "units", align: "center" },
       { Header: "status", accessor: "status", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
@@ -21,7 +21,7 @@ export default function courseData() {
             PHYS101
           </MDTypography>
         ),
-        title: (
+        subjectName: (
           <MDTypography display="block" variant="button" fontWeight="medium">
             Physics 1 : Quantum Mechanics
           </MDTypography>
@@ -33,7 +33,7 @@ export default function courseData() {
         ),
         status: (
           <MDBox ml={-1}>
-            <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
+            <MDBadge badgeContent="dropped" color="error" variant="gradient" size="sm" />
           </MDBox>
         ),
         action: (
@@ -48,7 +48,7 @@ export default function courseData() {
             COM101
           </MDTypography>
         ),
-        title: (
+        subjectName: (
           <MDTypography display="block" variant="button" fontWeight="medium">
             C Programming
           </MDTypography>
@@ -60,7 +60,7 @@ export default function courseData() {
         ),
         status: (
           <MDBox ml={-1}>
-            <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
+            <MDBadge badgeContent="Active" color="success" variant="gradient" size="sm" />
           </MDBox>
         ),
         action: (

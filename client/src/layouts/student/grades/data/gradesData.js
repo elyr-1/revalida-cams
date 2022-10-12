@@ -8,10 +8,10 @@ export default function gradesData() {
   return {
     columns: [
       { Header: "subject code", accessor: "subjectCode", width: "15%", align: "left" },
-      { Header: "title", accessor: "title", align: "left" },
+      { Header: "subject name", accessor: "subjectName", align: "left" },
       { Header: "units", accessor: "units", align: "center" },
       { Header: "status", accessor: "status", align: "center" },
-      { Header: "action", accessor: "action", align: "center" },
+      { Header: "grade", accessor: "grade", align: "center" },
     ],
 
     rows: [
@@ -21,7 +21,7 @@ export default function gradesData() {
             PHYS101
           </MDTypography>
         ),
-        title: (
+        subjectName: (
           <MDTypography display="block" variant="button" fontWeight="medium">
             Physics 1 : Quantum Mechanics
           </MDTypography>
@@ -33,12 +33,12 @@ export default function gradesData() {
         ),
         status: (
           <MDBox ml={-1}>
-            <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
+            <MDBadge badgeContent="passed" color="success" variant="gradient" size="sm" />
           </MDBox>
         ),
-        action: (
+        grade: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
+            2.00
           </MDTypography>
         ),
       },
@@ -48,7 +48,7 @@ export default function gradesData() {
             COM101
           </MDTypography>
         ),
-        title: (
+        subjectName: (
           <MDTypography display="block" variant="button" fontWeight="medium">
             C Programming
           </MDTypography>
@@ -60,12 +60,12 @@ export default function gradesData() {
         ),
         status: (
           <MDBox ml={-1}>
-            <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
+            <MDBadge badgeContent="passed" color="success" variant="gradient" size="sm" />
           </MDBox>
         ),
-        action: (
+        grade: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
+            1.00
           </MDTypography>
         ),
       },
