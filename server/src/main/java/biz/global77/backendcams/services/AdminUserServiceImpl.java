@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.userdetails.UsernameNotFoundException;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,23 +29,20 @@ public class AdminUserServiceImpl implements AdminUserService {
     private DSLContext dsl;
 
     /* method in UserDetailsService interface
-    * to obtain user information in the database
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    * to obtain user information in the database */
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 //        AdminUser adminUser = dsl.select().from(Tables.ADMIN_USER)
 //                .where(Tables.ADMIN_USER.USERNAME.eq(username))
-//                .fetchAny().into(AdminUser.class);
+//                .fetchOneInto(AdminUser.class);
 //        if (adminUser == null) {
 //            throw new UsernameNotFoundException("User not found");
 //        }
 //        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 //        authorities.add(new SimpleGrantedAuthority(adminUser.getUsername()));
 //        return new User(adminUser.getUsername(), adminUser.getPassword(), authorities);
-        return dsl.selectFrom(Tables.ADMIN_USER)
-                .where(Tables.ADMIN_USER.USERNAME.eq(username))
-                .fetchAny().into(UserDetails.class);
-    }
-    */
+//    }
+
     /* add an admin */
     @Override
     public AdminUser insertAdminUser(AdminUser admin) {

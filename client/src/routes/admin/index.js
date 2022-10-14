@@ -20,7 +20,6 @@
   10. The `component` key is used to store the component of its route.
 */
 
-// Material Dashboard 2 React layouts
 import Dashboard from "layouts/admin/dashboard";
 import AdminUsers from "layouts/admin/users";
 import Programs from "layouts/admin/programs";
@@ -28,7 +27,7 @@ import Courses from "layouts/admin/courses";
 import Students from "layouts/admin/students";
 import Faculty from "layouts/admin/faculty";
 import Profile from "layouts/admin/profile";
-
+import Parents from "layouts/admin/parents";
 import Icon from "@mui/material/Icon";
 
 const adminRoutes = [
@@ -76,9 +75,17 @@ const adminRoutes = [
     type: "collapse",
     name: "Faculty",
     key: "faculty",
-    icon: <Icon fontSize="small">supervisor_account</Icon>,
+    icon: <Icon fontSize="small">engineering</Icon>,
     route: "/faculty",
     component: <Faculty />,
+  },
+  {
+    type: "collapse",
+    name: "Parents",
+    key: "parents",
+    icon: <Icon fontSize="small">supervisor_account</Icon>,
+    route: "/parents",
+    component: <Parents />,
   },
   {
     type: "collapse",

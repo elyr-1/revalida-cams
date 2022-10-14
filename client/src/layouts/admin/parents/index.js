@@ -16,18 +16,19 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import TablePagination from "@mui/material/TablePagination";
-import * as courseService from "services/course";
+import * as programService from "services/program";
 
 const columns = [
-  { id: "subjectCode", label: "Subject Code" },
-  { id: "subjectTitle", label: "Subject Title" },
-  { id: "units", label: "Units" },
-  { id: "preRequisites", label: "Pre-Requisites", align: "center" },
+  { id: "programCode", label: "Program Code" },
+  { id: "programTitle", label: "Program Title" },
+  { id: "major", label: "Major" },
+  { id: "courseCount", label: "Total No. of Courses", align: "center" },
+  { id: "unitCount", label: "Total No. of Units", align: "center" },
   { id: "actions", label: "Actions", align: "center" },
 ];
 
-function Courses() {
-  const [courses, setCourses] = useState([]);
+function Parents() {
+  const [programs, setPrograms] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -40,22 +41,11 @@ function Courses() {
     setPage(0);
   };
 
-  const handleDeleteCourse = async (subjectId) => {
-    try {
-      await courseService.deleteCourse(subjectId);
-      setCourses(courses.filter((course) => course.subjectId !== subjectId));
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        alert("Course may have already been deleted");
-      }
-    }
-  };
-
   // Fetch data from server
   useEffect(async () => {
-    await courseService.getCourses().then((response) => {
+    await programService.getPrograms().then((response) => {
       // console.log(response);
-      setCourses(response.data);
+      setPrograms(response.data);
     });
   }, []);
 
@@ -77,7 +67,7 @@ function Courses() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Courses
+                  Parents
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
@@ -102,11 +92,11 @@ function Courses() {
                       </TableRow>
                     </MDBox>
                     <TableBody>
-                      {courses
+                      {programs
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        .map((course) => (
+                        .map((program) => (
                           <TableRow
-                            key={course.subjectId}
+                            key={program.programId}
                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                           >
                             <TableCell>
@@ -116,7 +106,7 @@ function Courses() {
                                 color="text"
                                 fontWeight="medium"
                               >
-                                {course.subjectCode}
+                                {program.programCode}
                               </MDTypography>
                             </TableCell>
                             <TableCell>
@@ -126,7 +116,7 @@ function Courses() {
                                 color="text"
                                 fontWeight="medium"
                               >
-                                {course.subjectTitle}
+                                {program.programTitle}
                               </MDTypography>
                             </TableCell>
                             <TableCell>
@@ -136,7 +126,7 @@ function Courses() {
                                 color="text"
                                 fontWeight="medium"
                               >
-                                {course.units}
+                                {program.major}
                               </MDTypography>
                             </TableCell>
                             <TableCell align="center">
@@ -146,7 +136,17 @@ function Courses() {
                                 color="text"
                                 fontWeight="medium"
                               >
-                                {course.preRequisites}
+                                {50}
+                              </MDTypography>
+                            </TableCell>
+                            <TableCell align="center">
+                              <MDTypography
+                                display="block"
+                                variant="button"
+                                color="text"
+                                fontWeight="medium"
+                              >
+                                {300}
                               </MDTypography>
                             </TableCell>
                             <TableCell align="center">
@@ -155,10 +155,7 @@ function Courses() {
                                   <EditRoundedIcon color="primary" />
                                 </IconButton>
                                 <IconButton>
-                                  <DeleteRoundedIcon
-                                    color="error"
-                                    onClick={() => handleDeleteCourse(course.subjectId)}
-                                  />
+                                  <DeleteRoundedIcon color="error" />
                                 </IconButton>
                               </ButtonGroup>
                             </TableCell>
@@ -173,7 +170,7 @@ function Courses() {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 15]}
                 component="div"
-                count={courses.length}
+                count={programs.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
@@ -196,4 +193,4 @@ function Courses() {
   );
 }
 
-export default Courses;
+export default Parents;

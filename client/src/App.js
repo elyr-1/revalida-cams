@@ -8,8 +8,8 @@ import Sidenav from "examples/Sidenav";
 import Configurator from "examples/Configurator";
 import theme from "assets/theme";
 import themeDark from "assets/theme-dark";
-import studentRoutes from "routes/student";
-// import adminRoutes from "routes/admin";
+// import studentRoutes from "routes/student";
+import adminRoutes from "routes/admin";
 // import facultyRoutes from "routes/faculty";
 
 // Material Dashboard 2 React contexts
@@ -110,7 +110,7 @@ export default function App() {
             color={sidenavColor}
             brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
             brandName="Eight Institute"
-            routes={studentRoutes}
+            routes={adminRoutes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
           />
@@ -120,8 +120,8 @@ export default function App() {
       )}
       {layout === "vr" && <Configurator />}
       <Routes>
-        {getRoutes(studentRoutes)}
-        <Route path="*" element={<Navigate to="/dashboard/student" />} />
+        {getRoutes(adminRoutes)}
+        <Route path="*" element={<Navigate to="/dashboard/admin" />} />
       </Routes>
     </ThemeProvider>
   );
