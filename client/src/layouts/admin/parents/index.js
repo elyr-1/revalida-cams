@@ -16,7 +16,13 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import TablePagination from "@mui/material/TablePagination";
+import Backdrop from "@mui/material/Backdrop";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+import Tooltip from "@mui/material/Tooltip";
+import Icon from "@mui/material/Icon";
 import * as programService from "services/program";
+import ParentForm from "./form";
 
 const columns = [
   { id: "programCode", label: "Program Code" },
@@ -27,10 +33,26 @@ const columns = [
   { id: "actions", label: "Actions", align: "center" },
 ];
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 350,
+  bgcolor: "background.paper",
+  borderRadius: "10px",
+  boxShadow: 24,
+  p: 4,
+};
+
 function Parents() {
   const [programs, setPrograms] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -65,10 +87,48 @@ function Parents() {
                 bgColor="info"
                 borderRadius="lg"
                 coloredShadow="info"
+                display="flex"
+                justifyContent="space-between"
               >
                 <MDTypography variant="h6" color="white">
                   Parents
                 </MDTypography>
+                <IconButton onClick={handleOpen}>
+                  <MDBox
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    width="2.5rem"
+                    height="2.5rem"
+                    bgColor="white"
+                    shadow="sm"
+                    borderRadius="50%"
+                    color="dark"
+                  >
+                    <Tooltip title="Add new program" placement="top">
+                      <Icon fontSize="medium" color="inherit">
+                        add_rounded
+                      </Icon>
+                    </Tooltip>
+                  </MDBox>
+                </IconButton>
+                <Modal
+                  aria-labelledby="transition-modal-title"
+                  aria-describedby="transition-modal-description"
+                  open={open}
+                  onClose={handleClose}
+                  closeAfterTransition
+                  BackdropComponent={Backdrop}
+                  BackdropProps={{
+                    timeout: 500,
+                  }}
+                >
+                  <Fade in={open}>
+                    <Card sx={style}>
+                      <ParentForm />
+                    </Card>
+                  </Fade>
+                </Modal>
               </MDBox>
               <MDBox pt={3}>
                 <TableContainer>
