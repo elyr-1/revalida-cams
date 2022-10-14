@@ -19,11 +19,10 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import TablePagination from "@mui/material/TablePagination";
 import Tooltip from "@mui/material/Tooltip";
 import Backdrop from "@mui/material/Backdrop";
-import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import * as programService from "services/program";
-import AddProgram from "./forms";
+import ProgramForm from "./forms";
 
 const columns = [
   { id: "programCode", label: "Program Code" },
@@ -39,7 +38,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  maxWidth: 350,
+  width: 350,
   bgcolor: "background.paper",
   borderRadius: "10px",
   boxShadow: 24,
@@ -136,9 +135,9 @@ function Programs() {
                   }}
                 >
                   <Fade in={open}>
-                    <Box sx={style}>
-                      <AddProgram />
-                    </Box>
+                    <Card sx={style}>
+                      <ProgramForm />
+                    </Card>
                   </Fade>
                 </Modal>
               </MDBox>
