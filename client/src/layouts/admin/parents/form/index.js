@@ -4,20 +4,20 @@ import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
 import Divider from "@mui/material/Divider";
 
-function ProgramForm() {
+function ParentForm() {
   return (
     <>
       <MDTypography variant="button" fontWeight="medium" textAlign="center">
-        Add New Program
+        Add New Parent
       </MDTypography>
       <Divider />
       <MDBox pt={1} pb={2} px={2}>
         <MDBox component="form" role="form">
           <MDBox mb={2}>
-            <MDInput type="text" label="Program Code" variant="standard" fullWidth />
+            <MDInput type="text" label="Subject Code" variant="standard" fullWidth />
           </MDBox>
           <MDBox mb={2}>
-            <MDInput type="text" label="Program Title" variant="standard" fullWidth />
+            <MDInput type="text" label="Subject Title" variant="standard" fullWidth />
           </MDBox>
           <MDBox mb={2}>
             <MDInput type="text" label="Major" variant="standard" fullWidth />
@@ -33,4 +33,4 @@ function ProgramForm() {
   );
 }
 
-export default ProgramForm;
+export default ParentForm;
