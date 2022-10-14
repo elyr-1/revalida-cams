@@ -1,7 +1,4 @@
-import { useState } from "react";
 import Card from "@mui/material/Card";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
@@ -15,28 +12,6 @@ import data from "./data";
 
 function Subjects() {
   const { columns, rows } = data();
-  const [menu, setMenu] = useState(null);
-
-  const closeMenu = () => setMenu(null);
-
-  const renderMenu = (
-    <Menu
-      id="simple-menu"
-      anchorEl={menu}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "left",
-      }}
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={Boolean(menu)}
-      onClose={closeMenu}
-    >
-      <MenuItem onClick={closeMenu}>View Subjects</MenuItem>
-    </Menu>
-  );
 
   return (
     <Card>
@@ -52,11 +27,10 @@ function Subjects() {
           </MDBox>
         </MDBox>
         <MDBox color="text" px={2}>
-          <MDButton variant="outlined" color="info" size="small">
+          <MDButton variant="outlined" color="info" size="small" href="/grades">
             view grades
           </MDButton>
         </MDBox>
-        {renderMenu}
       </MDBox>
       <MDBox>
         <DataTable

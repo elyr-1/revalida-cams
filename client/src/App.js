@@ -10,6 +10,7 @@ import theme from "assets/theme";
 import themeDark from "assets/theme-dark";
 import studentRoutes from "routes/student";
 // import adminRoutes from "routes/admin";
+// import facultyRoutes from "routes/faculty";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
