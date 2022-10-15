@@ -9,15 +9,17 @@ import Divider from "@mui/material/Divider";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Joi from "joi";
-import * as courseService from "services/course";
+import * as studentService from "services/student";
 
-function CourseForm() {
+function StudentForm() {
   const [form, setForm] = useState({
-    subjectCode: "",
-    subjectTitle: "",
-    units: 0,
-    preRequisites: "",
-    programCode: "",
+    studentNo: "",
+    firstname: "",
+    middlename: "",
+    lastname: "",
+    gender: "",
+    yearLevel: 0,
+    sem: 0,
   });
 
   const [successSB, setSuccessSB] = useState(false);
@@ -27,11 +29,13 @@ function CourseForm() {
   const [errors, setErrors] = useState({});
 
   const schema = Joi.object({
-    subjectCode: Joi.string().min(1).max(30).required(),
-    subjectTitle: Joi.string().min(1).required(),
-    units: Joi.number().min(1).required(),
-    preRequisites: Joi.string().allow("").optional(),
-    programCode: Joi.string().min(1).max(30).required(),
+    studentNo: Joi.string().min(1).max(30).required(),
+    firstname: Joi.string().min(1).required(),
+    middlename: Joi.string().allow("").optional(),
+    lastname: Joi.string().min(1).required(),
+    gender: Joi.string().allow("").optional(),
+    yearlevel: Joi.number().min(1).optional(),
+    sem: Joi.number().min(1).optional(),
   });
 
   const handleChange = (event) => {
@@ -53,9 +57,9 @@ function CourseForm() {
     }
   };
 
-  const handleAddCourse = async (course) => {
-    await courseService
-      .addCourse(course)
+  const handleAddStudent = (student) => {
+    studentService
+      .addStudent(student)
       .then((response) => {
         console.log(response);
         setTimeout(() => {
@@ -71,7 +75,7 @@ function CourseForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleAddCourse(form);
+    handleAddStudent(form);
     console.log(form);
   };
 
@@ -84,8 +88,8 @@ function CourseForm() {
     <MDSnackbar
       color="info"
       icon="check"
-      title="Course Saved"
-      content="Course has been added successfully!"
+      title="Student Saved"
+      content="New student has been added successfully!"
       dateTime=""
       open={successSB}
       onClose={closeSuccessSB}
@@ -96,7 +100,7 @@ function CourseForm() {
   return (
     <Grid component="form" onSubmit={handleSubmit}>
       <Grid item>
-        <CardHeader title="Add New Course" sx={{ textAlign: "center" }} />
+        <CardHeader title="Add New Student" sx={{ textAlign: "center" }} />
         <Divider />
         <CardContent>
           <MDBox pt={1} pb={1} px={1}>
@@ -104,10 +108,10 @@ function CourseForm() {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Subject Code"
+                  label="Student No."
                   variant="standard"
                   fullWidth
-                  name="subjectCode"
+                  name="studentNo"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -117,10 +121,49 @@ function CourseForm() {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Subject Title"
+                  label="First Name"
                   variant="standard"
                   fullWidth
-                  name="subjectTitle"
+                  name="firstname"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Middle Name"
+                  variant="standard"
+                  fullWidth
+                  name="middlename"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Last Name"
+                  variant="standard"
+                  fullWidth
+                  name="lastname"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Gender"
+                  variant="standard"
+                  fullWidth
+                  name="gender"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -130,10 +173,10 @@ function CourseForm() {
               <MDBox mb={2}>
                 <MDInput
                   type="number"
-                  label="Units"
+                  label="Year Level"
                   variant="standard"
                   fullWidth
-                  name="units"
+                  name="yearlevel"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -142,24 +185,11 @@ function CourseForm() {
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="text"
-                  label="Pre-requisites"
+                  type="number"
+                  label="Semester"
                   variant="standard"
                   fullWidth
-                  name="preRequisites"
-                  error={!!errors.name}
-                  helperText={errors.name}
-                  value={form.name}
-                  onChange={handleChange}
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Program Code"
-                  variant="standard"
-                  fullWidth
-                  name="programCode"
+                  name="sem"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -172,7 +202,7 @@ function CourseForm() {
                   color="info"
                   fullWidth
                   type="submit"
-                  disabled={isFormInvalid()}
+                  disabled={!isFormInvalid()}
                   onClick={openSuccessSB}
                 >
                   save
@@ -187,4 +217,4 @@ function CourseForm() {
   );
 }
 
-export default CourseForm;
+export default StudentForm;

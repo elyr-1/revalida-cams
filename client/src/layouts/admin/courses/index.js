@@ -11,16 +11,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+import Icon from "@mui/material/Icon";
 import IconButton from "@mui/material/IconButton";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import TablePagination from "@mui/material/TablePagination";
-import Backdrop from "@mui/material/Backdrop";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
 import Tooltip from "@mui/material/Tooltip";
-import Icon from "@mui/material/Icon";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
 import * as courseService from "services/course";
 import CourseForm from "./form";
 
@@ -28,21 +27,10 @@ const columns = [
   { id: "subjectCode", label: "Subject Code" },
   { id: "subjectTitle", label: "Subject Title" },
   { id: "units", label: "Units" },
-  { id: "preRequisites", label: "Pre-Requisites", align: "center" },
+  { id: "preRequisites", label: "Pre-requisites" },
+  { id: "programCode", label: "Program Code" },
   { id: "actions", label: "Actions", align: "center" },
 ];
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 350,
-  bgcolor: "background.paper",
-  borderRadius: "10px",
-  boxShadow: 24,
-  p: 4,
-};
 
 function Courses() {
   const [courses, setCourses] = useState([]);
@@ -76,7 +64,6 @@ function Courses() {
   // Fetch data from server
   useEffect(async () => {
     await courseService.getCourses().then((response) => {
-      // console.log(response);
       setCourses(response.data);
     });
   }, []);
@@ -122,23 +109,11 @@ function Courses() {
                     </Tooltip>
                   </MDBox>
                 </IconButton>
-                <Modal
-                  aria-labelledby="transition-modal-title"
-                  aria-describedby="transition-modal-description"
-                  open={open}
-                  onClose={handleClose}
-                  closeAfterTransition
-                  BackdropComponent={Backdrop}
-                  BackdropProps={{
-                    timeout: 500,
-                  }}
-                >
-                  <Fade in={open}>
-                    <Card sx={style}>
-                      <CourseForm />
-                    </Card>
-                  </Fade>
-                </Modal>
+                <Dialog open={open} onClose={handleClose} fullWidth>
+                  <DialogContent>
+                    <CourseForm />
+                  </DialogContent>
+                </Dialog>
               </MDBox>
               <MDBox pt={3}>
                 <TableContainer>
@@ -199,7 +174,7 @@ function Courses() {
                                 {course.units}
                               </MDTypography>
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell>
                               <MDTypography
                                 display="block"
                                 variant="button"
@@ -207,6 +182,16 @@ function Courses() {
                                 fontWeight="medium"
                               >
                                 {course.preRequisites}
+                              </MDTypography>
+                            </TableCell>
+                            <TableCell>
+                              <MDTypography
+                                display="block"
+                                variant="button"
+                                color="text"
+                                fontWeight="medium"
+                              >
+                                {course.programCode}
                               </MDTypography>
                             </TableCell>
                             <TableCell align="center">
