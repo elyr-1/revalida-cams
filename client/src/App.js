@@ -11,6 +11,7 @@ import themeDark from "assets/theme-dark";
 // import studentRoutes from "routes/student";
 import adminRoutes from "routes/admin";
 // import facultyRoutes from "routes/faculty";
+import Login from "layouts/authentication/sign-in";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
@@ -122,6 +123,7 @@ export default function App() {
       <Routes>
         {getRoutes(adminRoutes)}
         <Route path="*" element={<Navigate to="/dashboard/admin" />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </ThemeProvider>
   );

@@ -3,24 +3,20 @@ import { useState } from "react";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
-import MDSnackbar from "components/MDSnackbar";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Joi from "joi";
 import * as programService from "services/program";
+import Swal from "sweetalert2";
 
-function ProgramForm() {
+function ProgramForm({ onClose }) {
   const [form, setForm] = useState({
     programCode: "",
     programTitle: "",
     major: "",
   });
-
-  const [successSB, setSuccessSB] = useState(false);
-  const openSuccessSB = () => setSuccessSB(true);
-  const closeSuccessSB = () => setSuccessSB(false);
 
   const [errors, setErrors] = useState({});
 
@@ -52,8 +48,14 @@ function ProgramForm() {
   const handleAddProgram = (program) => {
     programService
       .addProgram(program)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: "A new program has been added!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         setTimeout(() => {
           window.location.reload();
         }, 500);
@@ -75,19 +77,6 @@ function ProgramForm() {
     const result = schema.validate(form);
     return !!result.error;
   };
-
-  const renderSuccessSB = (
-    <MDSnackbar
-      color="info"
-      icon="check"
-      title="Program Saved"
-      content="Program has been added successfully!"
-      dateTime=""
-      open={successSB}
-      onClose={closeSuccessSB}
-      close={closeSuccessSB}
-    />
-  );
 
   return (
     <Grid component="form" onSubmit={handleSubmit}>
@@ -143,11 +132,10 @@ function ProgramForm() {
                   fullWidth
                   type="submit"
                   disabled={isFormInvalid()}
-                  onClick={openSuccessSB}
+                  onClick={onClose}
                 >
                   save
                 </MDButton>
-                {renderSuccessSB}
               </MDBox>
             </MDBox>
           </MDBox>

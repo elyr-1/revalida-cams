@@ -20,19 +20,19 @@ import TablePagination from "@mui/material/TablePagination";
 import Tooltip from "@mui/material/Tooltip";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import * as facultyService from "services/faculty";
+import * as parentService from "services/parent";
+import Swal from "sweetalert2";
 import ParentForm from "./forms";
 
 const columns = [
   { id: "parentNo", label: "Parent No." },
   { id: "parentName", label: "Parent Name" },
   { id: "studentNo", label: "Student No." },
-  { id: "status", label: "Status" },
   { id: "actions", label: "Actions", align: "center" },
 ];
 
 function Parents() {
-  const [professors, setProfessors] = useState([]);
+  const [parents, setParents] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = useState(false);
@@ -49,21 +49,39 @@ function Parents() {
     setPage(0);
   };
 
-  const handleDeleteProfessor = async (professorId) => {
+  const handleDeleteParent = (parentId) => {
     try {
-      await facultyService.deleteProfessor(professorId);
-      setProfessors(professors.filter((professor) => professor.professorId !== professorId));
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Do you really want to delete this record? This process cannot be undone.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#FF0000",
+        confirmButtonText: "Delete",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          parentService.deleteParent(parentId);
+          setParents(parents.filter((parent) => parent.parentId !== parentId));
+          Swal.fire("Deleted", "Record has been deleted.", "success");
+        } else if (result.isDenied) {
+          Swal.fire("Deletion has been cancelled", "", "info");
+        }
+      });
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        alert("Professor may have already been deleted");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "This record may have already been deleted.",
+        });
       }
     }
   };
 
   // Fetch data from server
   useEffect(async () => {
-    await facultyService.getProfessors().then((response) => {
-      setProfessors(response.data);
+    await parentService.getParents().then((response) => {
+      setParents(response.data);
     });
   }, []);
 
@@ -87,7 +105,7 @@ function Parents() {
                 justifyContent="space-between"
               >
                 <MDTypography variant="h6" color="white">
-                  Faculty Members
+                  Parents
                 </MDTypography>
                 <IconButton onClick={handleOpen}>
                   <MDBox
@@ -101,7 +119,7 @@ function Parents() {
                     borderRadius="50%"
                     color="dark"
                   >
-                    <Tooltip title="Add new program" placement="top">
+                    <Tooltip title="Add new parent" placement="top">
                       <Icon fontSize="medium" color="inherit">
                         add_rounded
                       </Icon>
@@ -136,11 +154,11 @@ function Parents() {
                       </TableRow>
                     </MDBox>
                     <TableBody>
-                      {professors
+                      {parents
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        .map((professor) => (
+                        .map((parent) => (
                           <TableRow
-                            key={professor.professorId}
+                            key={parent.parentId}
                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                           >
                             <TableCell>
@@ -150,7 +168,7 @@ function Parents() {
                                 color="text"
                                 fontWeight="medium"
                               >
-                                {professor.professorNo}
+                                {parent.parentNo}
                               </MDTypography>
                             </TableCell>
                             <TableCell>
@@ -160,7 +178,7 @@ function Parents() {
                                 color="text"
                                 fontWeight="medium"
                               >
-                                {professor.professorName}
+                                {parent.parentName}
                               </MDTypography>
                             </TableCell>
                             <TableCell>
@@ -170,10 +188,10 @@ function Parents() {
                                 color="text"
                                 fontWeight="medium"
                               >
-                                {professor.gender}
+                                {parent.studentId}
                               </MDTypography>
                             </TableCell>
-                            <TableCell>
+                            {/* <TableCell>
                               <MDTypography
                                 display="block"
                                 variant="button"
@@ -182,15 +200,13 @@ function Parents() {
                               >
                                 {professor.status}
                               </MDTypography>
-                            </TableCell>
+                            </TableCell> */}
                             <TableCell align="center">
                               <ButtonGroup>
                                 <IconButton>
                                   <EditRoundedIcon color="primary" />
                                 </IconButton>
-                                <IconButton
-                                  onClick={() => handleDeleteProfessor(professor.professorId)}
-                                >
+                                <IconButton onClick={() => handleDeleteParent(parent.parentId)}>
                                   <DeleteRoundedIcon color="error" />
                                 </IconButton>
                               </ButtonGroup>
@@ -206,7 +222,7 @@ function Parents() {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 15]}
                 component="div"
-                count={professors.length}
+                count={parents.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

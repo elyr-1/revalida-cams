@@ -94,7 +94,7 @@ function FacultyForm() {
   return (
     <Grid component="form" onSubmit={handleSubmit}>
       <Grid item>
-        <CardHeader title="Add New Course" sx={{ textAlign: "center" }} />
+        <CardHeader title="Add New Faculty Member" sx={{ textAlign: "center" }} />
         <Divider />
         <CardContent>
           <MDBox pt={1} pb={1} px={1}>

@@ -5,7 +5,6 @@ import Students from "layouts/admin/students";
 import Faculty from "layouts/admin/faculty";
 import Profile from "layouts/admin/profile";
 import Parents from "layouts/admin/parents";
-import Notifications from "layouts/admin/notifications";
 import Icon from "@mui/material/Icon";
 
 const adminRoutes = [
@@ -64,14 +63,6 @@ const adminRoutes = [
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",
     component: <Profile />,
-  },
-  {
-    type: "collapse",
-    name: "Notifs",
-    key: "notifs",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/notifs",
-    component: <Notifications />,
   },
 ];
 

@@ -21,6 +21,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import * as courseService from "services/course";
+import Swal from "sweetalert2";
 import CourseForm from "./form";
 
 const columns = [
@@ -52,11 +53,29 @@ function Courses() {
 
   const handleDeleteCourse = async (subjectId) => {
     try {
-      await courseService.deleteCourse(subjectId);
-      setCourses(courses.filter((course) => course.subjectId !== subjectId));
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Do you really want to delete this record? This process cannot be undone.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#FF0000",
+        confirmButtonText: "Delete",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          courseService.deleteCourse(subjectId);
+          setCourses(courses.filter((course) => course.subjectId !== subjectId));
+          Swal.fire("Deleted", "Record has been deleted.", "success");
+        } else if (result.isDenied) {
+          Swal.fire("Deletion has been cancelled", "", "info");
+        }
+      });
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        alert("Course may have already been deleted");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "This record may have already been deleted.",
+        });
       }
     }
   };
@@ -102,7 +121,7 @@ function Courses() {
                     borderRadius="50%"
                     color="dark"
                   >
-                    <Tooltip title="Add new program" placement="top">
+                    <Tooltip title="Add new course" placement="top">
                       <Icon fontSize="medium" color="inherit">
                         add_rounded
                       </Icon>

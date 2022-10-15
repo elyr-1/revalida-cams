@@ -21,6 +21,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import * as facultyService from "services/faculty";
+import Swal from "sweetalert2";
 import FacultyForm from "./forms";
 
 const columns = [
@@ -51,11 +52,29 @@ function Faculty() {
 
   const handleDeleteProfessor = async (professorId) => {
     try {
-      await facultyService.deleteProfessor(professorId);
-      setProfessors(professors.filter((professor) => professor.professorId !== professorId));
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Do you really want to delete this record? This process cannot be undone.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#FF0000",
+        confirmButtonText: "Delete",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          facultyService.deleteProfessor(professorId);
+          setProfessors(professors.filter((professor) => professor.professorId !== professorId));
+          Swal.fire("Deleted", "Record has been deleted.", "success");
+        } else if (result.isDenied) {
+          Swal.fire("Deletion has been cancelled", "", "info");
+        }
+      });
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        alert("Professor may have already been deleted");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "This record may have already been deleted.",
+        });
       }
     }
   };
@@ -101,7 +120,7 @@ function Faculty() {
                     borderRadius="50%"
                     color="dark"
                   >
-                    <Tooltip title="Add new program" placement="top">
+                    <Tooltip title="Add new faculty member" placement="top">
                       <Icon fontSize="medium" color="inherit">
                         add_rounded
                       </Icon>
