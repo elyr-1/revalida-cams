@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import Table from "@mui/material/Table";
@@ -10,18 +8,17 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
-import * as programService from "services/program";
+import * as adminService from "services/admin";
 
 const columns = [
-  { id: "programCode", label: "Program Code" },
-  { id: "programTitle", label: "Program Title" },
-  { id: "major", label: "Major" },
-  { id: "studentCount", label: "Total No. of Students", align: "center" },
+  { id: "userName", label: "Username" },
+  { id: "firstName", label: "First Name" },
+  { id: "lastName", label: "Last Name" },
+  { id: "userType", label: "User Type" },
 ];
 
-function Programs() {
-  const [programs, setPrograms] = useState([]);
-  const [menu, setMenu] = useState(null);
+function AdminUsers() {
+  const [adminUsers, setAdminUsers] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
 
@@ -36,32 +33,11 @@ function Programs() {
 
   // Fetch data from server
   useEffect(async () => {
-    await programService.getPrograms().then((response) => {
+    await adminService.getAdminUsers().then((response) => {
       // console.log(response);
-      setPrograms(response.data);
+      setAdminUsers(response.data);
     });
   }, []);
-
-  const closeMenu = () => setMenu(null);
-
-  const renderMenu = (
-    <Menu
-      id="simple-menu"
-      anchorEl={menu}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "left",
-      }}
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={Boolean(menu)}
-      onClose={closeMenu}
-    >
-      <MenuItem onClick={closeMenu}>View Programs</MenuItem>
-    </Menu>
-  );
 
   return (
     <>
@@ -69,15 +45,14 @@ function Programs() {
         <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
           <MDBox>
             <MDTypography variant="h6" gutterBottom>
-              Top Programs
+              Administrators
             </MDTypography>
             <MDBox display="flex" alignItems="center" lineHeight={0}>
               <MDTypography variant="button" fontWeight="regular" color="text">
-                Programs with most students
+                View list of administrators
               </MDTypography>
             </MDBox>
           </MDBox>
-          {renderMenu}
         </MDBox>
         <MDBox>
           <TableContainer>
@@ -101,11 +76,11 @@ function Programs() {
                 </TableRow>
               </MDBox>
               <TableBody>
-                {programs
+                {adminUsers
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((program) => (
+                  .map((adminUser) => (
                     <TableRow
-                      key={program.programId}
+                      key={adminUser.adminId}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
                       <TableCell>
@@ -115,7 +90,7 @@ function Programs() {
                           color="text"
                           fontWeight="medium"
                         >
-                          {program.programCode}
+                          {adminUser.username}
                         </MDTypography>
                       </TableCell>
                       <TableCell>
@@ -125,7 +100,7 @@ function Programs() {
                           color="text"
                           fontWeight="medium"
                         >
-                          {program.programTitle}
+                          {adminUser.firstname}
                         </MDTypography>
                       </TableCell>
                       <TableCell>
@@ -135,17 +110,17 @@ function Programs() {
                           color="text"
                           fontWeight="medium"
                         >
-                          {program.major}
+                          {adminUser.lastname}
                         </MDTypography>
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell>
                         <MDTypography
                           display="block"
                           variant="button"
                           color="text"
                           fontWeight="medium"
                         >
-                          {300}
+                          {adminUser.type}
                         </MDTypography>
                       </TableCell>
                     </TableRow>
@@ -157,9 +132,9 @@ function Programs() {
       </Card>
       <MDBox>
         <TablePagination
-          rowsPerPageOptions={[4, 8]}
+          rowsPerPageOptions={[8, 16]}
           component="div"
-          count={programs.length}
+          count={adminUsers.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -178,4 +153,4 @@ function Programs() {
   );
 }
 
-export default Programs;
+export default AdminUsers;

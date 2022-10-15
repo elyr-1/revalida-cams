@@ -9,15 +9,14 @@ import Divider from "@mui/material/Divider";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Joi from "joi";
-import * as courseService from "services/course";
+import * as facultyService from "services/faculty";
 
-function CourseForm() {
+function ParentForm() {
   const [form, setForm] = useState({
-    subjectCode: "",
-    subjectTitle: "",
-    units: 0,
-    preRequisites: "",
-    programCode: "",
+    professorNo: "",
+    professorName: "",
+    gender: "",
+    status: "",
   });
 
   const [successSB, setSuccessSB] = useState(false);
@@ -27,11 +26,10 @@ function CourseForm() {
   const [errors, setErrors] = useState({});
 
   const schema = Joi.object({
-    subjectCode: Joi.string().min(1).max(30).required(),
-    subjectTitle: Joi.string().min(1).required(),
-    units: Joi.number().min(1).required(),
-    preRequisites: Joi.string().allow("").optional(),
-    programCode: Joi.string().min(1).max(30).required(),
+    professorNo: Joi.string().min(1).max(30).required(),
+    professorName: Joi.string().min(1).required(),
+    gender: Joi.string().allow("").optional(),
+    status: Joi.string().min(1).max(30).required(),
   });
 
   const handleChange = (event) => {
@@ -53,9 +51,9 @@ function CourseForm() {
     }
   };
 
-  const handleAddCourse = async (course) => {
-    await courseService
-      .addCourse(course)
+  const handleAddProfessor = (professor) => {
+    facultyService
+      .addProfessor(professor)
       .then((response) => {
         console.log(response);
         setTimeout(() => {
@@ -71,7 +69,7 @@ function CourseForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleAddCourse(form);
+    handleAddProfessor(form);
     console.log(form);
   };
 
@@ -84,8 +82,8 @@ function CourseForm() {
     <MDSnackbar
       color="info"
       icon="check"
-      title="Course Saved"
-      content="Course has been added successfully!"
+      title="Professor Saved"
+      content="New faculty member has been added successfully!"
       dateTime=""
       open={successSB}
       onClose={closeSuccessSB}
@@ -104,10 +102,10 @@ function CourseForm() {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Subject Code"
+                  label="Professor No."
                   variant="standard"
                   fullWidth
-                  name="subjectCode"
+                  name="professorNo"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -117,23 +115,10 @@ function CourseForm() {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Subject Title"
+                  label="Professor Name"
                   variant="standard"
                   fullWidth
-                  name="subjectTitle"
-                  error={!!errors.name}
-                  helperText={errors.name}
-                  value={form.name}
-                  onChange={handleChange}
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="number"
-                  label="Units"
-                  variant="standard"
-                  fullWidth
-                  name="units"
+                  name="professorName"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -143,10 +128,10 @@ function CourseForm() {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Pre-requisites"
+                  label="Gender"
                   variant="standard"
                   fullWidth
-                  name="preRequisites"
+                  name="gender"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -154,6 +139,19 @@ function CourseForm() {
                 />
               </MDBox>
               <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Status"
+                  variant="standard"
+                  fullWidth
+                  name="status"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              {/* <MDBox mb={2}>
                 <MDInput
                   type="text"
                   label="Program Code"
@@ -165,7 +163,7 @@ function CourseForm() {
                   value={form.name}
                   onChange={handleChange}
                 />
-              </MDBox>
+              </MDBox> */}
               <MDBox mt={4} mb={1}>
                 <MDButton
                   variant="gradient"
@@ -187,4 +185,4 @@ function CourseForm() {
   );
 }
 
-export default CourseForm;
+export default ParentForm;

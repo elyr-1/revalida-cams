@@ -11,42 +11,28 @@ import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+import Icon from "@mui/material/Icon";
 import IconButton from "@mui/material/IconButton";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import TablePagination from "@mui/material/TablePagination";
-import Backdrop from "@mui/material/Backdrop";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
 import Tooltip from "@mui/material/Tooltip";
-import Icon from "@mui/material/Icon";
-import * as programService from "services/program";
-import ParentForm from "./form";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import * as facultyService from "services/faculty";
+import ParentForm from "./forms";
 
 const columns = [
-  { id: "programCode", label: "Program Code" },
-  { id: "programTitle", label: "Program Title" },
-  { id: "major", label: "Major" },
-  { id: "courseCount", label: "Total No. of Courses", align: "center" },
-  { id: "unitCount", label: "Total No. of Units", align: "center" },
+  { id: "parentNo", label: "Parent No." },
+  { id: "parentName", label: "Parent Name" },
+  { id: "studentNo", label: "Student No." },
+  { id: "status", label: "Status" },
   { id: "actions", label: "Actions", align: "center" },
 ];
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 350,
-  bgcolor: "background.paper",
-  borderRadius: "10px",
-  boxShadow: 24,
-  p: 4,
-};
-
 function Parents() {
-  const [programs, setPrograms] = useState([]);
+  const [professors, setProfessors] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = useState(false);
@@ -63,11 +49,21 @@ function Parents() {
     setPage(0);
   };
 
+  const handleDeleteProfessor = async (professorId) => {
+    try {
+      await facultyService.deleteProfessor(professorId);
+      setProfessors(professors.filter((professor) => professor.professorId !== professorId));
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        alert("Professor may have already been deleted");
+      }
+    }
+  };
+
   // Fetch data from server
   useEffect(async () => {
-    await programService.getPrograms().then((response) => {
-      // console.log(response);
-      setPrograms(response.data);
+    await facultyService.getProfessors().then((response) => {
+      setProfessors(response.data);
     });
   }, []);
 
@@ -91,7 +87,7 @@ function Parents() {
                 justifyContent="space-between"
               >
                 <MDTypography variant="h6" color="white">
-                  Parents
+                  Faculty Members
                 </MDTypography>
                 <IconButton onClick={handleOpen}>
                   <MDBox
@@ -112,23 +108,11 @@ function Parents() {
                     </Tooltip>
                   </MDBox>
                 </IconButton>
-                <Modal
-                  aria-labelledby="transition-modal-title"
-                  aria-describedby="transition-modal-description"
-                  open={open}
-                  onClose={handleClose}
-                  closeAfterTransition
-                  BackdropComponent={Backdrop}
-                  BackdropProps={{
-                    timeout: 500,
-                  }}
-                >
-                  <Fade in={open}>
-                    <Card sx={style}>
-                      <ParentForm />
-                    </Card>
-                  </Fade>
-                </Modal>
+                <Dialog open={open} onClose={handleClose} fullWidth>
+                  <DialogContent>
+                    <ParentForm />
+                  </DialogContent>
+                </Dialog>
               </MDBox>
               <MDBox pt={3}>
                 <TableContainer>
@@ -152,11 +136,11 @@ function Parents() {
                       </TableRow>
                     </MDBox>
                     <TableBody>
-                      {programs
+                      {professors
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        .map((program) => (
+                        .map((professor) => (
                           <TableRow
-                            key={program.programId}
+                            key={professor.professorId}
                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                           >
                             <TableCell>
@@ -166,7 +150,7 @@ function Parents() {
                                 color="text"
                                 fontWeight="medium"
                               >
-                                {program.programCode}
+                                {professor.professorNo}
                               </MDTypography>
                             </TableCell>
                             <TableCell>
@@ -176,7 +160,7 @@ function Parents() {
                                 color="text"
                                 fontWeight="medium"
                               >
-                                {program.programTitle}
+                                {professor.professorName}
                               </MDTypography>
                             </TableCell>
                             <TableCell>
@@ -186,27 +170,17 @@ function Parents() {
                                 color="text"
                                 fontWeight="medium"
                               >
-                                {program.major}
+                                {professor.gender}
                               </MDTypography>
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell>
                               <MDTypography
                                 display="block"
                                 variant="button"
                                 color="text"
                                 fontWeight="medium"
                               >
-                                {50}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {300}
+                                {professor.status}
                               </MDTypography>
                             </TableCell>
                             <TableCell align="center">
@@ -214,7 +188,9 @@ function Parents() {
                                 <IconButton>
                                   <EditRoundedIcon color="primary" />
                                 </IconButton>
-                                <IconButton>
+                                <IconButton
+                                  onClick={() => handleDeleteProfessor(professor.professorId)}
+                                >
                                   <DeleteRoundedIcon color="error" />
                                 </IconButton>
                               </ButtonGroup>
@@ -230,7 +206,7 @@ function Parents() {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 15]}
                 component="div"
-                count={programs.length}
+                count={professors.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

@@ -11,39 +11,25 @@ import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+import Icon from "@mui/material/Icon";
 import IconButton from "@mui/material/IconButton";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import TablePagination from "@mui/material/TablePagination";
-import Backdrop from "@mui/material/Backdrop";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
 import Tooltip from "@mui/material/Tooltip";
-import Icon from "@mui/material/Icon";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
 import * as facultyService from "services/faculty";
-import FacultyForm from "./form";
+import FacultyForm from "./forms";
 
 const columns = [
   { id: "professorNo", label: "Professor No." },
-  { id: "professorName", label: "Name" },
-  { id: "work", label: "Work" },
-  { id: "status", label: "Status", align: "center" },
-  { id: "birthDate", label: "Birth Date", align: "center" },
+  { id: "professorName", label: "Professor Name" },
+  { id: "gender", label: "Gender" },
+  { id: "status", label: "Status" },
   { id: "actions", label: "Actions", align: "center" },
 ];
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 350,
-  bgcolor: "background.paper",
-  borderRadius: "10px",
-  boxShadow: 24,
-  p: 4,
-};
 
 function Faculty() {
   const [professors, setProfessors] = useState([]);
@@ -77,7 +63,6 @@ function Faculty() {
   // Fetch data from server
   useEffect(async () => {
     await facultyService.getProfessors().then((response) => {
-      // console.log(response);
       setProfessors(response.data);
     });
   }, []);
@@ -123,23 +108,11 @@ function Faculty() {
                     </Tooltip>
                   </MDBox>
                 </IconButton>
-                <Modal
-                  aria-labelledby="transition-modal-title"
-                  aria-describedby="transition-modal-description"
-                  open={open}
-                  onClose={handleClose}
-                  closeAfterTransition
-                  BackdropComponent={Backdrop}
-                  BackdropProps={{
-                    timeout: 500,
-                  }}
-                >
-                  <Fade in={open}>
-                    <Card sx={style}>
-                      <FacultyForm />
-                    </Card>
-                  </Fade>
-                </Modal>
+                <Dialog open={open} onClose={handleClose} fullWidth>
+                  <DialogContent>
+                    <FacultyForm />
+                  </DialogContent>
+                </Dialog>
               </MDBox>
               <MDBox pt={3}>
                 <TableContainer>
@@ -197,10 +170,10 @@ function Faculty() {
                                 color="text"
                                 fontWeight="medium"
                               >
-                                {professor.work}
+                                {professor.gender}
                               </MDTypography>
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell>
                               <MDTypography
                                 display="block"
                                 variant="button"
@@ -208,16 +181,6 @@ function Faculty() {
                                 fontWeight="medium"
                               >
                                 {professor.status}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {professor.birthdate}
                               </MDTypography>
                             </TableCell>
                             <TableCell align="center">

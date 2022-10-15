@@ -12,41 +12,27 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Icon from "@mui/material/Icon";
-import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import TablePagination from "@mui/material/TablePagination";
-import Backdrop from "@mui/material/Backdrop";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
+import Tooltip from "@mui/material/Tooltip";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
 import * as studentService from "services/student";
-import StudentForm from "./form";
+import StudentForm from "./forms";
 
 const columns = [
   { id: "studentNo", label: "Student No." },
-  { id: "firstName", label: "First Name" },
-  { id: "middleName", label: "Middle Name" },
-  { id: "lastName", label: "Last Name" },
-  { id: "gender", label: "Gender", align: "center" },
-  { id: "program", label: "Program", align: "center" },
-  { id: "yearLevel", label: "Year Level", align: "center" },
-  { id: "sem", label: "Semester", align: "center" },
+  { id: "lastname", label: "Last Name" },
+  { id: "firstname", label: "First Name" },
+  { id: "middlename", label: "Middle Name" },
+  { id: "gender", label: "Gender" },
+  { id: "yearlevel", label: "Year Level" },
+  { id: "sem", label: "Semester" },
   { id: "actions", label: "Actions", align: "center" },
 ];
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 350,
-  bgcolor: "background.paper",
-  borderRadius: "10px",
-  boxShadow: 24,
-  p: 4,
-};
 
 function Students() {
   const [students, setStudents] = useState([]);
@@ -80,7 +66,6 @@ function Students() {
   // Fetch data from server
   useEffect(async () => {
     await studentService.getStudents().then((response) => {
-      // console.log(response);
       setStudents(response.data);
     });
   }, []);
@@ -126,23 +111,11 @@ function Students() {
                     </Tooltip>
                   </MDBox>
                 </IconButton>
-                <Modal
-                  aria-labelledby="transition-modal-title"
-                  aria-describedby="transition-modal-description"
-                  open={open}
-                  onClose={handleClose}
-                  closeAfterTransition
-                  BackdropComponent={Backdrop}
-                  BackdropProps={{
-                    timeout: 500,
-                  }}
-                >
-                  <Fade in={open}>
-                    <Card sx={style}>
-                      <StudentForm />
-                    </Card>
-                  </Fade>
-                </Modal>
+                <Dialog open={open} onClose={handleClose} fullWidth>
+                  <DialogContent>
+                    <StudentForm />
+                  </DialogContent>
+                </Dialog>
               </MDBox>
               <MDBox pt={3}>
                 <TableContainer>
@@ -190,6 +163,16 @@ function Students() {
                                 color="text"
                                 fontWeight="medium"
                               >
+                                {student.lastname}
+                              </MDTypography>
+                            </TableCell>
+                            <TableCell>
+                              <MDTypography
+                                display="block"
+                                variant="button"
+                                color="text"
+                                fontWeight="medium"
+                              >
                                 {student.firstname}
                               </MDTypography>
                             </TableCell>
@@ -210,30 +193,10 @@ function Students() {
                                 color="text"
                                 fontWeight="medium"
                               >
-                                {student.lastname}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
                                 {student.gender}
                               </MDTypography>
                             </TableCell>
-                            <TableCell align="center">
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {student.program}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell align="center">
+                            <TableCell>
                               <MDTypography
                                 display="block"
                                 variant="button"
@@ -243,7 +206,7 @@ function Students() {
                                 {student.yearlevel}
                               </MDTypography>
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell>
                               <MDTypography
                                 display="block"
                                 variant="button"
