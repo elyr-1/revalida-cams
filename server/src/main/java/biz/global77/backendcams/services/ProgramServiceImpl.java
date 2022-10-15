@@ -66,13 +66,4 @@ public class ProgramServiceImpl implements ProgramService {
                 .execute();
     }
 
-    /* This query will return a table with INNER JOIN */
-//    public List<Record3<String, String, String>> getProgramsWithStudentCount() {
-//        return dsl.select(Tables.PROGRAM.PROGRAM_CODE, Tables.PROGRAM.PROGRAM_TITLE, Tables.STUDENT.FIRSTNAME)
-//                .from(Tables.PROGRAM)
-//                .innerJoin(Tables.STUDENT)
-//                .on(Tables.STUDENT.PROGRAM_CODE.eq(Tables.PROGRAM.PROGRAM_CODE))
-//                .fetch();
-//    }
-
 }

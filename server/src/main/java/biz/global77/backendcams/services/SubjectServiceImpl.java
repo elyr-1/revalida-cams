@@ -23,14 +23,12 @@ public class SubjectServiceImpl implements SubjectService {
                 Tables.SUBJECT.SUBJECT_TITLE,
                 Tables.SUBJECT.UNITS,
                 Tables.SUBJECT.PRE_REQUISITES,
-                Tables.SUBJECT.ACTIVE_INACTIVE,
                 Tables.SUBJECT.PROGRAM_CODE)
         .values(
                 subject.getSubjectCode(),
                 subject.getSubjectTitle(),
                 subject.getUnits(),
                 subject.getPreRequisites(),
-                subject.getActiveInactive(),
                 subject.getProgramCode())
         .execute();
         return subject;
@@ -39,7 +37,9 @@ public class SubjectServiceImpl implements SubjectService {
     /* get all subjects */
     @Override
     public List<Subject> getSubjects() {
-        return dsl.selectFrom(Tables.SUBJECT).fetchInto(Subject.class);
+        return dsl.selectFrom(Tables.SUBJECT)
+                .orderBy(Tables.SUBJECT.PROGRAM_CODE)
+                .fetchInto(Subject.class);
     }
 
     /* get subject by ID */
@@ -58,7 +58,7 @@ public class SubjectServiceImpl implements SubjectService {
                 .set(Tables.SUBJECT.SUBJECT_TITLE, subject.getSubjectTitle())
                 .set(Tables.SUBJECT.UNITS, subject.getUnits())
                 .set(Tables.SUBJECT.PRE_REQUISITES, subject.getPreRequisites())
-                .set(Tables.SUBJECT.ACTIVE_INACTIVE, subject.getActiveInactive())
+                .set(Tables.SUBJECT.PROGRAM_CODE, subject.getProgramCode())
                 .where(Tables.SUBJECT.SUBJECT_ID.eq(subjectId))
                 .execute();
         return subject;

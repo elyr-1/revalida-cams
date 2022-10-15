@@ -16,8 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
+//import java.util.ArrayList;
+//import java.util.Collection;
 import java.util.List;
 
 /* CRUD functions for Admin */
@@ -51,13 +51,13 @@ public class AdminUserServiceImpl implements AdminUserService {
                 Tables.ADMIN_USER.LASTNAME,
                 Tables.ADMIN_USER.USERNAME,
                 Tables.ADMIN_USER.PASSWORD,
-                Tables.ADMIN_USER.TYPE)
+                Tables.ADMIN_USER.ROLE_ID)
         .values(
                 admin.getFirstname(),
                 admin.getLastname(),
                 admin.getUsername(),
                 admin.getPassword(),
-                admin.getType())
+                admin.getRoleId())
         .execute();
         return admin;
     }
@@ -66,7 +66,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     public List<AdminUser> getAdminUsers() {
         return dsl.selectFrom(Tables.ADMIN_USER)
-                .orderBy(Tables.ADMIN_USER.TYPE.desc())
+                .orderBy(Tables.ADMIN_USER.LASTNAME.desc())
                 .fetchInto(AdminUser.class);
     }
 
@@ -85,7 +85,6 @@ public class AdminUserServiceImpl implements AdminUserService {
                 .set(Tables.ADMIN_USER.FIRSTNAME, admin.getFirstname())
                 .set(Tables.ADMIN_USER.LASTNAME, admin.getLastname())
                 .set(Tables.ADMIN_USER.USERNAME,admin.getUsername())
-                .set(Tables.ADMIN_USER.TYPE, admin.getType())
                 .where(Tables.ADMIN_USER.ADMIN_ID.eq(adminId))
                 .execute();
         return admin;

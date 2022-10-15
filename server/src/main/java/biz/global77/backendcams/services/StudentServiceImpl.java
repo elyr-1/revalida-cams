@@ -27,11 +27,13 @@ public class StudentServiceImpl implements StudentService {
                 Tables.STUDENT.PROGRAM_CODE,
                 Tables.STUDENT.BIRTHDATE,
                 Tables.STUDENT.GENDER,
+                Tables.STUDENT.ADDRESS,
                 Tables.STUDENT.SEM,
                 Tables.STUDENT.YEARLEVEL,
                 Tables.STUDENT.ACADEMIC_YEAR,
                 Tables.STUDENT.STATUS,
-                Tables.STUDENT.ACTIVE_INACTIVE)
+                Tables.STUDENT.IS_ACTIVE,
+                Tables.STUDENT.ROLE_ID)
         .values(
                 student.getStudentNo(),
                 student.getPassword(),
@@ -41,11 +43,13 @@ public class StudentServiceImpl implements StudentService {
                 student.getProgramCode(),
                 student.getBirthdate(),
                 student.getGender(),
+                student.getAddress(),
                 student.getSem(),
                 student.getYearlevel(),
                 student.getAcademicYear(),
                 student.getStatus(),
-                student.getActiveInactive())
+                student.getIsActive(),
+                student.getRoleId())
         .execute();
         return student;
     }
@@ -78,11 +82,13 @@ public class StudentServiceImpl implements StudentService {
                 .set(Tables.STUDENT.PROGRAM_CODE, student.getProgramCode())
                 .set(Tables.STUDENT.BIRTHDATE, student.getBirthdate())
                 .set(Tables.STUDENT.GENDER, student.getGender())
+                .set(Tables.STUDENT.ADDRESS, student.getAddress())
                 .set(Tables.STUDENT.SEM, student.getSem())
                 .set(Tables.STUDENT.YEARLEVEL, student.getYearlevel())
                 .set(Tables.STUDENT.ACADEMIC_YEAR, student.getAcademicYear())
                 .set(Tables.STUDENT.STATUS, student.getStatus())
-                .set(Tables.STUDENT.ACTIVE_INACTIVE, student.getActiveInactive())
+                .set(Tables.STUDENT.IS_ACTIVE, student.getIsActive())
+                .set(Tables.STUDENT.ROLE_ID, student.getRoleId())
                 .where(Tables.STUDENT.STUDENT_ID.eq(studentId))
                 .execute();
         return student;

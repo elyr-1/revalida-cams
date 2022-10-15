@@ -1,4 +1,4 @@
 package biz.global77.backendcams.services;
 
-public interface StudentProgramService {
+public interface RoleService {
 }

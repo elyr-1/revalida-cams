@@ -25,9 +25,8 @@ public class SubjectDetailServiceImpl implements SubjectDetailService {
                 Tables.SUBJECT_DETAIL_HISTORY.SECTION,
                 Tables.SUBJECT_DETAIL_HISTORY.YEARLEVEL,
                 Tables.SUBJECT_DETAIL_HISTORY.STATUS,
-                Tables.SUBJECT_DETAIL_HISTORY.ACTIVE_INACTIVE,
-                Tables.SUBJECT_DETAIL_HISTORY.PROFESSOR_ID,
-                Tables.SUBJECT_DETAIL_HISTORY.SUBJECT_ID)
+                Tables.SUBJECT_DETAIL_HISTORY.PROFESSOR_NO,
+                Tables.SUBJECT_DETAIL_HISTORY.SUBJECT_CODE)
         .values(
                 subjectDetail.getAcademicYear(),
                 subjectDetail.getSem(),
@@ -35,9 +34,8 @@ public class SubjectDetailServiceImpl implements SubjectDetailService {
                 subjectDetail.getSection(),
                 subjectDetail.getYearlevel(),
                 subjectDetail.getStatus(),
-                subjectDetail.getActiveInactive(),
-                subjectDetail.getProfessorId(),
-                subjectDetail.getSubjectId())
+                subjectDetail.getProfessorNo(),
+                subjectDetail.getSubjectCode())
         .execute();
         return subjectDetail;
     }
@@ -46,6 +44,7 @@ public class SubjectDetailServiceImpl implements SubjectDetailService {
     @Override
     public List<SubjectDetailHistory> getSubjectDetails() {
         return dsl.selectFrom(Tables.SUBJECT_DETAIL_HISTORY)
+                .orderBy(Tables.SUBJECT_DETAIL_HISTORY.SUBJECT_CODE)
                 .fetchInto(SubjectDetailHistory.class);
     }
 
@@ -67,9 +66,8 @@ public class SubjectDetailServiceImpl implements SubjectDetailService {
                 .set(Tables.SUBJECT_DETAIL_HISTORY.SECTION, subjectDetail.getSection())
                 .set(Tables.SUBJECT_DETAIL_HISTORY.YEARLEVEL, subjectDetail.getYearlevel())
                 .set(Tables.SUBJECT_DETAIL_HISTORY.STATUS, subjectDetail.getStatus())
-                .set(Tables.SUBJECT_DETAIL_HISTORY.ACTIVE_INACTIVE, subjectDetail.getActiveInactive())
-                .set(Tables.SUBJECT_DETAIL_HISTORY.PROFESSOR_ID, subjectDetail.getProfessorId())
-                .set(Tables.SUBJECT_DETAIL_HISTORY.SUBJECT_ID, subjectDetail.getSubjectId())
+                .set(Tables.SUBJECT_DETAIL_HISTORY.PROFESSOR_NO, subjectDetail.getProfessorNo())
+                .set(Tables.SUBJECT_DETAIL_HISTORY.SUBJECT_CODE, subjectDetail.getSubjectCode())
                 .where(Tables.SUBJECT_DETAIL_HISTORY.SESSION_ID.eq(sessionId))
                 .execute();
         return subjectDetail;

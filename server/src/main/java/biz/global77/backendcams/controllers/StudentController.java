@@ -10,7 +10,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"})
 @RequestMapping("/api/student") /* API entry point */
 public class StudentController {
 
@@ -39,7 +39,7 @@ public class StudentController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{studentId}")
+    @PatchMapping("/{studentId}")
     public ResponseEntity<Student> updateStudent(@PathVariable(value = "studentId") Integer studentId, @RequestBody Student student) {
         return ResponseEntity.ok().body(studentServiceImpl.updateStudent(studentId, student));
     }

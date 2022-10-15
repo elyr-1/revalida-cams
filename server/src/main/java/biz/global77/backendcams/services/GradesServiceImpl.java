@@ -19,21 +19,17 @@ public class GradesServiceImpl implements GradesService {
     @Override
     public Grades insertGrade(Grades grade) {
         dsl.insertInto(Tables.GRADES,
-                Tables.GRADES.SESSION_ID,
                 Tables.GRADES.GRADE,
-                Tables.GRADES.COMMENT,
                 Tables.GRADES.DATE_MODIFIED,
                 Tables.GRADES.REMARKS,
                 Tables.GRADES.STATUS,
-                Tables.GRADES.SUBJECT_ID)
+                Tables.GRADES.SUBJECT_CODE)
         .values(
-                grade.getSessionId(),
                 grade.getGrade(),
-                grade.getComment(),
                 grade.getDateModified(),
                 grade.getRemarks(),
                 grade.getStatus(),
-                grade.getSubjectId())
+                grade.getSubjectCode())
         .execute();
         return grade;
     }
@@ -41,7 +37,9 @@ public class GradesServiceImpl implements GradesService {
     /* get all grades */
     @Override
     public List<Grades> getGrades() {
-        return dsl.selectFrom(Tables.GRADES).fetchInto(Grades.class);
+        return dsl.selectFrom(Tables.GRADES)
+                .orderBy(Tables.GRADES.SUBJECT_CODE)
+                .fetchInto(Grades.class);
     }
 
     /* get grade by ID */
@@ -56,13 +54,11 @@ public class GradesServiceImpl implements GradesService {
     @Override
     public Grades updateGrade(Integer gradeId, Grades grade) {
         dsl.update(Tables.GRADES)
-                .set(Tables.GRADES.SESSION_ID, grade.getSessionId())
                 .set(Tables.GRADES.GRADE, grade.getGrade())
-                .set(Tables.GRADES.COMMENT, grade.getComment())
                 .set(Tables.GRADES.DATE_MODIFIED, grade.getDateModified())
                 .set(Tables.GRADES.REMARKS, grade.getRemarks())
                 .set(Tables.GRADES.STATUS, grade.getStatus())
-                .set(Tables.GRADES.SUBJECT_ID, grade.getSubjectId())
+                .set(Tables.GRADES.SUBJECT_CODE, grade.getSubjectCode())
                 .where(Tables.GRADES.GRADE_ID.eq(gradeId))
                 .execute();
         return grade;

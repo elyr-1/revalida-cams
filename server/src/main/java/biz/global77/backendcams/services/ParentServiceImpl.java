@@ -5,7 +5,6 @@ import com.tej.JooQDemo.jooq.sample.model.tables.pojos.Parent;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -16,7 +15,9 @@ public class ParentServiceImpl implements ParentService {
 
     @Override
     public List<Parent> getParents() {
-        return dsl.selectFrom(Tables.PARENT).fetchInto(Parent.class);
+        return dsl.selectFrom(Tables.PARENT)
+                .orderBy(Tables.PARENT.PARENT_NO)
+                .fetchInto(Parent.class);
     }
 
     @Override
@@ -32,12 +33,14 @@ public class ParentServiceImpl implements ParentService {
                 Tables.PARENT.PARENT_NO,
                 Tables.PARENT.PARENT_NAME,
                 Tables.PARENT.PASSWORD,
-                Tables.PARENT.STUDENT_ID)
+                Tables.PARENT.STUDENT_NO,
+                Tables.PARENT.ROLE_ID)
         .values(
                 parent.getParentNo(),
                 parent.getParentName(),
                 parent.getPassword(),
-                parent.getStudentId())
+                parent.getStudentNo(),
+                parent.getRoleId())
         .execute();
         return parent;
     }
@@ -48,6 +51,8 @@ public class ParentServiceImpl implements ParentService {
                 .set(Tables.PARENT.PARENT_NO, parent.getParentNo())
                 .set(Tables.PARENT.PARENT_NAME, parent.getParentName())
                 .set(Tables.PARENT.PASSWORD, parent.getPassword())
+                .set(Tables.PARENT.STUDENT_NO, parent.getStudentNo())
+                .set(Tables.PARENT.ROLE_ID, parent.getRoleId())
                 .where(Tables.PARENT.PARENT_ID.eq(parentId))
                 .execute();
         return parent;

@@ -22,12 +22,12 @@ public class ProfessorLoadServiceImpl implements ProfessorLoadService {
                 Tables.PROFESSOR_LOAD.SECTION,
                 Tables.PROFESSOR_LOAD.YEARLEVEL,
                 Tables.PROFESSOR_LOAD.COURSE_TITLE,
-                Tables.PROFESSOR_LOAD.PROFESSOR_ID)
+                Tables.PROFESSOR_LOAD.PROFESSOR_NO)
                 .values(
                         professorLoad.getSection(),
                         professorLoad.getYearlevel(),
                         professorLoad.getCourseTitle(),
-                        professorLoad.getProfessorId())
+                        professorLoad.getProfessorNo())
                 .execute();
         return professorLoad;
     }
@@ -42,7 +42,7 @@ public class ProfessorLoadServiceImpl implements ProfessorLoadService {
     @Override
     public ProfessorLoad getProfessorLoadById(Integer loadId) {
         return dsl.selectFrom(Tables.PROFESSOR_LOAD)
-                .where(Tables.PROFESSOR_LOAD.PROFESSOR_ID.eq(loadId))
+                .where(Tables.PROFESSOR_LOAD.LOAD_ID.eq(loadId))
                 .fetchOneInto(ProfessorLoad.class);
     }
 
@@ -53,7 +53,7 @@ public class ProfessorLoadServiceImpl implements ProfessorLoadService {
                 .set(Tables.PROFESSOR_LOAD.SECTION, professorLoad.getSection())
                 .set(Tables.PROFESSOR_LOAD.YEARLEVEL, professorLoad.getYearlevel())
                 .set(Tables.PROFESSOR_LOAD.COURSE_TITLE, professorLoad.getCourseTitle())
-                .set(Tables.PROFESSOR_LOAD.PROFESSOR_ID, professorLoad.getProfessorId())
+                .set(Tables.PROFESSOR_LOAD.PROFESSOR_NO, professorLoad.getProfessorNo())
                 .where(Tables.PROFESSOR_LOAD.LOAD_ID.eq(loadId))
                 .execute();
         return professorLoad;
@@ -63,7 +63,7 @@ public class ProfessorLoadServiceImpl implements ProfessorLoadService {
     @Override
     public void deleteProfessorLoadById(Integer loadId) {
         dsl.deleteFrom(Tables.PROFESSOR_LOAD)
-                .where(Tables.PROFESSOR_LOAD.PROFESSOR_ID.eq(loadId))
+                .where(Tables.PROFESSOR_LOAD.LOAD_ID.eq(loadId))
                 .execute();
     }
 

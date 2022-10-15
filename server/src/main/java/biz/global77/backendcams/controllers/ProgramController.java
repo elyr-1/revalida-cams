@@ -12,7 +12,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"})
 @RequestMapping("/api/program") /* API entry point */
 public class ProgramController {
 
@@ -46,7 +46,7 @@ public class ProgramController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{programId}")
+    @PatchMapping("/{programId}")
     public ResponseEntity<Program> updateProgram(@PathVariable(value = "programId") Integer programId, @RequestBody Program program) {
         return ResponseEntity.ok().body(programServiceImpl.updateProgram(programId, program));
     }

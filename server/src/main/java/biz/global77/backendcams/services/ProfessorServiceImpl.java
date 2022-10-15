@@ -22,20 +22,16 @@ public class ProfessorServiceImpl implements ProfessorService {
                 Tables.PROFESSOR.PROFESSOR_NO,
                 Tables.PROFESSOR.PROFESSOR_NAME,
                 Tables.PROFESSOR.PASSWORD,
-                Tables.PROFESSOR.WORK,
                 Tables.PROFESSOR.GENDER,
                 Tables.PROFESSOR.BIRTHDATE,
-                Tables.PROFESSOR.STATUS,
-                Tables.PROFESSOR.ACTIVE_INACTIVE)
+                Tables.PROFESSOR.IS_ACTIVE)
         .values(
                 professor.getProfessorNo(),
                 professor.getProfessorName(),
                 professor.getPassword(),
-                professor.getWork(),
                 professor.getGender(),
                 professor.getBirthdate(),
-                professor.getStatus(),
-                professor.getActiveInactive())
+                professor.getIsActive())
         .execute();
         return professor;
     }
@@ -63,11 +59,9 @@ public class ProfessorServiceImpl implements ProfessorService {
                 .set(Tables.PROFESSOR.PROFESSOR_NO, professor.getProfessorNo())
                 .set(Tables.PROFESSOR.PROFESSOR_NAME, professor.getProfessorName())
                 .set(Tables.PROFESSOR.PASSWORD, professor.getPassword())
-                .set(Tables.PROFESSOR.WORK, professor.getWork())
                 .set(Tables.PROFESSOR.GENDER, professor.getGender())
                 .set(Tables.PROFESSOR.BIRTHDATE, professor.getBirthdate())
-                .set(Tables.PROFESSOR.STATUS, professor.getStatus())
-                .set(Tables.PROFESSOR.ACTIVE_INACTIVE, professor.getActiveInactive())
+                .set(Tables.PROFESSOR.IS_ACTIVE, professor.getIsActive())
                 .where(Tables.PROFESSOR.PROFESSOR_ID.eq(professorId))
                 .execute();
         return professor;

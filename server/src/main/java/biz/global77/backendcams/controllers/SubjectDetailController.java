@@ -11,7 +11,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"})
 @RequestMapping("/api/subject-detail-history") /* API entry point */
 public class SubjectDetailController {
 
@@ -40,7 +40,7 @@ public class SubjectDetailController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{sessionId}")
+    @PatchMapping("/{sessionId}")
     public ResponseEntity<SubjectDetailHistory> updateSubjectDetail(@PathVariable(value = "sessionId") Integer sessionId, @RequestBody SubjectDetailHistory subjectDetail) {
         return ResponseEntity.ok().body(subjectDetailServiceImpl.updateSubjectDetail(sessionId, subjectDetail));
     }
