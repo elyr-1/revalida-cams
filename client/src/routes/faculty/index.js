@@ -1,8 +1,7 @@
-// import Dashboard from "layouts/student/dashboard";
-// import Grades from "layouts/student/grades";
-// import Profile from "layouts/student/profile";
-// import Courses from "layouts/student/courses";
 import Dashboard from "layouts/faculty/dashboard";
+import Evaluation from "layouts/faculty/evaluation";
+import Students from "layouts/faculty/students";
+import Profile from "layouts/faculty/profile";
 import Icon from "@mui/material/Icon";
 
 const facultyRoutes = [
@@ -14,30 +13,29 @@ const facultyRoutes = [
     route: "/dashboard/faculty",
     component: <Dashboard />,
   },
-  //   {
-  //     type: "collapse",
-  //     name: "Courses",
-  //     key: "courses",
-  //     icon: <Icon fontSize="small">library_books</Icon>,
-  //     route: "/courses",
-  //     component: <Courses />,
-  //   },
-  //   {
-  //     type: "collapse",
-  //     name: "Grades",
-  //     key: "grades",
-  //     icon: <Icon fontSize="small">grade</Icon>,
-  //     route: "/grades",
-  //     component: <Grades />,
-  //   },
-  //   {
-  //     type: "collapse",
-  //     name: "Profile",
-  //     key: "profile",
-  //     icon: <Icon fontSize="small">person</Icon>,
-  //     route: "/profile",
-  //     component: <Profile />,
-  //   },
+  {
+    type: "collapse",
+    name: "Evaluation",
+    key: "evaluation",
+    icon: <Icon fontSize="small">library_books</Icon>,
+    route: "/evaluation",
+    component: <Evaluation />,
+  },
+  {
+    type: "collapse",
+    name: "Students",
+    key: "students",
+    icon: <Icon fontSize="small">people</Icon>,
+    route: "/students",
+    component: <Students />,
+  },
+  {
+    type: "collapse",
+    name: "Profile",
+    key: "profile",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/profile",
+    component: <Profile />,
+  },
 ];
-
 export default facultyRoutes;
