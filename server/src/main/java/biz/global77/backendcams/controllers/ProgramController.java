@@ -12,7 +12,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"})
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/program") /* API entry point */
 public class ProgramController {
 
@@ -28,11 +28,6 @@ public class ProgramController {
     public ResponseEntity<Program> getProgram(@PathVariable(value = "programId") Integer programId) {
         return ResponseEntity.ok().body(programServiceImpl.getProgramById(programId));
     }
-
-//    @GetMapping("/top-programs")
-//    public ResponseEntity<Result<?>> getProgramsWithStudentCount() {
-//        return ResponseEntity.ok().body(programServiceImpl.getProgramsWithStudentCount());
-//    }
 
     @PostMapping
     public ResponseEntity<Program> addProgram(@RequestBody Program program) {

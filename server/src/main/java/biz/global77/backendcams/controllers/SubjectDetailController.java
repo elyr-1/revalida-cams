@@ -11,7 +11,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"})
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/subject-detail-history") /* API entry point */
 public class SubjectDetailController {
 

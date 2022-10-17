@@ -1,89 +1,64 @@
 //package biz.global77.backendcams.security;
 //
-//import lombok.RequiredArgsConstructor;
+//import biz.global77.backendcams.services.UserDetailsServiceImpl;
 //import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.cglib.proxy.NoOp;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.security.authentication.AuthenticationManager;
-//import org.springframework.security.authentication.AuthenticationProvider;
-//import org.springframework.security.config.Customizer;
-//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+//import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+//import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+//import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 //import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 //import org.springframework.security.config.http.SessionCreationPolicy;
-//import org.springframework.security.core.userdetails.User;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.UserDetailsService;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 //import org.springframework.security.web.SecurityFilterChain;
+//import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 //
-//import static org.springframework.security.config.http.SessionCreationPolicy.*;
-//
-///* WebSecurityConfigurerAdapter in deprecated in Spring Security 5.7
-//* For Spring Security without the WebSecurityConfigurerAdapter, refer to
-//* https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter */
 //@Configuration
-//@EnableWebSecurity
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 //public class SecurityConfiguration {
 //
-//    /* for testing purposes only; do not use for production */
+//    @Autowired
+//    private UserDetailsServiceImpl userDetailsService;
+//
+//    @Autowired
+//    private JwtAuthEntryPoint jwtAuthEntryPoint;
+//
 //    @Bean
-//    public UserDetailsService userDetailsService() {
-//
-//        UserDetails admin = User.withDefaultPasswordEncoder()
-//                .username("admin")
-//                .password("test")
-//                .roles("ADMIN")
-//                .build();
-//
-//        UserDetails student = User.withDefaultPasswordEncoder()
-//                .username("stud")
-//                .password("test")
-//                .roles("STUDENT")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager( admin, student);
+//    public JwtAuthTokenFilter jwtAuthTokenFilter() {
+//        return new JwtAuthTokenFilter();
 //    }
 //
-//    /* handle http security; configure AUTHORIZATION */
+//    @Bean
+//    public DaoAuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//        authProvider.setUserDetailsService(userDetailsService);
+//        authProvider.setPasswordEncoder(passwordEncoder());
+//        return authProvider;
+//    }
+//
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+//        return configuration.getAuthenticationManager();
+//    }
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+//
 //    @Bean
 //    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        return http
-//                .csrf(csrf -> csrf.disable())
-//                .authorizeRequests(auth -> {
-//                    auth.antMatchers("/").permitAll();
-//                    auth.antMatchers("/api/admin").hasRole("ADMIN");
-//                    auth.antMatchers("/api/student").hasRole("STUDENT");
-//                })
-//                .formLogin()
-//                .and()
-//                .build();
+//        http.cors().and().csrf().disable()
+//                .exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint).and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+//                .authorizeRequests().antMatchers("/api/auth/**").permitAll()
+//                .antMatchers("/api/**").permitAll()
+//                .anyRequest().authenticated();
+//        http.authenticationProvider(authenticationProvider());
+//        http.addFilterBefore(jwtAuthTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+//        return http.build();
 //    }
-////    @Override
-////    protected void configure(HttpSecurity httpSecurity) throws Exception {
-////        httpSecurity
-////            .authorizeRequests()
-////            .anyRequest()
-////            .authenticated()
-////            .and()
-////            .formLogin();
-////    }
 //
-//    /* handle web security; configure AUTHENTICATION */
-////    @Override
-////    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-////        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-////    }
-//
-////    @Bean
-////    @Override
-////    public AuthenticationManager authenticationManagerBean() throws Exception {
-////        return super.authenticationManagerBean();
-////    }
-////
 //}

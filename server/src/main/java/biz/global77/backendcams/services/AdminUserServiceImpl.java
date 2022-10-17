@@ -3,21 +3,8 @@ package biz.global77.backendcams.services;
 import com.tej.JooQDemo.jooq.sample.model.Tables;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.AdminUser;
 import org.jooq.DSLContext;
-//import org.jooq.Record;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.security.core.authority.SimpleGrantedAuthority;
-//import org.springframework.security.core.userdetails.User;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.UserDetailsService;
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-
-//import java.util.ArrayList;
-//import java.util.Collection;
 import java.util.List;
 
 /* CRUD functions for Admin */
@@ -28,36 +15,25 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Autowired
     private DSLContext dsl;
 
-    /* method in UserDetailsService interface
-    * to obtain user information in the database */
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        AdminUser adminUser = dsl.select().from(Tables.ADMIN_USER)
-//                .where(Tables.ADMIN_USER.USERNAME.eq(username))
-//                .fetchOneInto(AdminUser.class);
-//        if (adminUser == null) {
-//            throw new UsernameNotFoundException("User not found");
-//        }
-//        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-//        authorities.add(new SimpleGrantedAuthority(adminUser.getUsername()));
-//        return new User(adminUser.getUsername(), adminUser.getPassword(), authorities);
-//    }
-
-    /* add an admin */
+    /* add an admin
+    * this method is not used in the frontend,
+    * as the addition of admin users is implemented in the database only */
     @Override
     public AdminUser insertAdminUser(AdminUser admin) {
         dsl.insertInto(Tables.ADMIN_USER,
                 Tables.ADMIN_USER.FIRSTNAME,
+                Tables.ADMIN_USER.MIDDLENAME,
                 Tables.ADMIN_USER.LASTNAME,
-                Tables.ADMIN_USER.USERNAME,
-                Tables.ADMIN_USER.PASSWORD,
-                Tables.ADMIN_USER.ROLE_ID)
+                Tables.ADMIN_USER.GENDER,
+                Tables.ADMIN_USER.ADDRESS,
+                Tables.ADMIN_USER.ID)
         .values(
                 admin.getFirstname(),
+                admin.getMiddlename(),
                 admin.getLastname(),
-                admin.getUsername(),
-                admin.getPassword(),
-                admin.getRoleId())
+                admin.getGender(),
+                admin.getAddress(),
+                admin.getId())
         .execute();
         return admin;
     }
@@ -83,8 +59,11 @@ public class AdminUserServiceImpl implements AdminUserService {
     public AdminUser updateAdminUser(Integer adminId, AdminUser admin) {
         dsl.update(Tables.ADMIN_USER)
                 .set(Tables.ADMIN_USER.FIRSTNAME, admin.getFirstname())
-                .set(Tables.ADMIN_USER.LASTNAME, admin.getLastname())
-                .set(Tables.ADMIN_USER.USERNAME,admin.getUsername())
+                .set(Tables.ADMIN_USER.MIDDLENAME, admin.getMiddlename())
+                .set(Tables.ADMIN_USER.LASTNAME,admin.getLastname())
+                .set(Tables.ADMIN_USER.GENDER, admin.getGender())
+                .set(Tables.ADMIN_USER.ADDRESS, admin.getAddress())
+                .set(Tables.ADMIN_USER.ID, admin.getId())
                 .where(Tables.ADMIN_USER.ADMIN_ID.eq(adminId))
                 .execute();
         return admin;

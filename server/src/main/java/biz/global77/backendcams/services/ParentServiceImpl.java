@@ -32,15 +32,13 @@ public class ParentServiceImpl implements ParentService {
         dsl.insertInto(Tables.PARENT,
                 Tables.PARENT.PARENT_NO,
                 Tables.PARENT.PARENT_NAME,
-                Tables.PARENT.PASSWORD,
                 Tables.PARENT.STUDENT_NO,
-                Tables.PARENT.ROLE_ID)
+                Tables.PARENT.ID)
         .values(
                 parent.getParentNo(),
                 parent.getParentName(),
-                parent.getPassword(),
                 parent.getStudentNo(),
-                parent.getRoleId())
+                parent.getId())
         .execute();
         return parent;
     }
@@ -50,9 +48,8 @@ public class ParentServiceImpl implements ParentService {
         dsl.update(Tables.PARENT)
                 .set(Tables.PARENT.PARENT_NO, parent.getParentNo())
                 .set(Tables.PARENT.PARENT_NAME, parent.getParentName())
-                .set(Tables.PARENT.PASSWORD, parent.getPassword())
                 .set(Tables.PARENT.STUDENT_NO, parent.getStudentNo())
-                .set(Tables.PARENT.ROLE_ID, parent.getRoleId())
+                .set(Tables.PARENT.ID, parent.getId())
                 .where(Tables.PARENT.PARENT_ID.eq(parentId))
                 .execute();
         return parent;

@@ -21,17 +21,19 @@ public class ProfessorServiceImpl implements ProfessorService {
         dsl.insertInto(Tables.PROFESSOR,
                 Tables.PROFESSOR.PROFESSOR_NO,
                 Tables.PROFESSOR.PROFESSOR_NAME,
-                Tables.PROFESSOR.PASSWORD,
                 Tables.PROFESSOR.GENDER,
                 Tables.PROFESSOR.BIRTHDATE,
-                Tables.PROFESSOR.IS_ACTIVE)
+                Tables.PROFESSOR.ADDRESS,
+                Tables.PROFESSOR.IS_ACTIVE,
+                Tables.PROFESSOR.ID)
         .values(
                 professor.getProfessorNo(),
                 professor.getProfessorName(),
-                professor.getPassword(),
                 professor.getGender(),
                 professor.getBirthdate(),
-                professor.getIsActive())
+                professor.getAddress(),
+                professor.getIsActive(),
+                professor.getId())
         .execute();
         return professor;
     }
@@ -58,10 +60,11 @@ public class ProfessorServiceImpl implements ProfessorService {
         dsl.update(Tables.PROFESSOR)
                 .set(Tables.PROFESSOR.PROFESSOR_NO, professor.getProfessorNo())
                 .set(Tables.PROFESSOR.PROFESSOR_NAME, professor.getProfessorName())
-                .set(Tables.PROFESSOR.PASSWORD, professor.getPassword())
                 .set(Tables.PROFESSOR.GENDER, professor.getGender())
                 .set(Tables.PROFESSOR.BIRTHDATE, professor.getBirthdate())
+                .set(Tables.PROFESSOR.ADDRESS, professor.getAddress())
                 .set(Tables.PROFESSOR.IS_ACTIVE, professor.getIsActive())
+                .set(Tables.PROFESSOR.ID, professor.getId())
                 .where(Tables.PROFESSOR.PROFESSOR_ID.eq(professorId))
                 .execute();
         return professor;

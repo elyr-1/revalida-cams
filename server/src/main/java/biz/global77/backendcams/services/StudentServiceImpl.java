@@ -20,36 +20,34 @@ public class StudentServiceImpl implements StudentService {
     public Student insertStudent(Student student) {
         dsl.insertInto(Tables.STUDENT,
                 Tables.STUDENT.STUDENT_NO,
-                Tables.STUDENT.PASSWORD,
                 Tables.STUDENT.FIRSTNAME,
                 Tables.STUDENT.MIDDLENAME,
                 Tables.STUDENT.LASTNAME,
-                Tables.STUDENT.PROGRAM_CODE,
                 Tables.STUDENT.BIRTHDATE,
                 Tables.STUDENT.GENDER,
                 Tables.STUDENT.ADDRESS,
-                Tables.STUDENT.SEM,
                 Tables.STUDENT.YEARLEVEL,
+                Tables.STUDENT.SEM,
                 Tables.STUDENT.ACADEMIC_YEAR,
                 Tables.STUDENT.STATUS,
                 Tables.STUDENT.IS_ACTIVE,
-                Tables.STUDENT.ROLE_ID)
+                Tables.STUDENT.PROGRAM_CODE,
+                Tables.STUDENT.ID)
         .values(
                 student.getStudentNo(),
-                student.getPassword(),
                 student.getFirstname(),
                 student.getMiddlename(),
                 student.getLastname(),
-                student.getProgramCode(),
                 student.getBirthdate(),
                 student.getGender(),
                 student.getAddress(),
-                student.getSem(),
                 student.getYearlevel(),
+                student.getSem(),
                 student.getAcademicYear(),
                 student.getStatus(),
                 student.getIsActive(),
-                student.getRoleId())
+                student.getProgramCode(),
+                student.getId())
         .execute();
         return student;
     }
@@ -75,20 +73,19 @@ public class StudentServiceImpl implements StudentService {
     public Student updateStudent(Integer studentId, Student student) {
         dsl.update(Tables.STUDENT)
                 .set(Tables.STUDENT.STUDENT_NO, student.getStudentNo())
-                .set(Tables.STUDENT.PASSWORD, student.getPassword())
                 .set(Tables.STUDENT.FIRSTNAME, student.getFirstname())
                 .set(Tables.STUDENT.MIDDLENAME, student.getMiddlename())
                 .set(Tables.STUDENT.LASTNAME, student.getLastname())
-                .set(Tables.STUDENT.PROGRAM_CODE, student.getProgramCode())
                 .set(Tables.STUDENT.BIRTHDATE, student.getBirthdate())
                 .set(Tables.STUDENT.GENDER, student.getGender())
                 .set(Tables.STUDENT.ADDRESS, student.getAddress())
-                .set(Tables.STUDENT.SEM, student.getSem())
                 .set(Tables.STUDENT.YEARLEVEL, student.getYearlevel())
+                .set(Tables.STUDENT.SEM, student.getSem())
                 .set(Tables.STUDENT.ACADEMIC_YEAR, student.getAcademicYear())
                 .set(Tables.STUDENT.STATUS, student.getStatus())
                 .set(Tables.STUDENT.IS_ACTIVE, student.getIsActive())
-                .set(Tables.STUDENT.ROLE_ID, student.getRoleId())
+                .set(Tables.STUDENT.PROGRAM_CODE, student.getProgramCode())
+                .set(Tables.STUDENT.ID, student.getId())
                 .where(Tables.STUDENT.STUDENT_ID.eq(studentId))
                 .execute();
         return student;
