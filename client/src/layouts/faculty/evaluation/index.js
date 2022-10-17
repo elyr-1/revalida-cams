@@ -26,11 +26,11 @@ function Courses() {
                 py={3}
                 px={2}
                 variant="gradient"
-                bgColor="success"
+                bgColor="error"
                 borderRadius="lg"
                 coloredShadow="info"
               >
-                <MDTypography variant="h6" color="white">
+                <MDTypography variant="h4" color="black">
                   EVALUATION
                 </MDTypography>
               </MDBox>

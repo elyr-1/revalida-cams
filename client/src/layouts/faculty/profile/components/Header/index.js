@@ -73,10 +73,10 @@ function Header({ children }) {
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>
               <MDTypography variant="h5" fontWeight="medium">
-                Sample Name
+                Jayson Derollo
               </MDTypography>
               <MDTypography variant="button" color="text" fontWeight="regular">
-                Sample Position
+                president
               </MDTypography>
             </MDBox>
           </Grid>

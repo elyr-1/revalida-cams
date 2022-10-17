@@ -25,7 +25,7 @@ const facultyRoutes = [
     type: "collapse",
     name: "Students",
     key: "students",
-    icon: <Icon fontSize="small">people</Icon>,
+    icon: <Icon fontSize="small">school</Icon>,
     route: "/students",
     component: <Students />,
   },

@@ -61,7 +61,7 @@ export default function infoData() {
           </MDBox>
         ),
         action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          <MDTypography component="a" href="#" variant="button" color="success" fontWeight="medium">
             Edit
           </MDTypography>
         ),

@@ -11,7 +11,7 @@ export default function courseData() {
       { Header: "fullname", accessor: "fullName", width: "15%", align: "left" },
       { Header: "course code", accessor: "subjectCode", width: "15%", align: "left" },
       { Header: "subject", accessor: "subject", align: "left" },
-      { Header: "professor", accessor: "professor", align: "center" },
+      { Header: "semester", accessor: "semester", align: "center" },
       { Header: "units", accessor: "units", align: "center" },
       { Header: "final grade", accessor: "finalGrade", align: "center" },
       { Header: "remarks", accessor: "remarks", align: "center" },
@@ -40,9 +40,9 @@ export default function courseData() {
             Fundamentals of Algebra
           </MDTypography>
         ),
-        professor: (
+        semester: (
           <MDTypography display="block" variant="button" fontWeight="medium">
-            Jason Macabante
+            2
           </MDTypography>
         ),
         units: (
@@ -61,7 +61,7 @@ export default function courseData() {
           </MDBox>
         ),
         action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          <MDTypography component="a" href="#" variant="button" color="success" fontWeight="medium">
             Edit
           </MDTypography>
         ),

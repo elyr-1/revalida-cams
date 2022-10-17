@@ -11,7 +11,7 @@ function PlatformSettings() {
   return (
     <Card sx={{ boxShadow: "none" }}>
       <MDBox p={2}>
-        <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
+        <MDTypography variant="h6" fontWeight="medium" textTransform="uppercase">
           Account Settings
         </MDTypography>
       </MDBox>

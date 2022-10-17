@@ -15,14 +15,13 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="dark"
                 icon="weekend"
-                title="Attendance"
-                count={281}
+                title="PRESENT"
+                count="50"
                 percentage={{
                   color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
+                  amount: "",
+                  label: "ATTENDANCE",
                 }}
               />
             </MDBox>
@@ -30,13 +29,14 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                icon="leaderboard"
-                title="Tasks Completed"
-                count="2,300"
+                color="dark"
+                icon="weekend"
+                title="ABSENT"
+                count="none"
                 percentage={{
                   color: "success",
-                  amount: "+3%",
-                  label: "than last month",
+                  amount: "",
+                  label: "ATTENDANCE",
                 }}
               />
             </MDBox>
@@ -45,13 +45,13 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="success"
-                icon="store"
-                title="Projects Completed"
-                count="34k"
+                icon="leaderboard"
+                title="PASSED"
+                count="25"
                 percentage={{
                   color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
+                  amount: "50%",
+                  label: " OF THE STUDENTS",
                 }}
               />
             </MDBox>
@@ -60,13 +60,13 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="primary"
-                icon="person_add"
-                title="Missing"
-                count="+91"
+                icon="leaderboard"
+                title="FAILED"
+                count="25"
                 percentage={{
                   color: "success",
-                  amount: "",
-                  label: "Just updated",
+                  amount: "50%",
+                  label: "OF THE STUDENTS",
                 }}
               />
             </MDBox>
