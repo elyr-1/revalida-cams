@@ -16,7 +16,7 @@ import MDAvatar from "components/MDAvatar";
 import breakpoints from "assets/theme/base/breakpoints";
 
 // Images
-import burceMars from "assets/images/bruce-mars.jpg";
+import burceMars from "assets/images/userprofile.png";
 import backgroundImage from "assets/images/profile-banner.png";
 
 function Header({ children }) {
@@ -76,7 +76,7 @@ function Header({ children }) {
                 Jayson Derollo
               </MDTypography>
               <MDTypography variant="button" color="text" fontWeight="regular">
-                president
+                Professor
               </MDTypography>
             </MDBox>
           </Grid>

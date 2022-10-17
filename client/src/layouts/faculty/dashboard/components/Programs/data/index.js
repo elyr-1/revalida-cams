@@ -46,7 +46,7 @@ export default function data() {
           </MDTypography>
         ),
         yearlevel: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
             4th year
           </MDTypography>
         ),
@@ -56,12 +56,12 @@ export default function data() {
           </MDTypography>
         ),
         units: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
             3
           </MDTypography>
         ),
         action: (
-          <MDTypography component="a" href="#" variant="button" color="success" fontWeight="medium">
+          <MDTypography component="a" href="#" variant="button" color="error" fontWeight="medium">
             Edit
           </MDTypography>
         ),

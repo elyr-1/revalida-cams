@@ -33,6 +33,14 @@ function PlatformSettings() {
       </MDBox>
       <MDBox p={2}>
         <MDTypography variant="caption" fontWeight="bold" color="text" textTransform="uppercase">
+          Username
+        </MDTypography>
+        <MDBox pt={1} px={2}>
+          <MDInput type="username" label="Username" fullWidth />
+        </MDBox>
+      </MDBox>
+      <MDBox p={2}>
+        <MDTypography variant="caption" fontWeight="bold" color="text" textTransform="uppercase">
           Password
         </MDTypography>
         <MDBox pt={1} px={2}>
@@ -48,7 +56,7 @@ function PlatformSettings() {
         </MDBox>
       </MDBox>
       <MDBox color="text" px={2}>
-        <MDButton variant="outlined" color="error" size="small">
+        <MDButton variant="gradient" color="info" fullWidth>
           Save
         </MDButton>
       </MDBox>

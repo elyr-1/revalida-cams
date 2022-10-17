@@ -46,12 +46,12 @@ export default function courseData() {
           </MDTypography>
         ),
         units: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
             3
           </MDTypography>
         ),
         finalGrade: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
             5.0
           </MDTypography>
         ),
@@ -61,7 +61,7 @@ export default function courseData() {
           </MDBox>
         ),
         action: (
-          <MDTypography component="a" href="#" variant="button" color="success" fontWeight="medium">
+          <MDTypography component="a" href="#" variant="button" color="error" fontWeight="medium">
             Edit
           </MDTypography>
         ),
