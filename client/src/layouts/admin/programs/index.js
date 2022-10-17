@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
@@ -22,7 +22,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import * as programService from "services/program";
 import Swal from "sweetalert2";
-import ProgramForm from "./forms";
+import AddProgram from "./pages/add-program";
+// import EditProgram from "./pages/edit-program";
 
 const columns = [
   { id: "programCode", label: "Program Code" },
@@ -35,10 +36,13 @@ function Programs() {
   const [programs, setPrograms] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [open, setOpen] = useState(false);
+  const [openAddDialog, setOpenAddDialog] = useState(false);
+  const [openEditDialog, setOpenEditDialog] = useState(false);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpenAddDialog = () => setOpenAddDialog(true);
+  const handleCloseAddDialog = () => setOpenAddDialog(false);
+  const handleOpenEditDialog = () => setOpenEditDialog(true);
+  const handleCloseEditDialog = () => setOpenEditDialog(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -48,6 +52,13 @@ function Programs() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  useEffect(async () => {
+    await programService.getPrograms().then((response) => {
+      console.log(response.data);
+      setPrograms(response.data);
+    });
+  }, []);
 
   const handleDeleteProgram = async (programId) => {
     try {
@@ -78,13 +89,6 @@ function Programs() {
     }
   };
 
-  // Fetch data from server
-  useEffect(async () => {
-    await programService.getPrograms().then((response) => {
-      setPrograms(response.data);
-    });
-  }, []);
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -107,7 +111,7 @@ function Programs() {
                 <MDTypography variant="h6" color="white">
                   Programs
                 </MDTypography>
-                <IconButton onClick={handleOpen}>
+                <IconButton onClick={handleOpenAddDialog}>
                   <MDBox
                     display="flex"
                     justifyContent="center"
@@ -126,9 +130,9 @@ function Programs() {
                     </Tooltip>
                   </MDBox>
                 </IconButton>
-                <Dialog open={open} onClose={handleClose} fullWidth>
+                <Dialog open={openAddDialog} onClose={handleCloseAddDialog} fullWidth>
                   <DialogContent>
-                    <ProgramForm onClose={handleClose} />
+                    <AddProgram onClose={handleCloseAddDialog} />
                   </DialogContent>
                 </Dialog>
               </MDBox>
@@ -193,9 +197,19 @@ function Programs() {
                             </TableCell>
                             <TableCell align="center">
                               <ButtonGroup>
-                                <IconButton>
+                                <IconButton onClick={handleOpenEditDialog}>
                                   <EditRoundedIcon color="primary" />
                                 </IconButton>
+                                <Dialog
+                                  open={openEditDialog}
+                                  onClose={handleCloseEditDialog}
+                                  fullWidth
+                                >
+                                  <DialogContent>
+                                    {/* <EditProgram onClose={handleCloseEditDialog} /> */}
+                                    <h1>Edit</h1>
+                                  </DialogContent>
+                                </Dialog>
                                 <IconButton onClick={() => handleDeleteProgram(program.programId)}>
                                   <DeleteRoundedIcon color="error" />
                                 </IconButton>

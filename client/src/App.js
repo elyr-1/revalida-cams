@@ -11,20 +11,17 @@ import themeDark from "assets/theme-dark";
 // import studentRoutes from "routes/student";
 import adminRoutes from "routes/admin";
 // import facultyRoutes from "routes/faculty";
-import Login from "layouts/authentication/sign-in";
-
-// Material Dashboard 2 React contexts
+import Login from "layouts/authentication/login";
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
-
-// Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
+import * as authService from "services/auth";
+import Swal from "sweetalert2";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
   const {
     miniSidenav,
-    direction,
     layout,
     openConfigurator,
     sidenavColor,
@@ -53,11 +50,6 @@ export default function App() {
 
   // Change the openConfigurator state
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
-
-  // Setting the dir attribute for the body element
-  useEffect(() => {
-    document.body.setAttribute("dir", direction);
-  }, [direction]);
 
   // Setting page scroll to 0 when changing the route
   useEffect(() => {
@@ -102,6 +94,19 @@ export default function App() {
     </MDBox>
   );
 
+  const handleLogin = async (username, password) => {
+    try {
+      const response = await authService.login(username, password);
+      console.log(response);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Username or password is incorrect",
+      });
+    }
+  };
+
   return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
@@ -122,8 +127,8 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(adminRoutes)}
-        <Route path="*" element={<Navigate to="/dashboard/admin" />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login onLogin={handleLogin} />} />
       </Routes>
     </ThemeProvider>
   );

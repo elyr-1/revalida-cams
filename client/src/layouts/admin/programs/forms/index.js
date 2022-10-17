@@ -8,15 +8,15 @@ import Divider from "@mui/material/Divider";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Joi from "joi";
-import * as programService from "services/program";
-import Swal from "sweetalert2";
 
-function ProgramForm({ onClose }) {
-  const [form, setForm] = useState({
-    programCode: "",
-    programTitle: "",
-    major: "",
-  });
+function ProgramForm({ initialValue, onSubmit, onClose }) {
+  const [form, setForm] = useState(
+    initialValue || {
+      programCode: "",
+      programTitle: "",
+      major: "",
+    }
+  );
 
   const [errors, setErrors] = useState({});
 
@@ -45,31 +45,9 @@ function ProgramForm({ onClose }) {
     }
   };
 
-  const handleAddProgram = (program) => {
-    programService
-      .addProgram(program)
-      .then(() => {
-        Swal.fire({
-          position: "top",
-          icon: "success",
-          title: "A new program has been added!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 500);
-      })
-      .catch((error) => {
-        if (error.response && error.response.status === 400) {
-          alert(error.response.data.message[0]);
-        }
-      });
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleAddProgram(form);
+    onSubmit(form);
     console.log(form);
   };
 
@@ -81,7 +59,10 @@ function ProgramForm({ onClose }) {
   return (
     <Grid component="form" onSubmit={handleSubmit}>
       <Grid item>
-        <CardHeader title="Add New Program" sx={{ textAlign: "center" }} />
+        <CardHeader
+          title={`${initialValue ? "Edit" : "Add"} Program`}
+          sx={{ textAlign: "center" }}
+        />
         <Divider />
         <CardContent>
           <MDBox pt={1} pb={1} px={1}>
