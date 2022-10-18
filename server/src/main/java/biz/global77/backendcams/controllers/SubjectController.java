@@ -28,7 +28,7 @@ public class SubjectController {
     }
 
     @PostMapping
-    public ResponseEntity<Subject> addSubject(Subject subject) {
+    public ResponseEntity<Subject> addSubject(@RequestBody Subject subject) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/subject").toUriString());
         return ResponseEntity.created(uri).body(subjectServiceImpl.insertSubject(subject));
     }

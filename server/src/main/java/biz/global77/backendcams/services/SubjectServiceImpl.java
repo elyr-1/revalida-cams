@@ -24,14 +24,14 @@ public class SubjectServiceImpl implements SubjectService {
                 Tables.SUBJECT.UNITS,
                 Tables.SUBJECT.PRE_REQUISITES,
                 Tables.SUBJECT.ACTIVE_INACTIVE,
-                Tables.SUBJECT.PROGRAM_ID)
+                Tables.SUBJECT.PROGRAM_CODE)
         .values(
                 subject.getSubjectCode(),
                 subject.getSubjectTitle(),
                 subject.getUnits(),
                 subject.getPreRequisites(),
                 subject.getActiveInactive(),
-                subject.getProgramId())
+                subject.getProgramCode())
         .execute();
         return subject;
     }

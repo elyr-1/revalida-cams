@@ -43,7 +43,9 @@ public class ProfessorServiceImpl implements ProfessorService {
     /* get all professors */
     @Override
     public List<Professor> getProfessors() {
-        return dsl.selectFrom(Tables.PROFESSOR).fetchInto(Professor.class);
+        return dsl.selectFrom(Tables.PROFESSOR)
+                .orderBy(Tables.PROFESSOR.PROFESSOR_NO)
+                .fetchInto(Professor.class);
     }
 
     /* get professor by ID */

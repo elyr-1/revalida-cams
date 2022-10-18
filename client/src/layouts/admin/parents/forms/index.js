@@ -9,13 +9,14 @@ import Divider from "@mui/material/Divider";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Joi from "joi";
-import * as programService from "services/program";
+import * as facultyService from "services/faculty";
 
-function ProgramForm() {
+function ParentForm() {
   const [form, setForm] = useState({
-    programCode: "",
-    programTitle: "",
-    major: "",
+    professorNo: "",
+    professorName: "",
+    gender: "",
+    status: "",
   });
 
   const [successSB, setSuccessSB] = useState(false);
@@ -25,9 +26,10 @@ function ProgramForm() {
   const [errors, setErrors] = useState({});
 
   const schema = Joi.object({
-    programCode: Joi.string().min(1).max(30).required(),
-    programTitle: Joi.string().min(1).required(),
-    major: Joi.string().allow("").optional(),
+    professorNo: Joi.string().min(1).max(30).required(),
+    professorName: Joi.string().min(1).required(),
+    gender: Joi.string().allow("").optional(),
+    status: Joi.string().min(1).max(30).required(),
   });
 
   const handleChange = (event) => {
@@ -49,9 +51,9 @@ function ProgramForm() {
     }
   };
 
-  const handleAddProgram = (program) => {
-    programService
-      .addProgram(program)
+  const handleAddProfessor = (professor) => {
+    facultyService
+      .addProfessor(professor)
       .then((response) => {
         console.log(response);
         setTimeout(() => {
@@ -67,7 +69,7 @@ function ProgramForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleAddProgram(form);
+    handleAddProfessor(form);
     console.log(form);
   };
 
@@ -80,8 +82,8 @@ function ProgramForm() {
     <MDSnackbar
       color="info"
       icon="check"
-      title="Program Saved"
-      content="Program has been added successfully!"
+      title="Professor Saved"
+      content="New faculty member has been added successfully!"
       dateTime=""
       open={successSB}
       onClose={closeSuccessSB}
@@ -92,12 +94,64 @@ function ProgramForm() {
   return (
     <Grid component="form" onSubmit={handleSubmit}>
       <Grid item>
-        <CardHeader title="Add New Program" sx={{ textAlign: "center" }} />
+        <CardHeader title="Add New Course" sx={{ textAlign: "center" }} />
         <Divider />
         <CardContent>
           <MDBox pt={1} pb={1} px={1}>
             <MDBox>
               <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Professor No."
+                  variant="standard"
+                  fullWidth
+                  name="professorNo"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Professor Name"
+                  variant="standard"
+                  fullWidth
+                  name="professorName"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Gender"
+                  variant="standard"
+                  fullWidth
+                  name="gender"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Status"
+                  variant="standard"
+                  fullWidth
+                  name="status"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              {/* <MDBox mb={2}>
                 <MDInput
                   type="text"
                   label="Program Code"
@@ -109,33 +163,7 @@ function ProgramForm() {
                   value={form.name}
                   onChange={handleChange}
                 />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Program Title"
-                  variant="standard"
-                  fullWidth
-                  name="programTitle"
-                  error={!!errors.name}
-                  helperText={errors.name}
-                  value={form.name}
-                  onChange={handleChange}
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Major"
-                  variant="standard"
-                  fullWidth
-                  name="major"
-                  error={!!errors.name}
-                  helperText={errors.name}
-                  value={form.name}
-                  onChange={handleChange}
-                />
-              </MDBox>
+              </MDBox> */}
               <MDBox mt={4} mb={1}>
                 <MDButton
                   variant="gradient"
@@ -157,4 +185,4 @@ function ProgramForm() {
   );
 }
 
-export default ProgramForm;
+export default ParentForm;

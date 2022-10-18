@@ -65,7 +65,9 @@ public class AdminUserServiceImpl implements AdminUserService {
     /* get all admin users */
     @Override
     public List<AdminUser> getAdminUsers() {
-        return dsl.selectFrom(Tables.ADMIN_USER).fetchInto(AdminUser.class);
+        return dsl.selectFrom(Tables.ADMIN_USER)
+                .orderBy(Tables.ADMIN_USER.TYPE.desc())
+                .fetchInto(AdminUser.class);
     }
 
     /* get an admin by ID */

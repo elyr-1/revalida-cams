@@ -24,7 +24,7 @@ public class StudentServiceImpl implements StudentService {
                 Tables.STUDENT.FIRSTNAME,
                 Tables.STUDENT.MIDDLENAME,
                 Tables.STUDENT.LASTNAME,
-                Tables.STUDENT.PROGRAM,
+                Tables.STUDENT.PROGRAM_CODE,
                 Tables.STUDENT.BIRTHDATE,
                 Tables.STUDENT.GENDER,
                 Tables.STUDENT.SEM,
@@ -38,7 +38,7 @@ public class StudentServiceImpl implements StudentService {
                 student.getFirstname(),
                 student.getMiddlename(),
                 student.getLastname(),
-                student.getProgram(),
+                student.getProgramCode(),
                 student.getBirthdate(),
                 student.getGender(),
                 student.getSem(),
@@ -53,7 +53,9 @@ public class StudentServiceImpl implements StudentService {
     /* get all students */
     @Override
     public List<Student> getStudents() {
-        return dsl.selectFrom(Tables.STUDENT).fetchInto(Student.class);
+        return dsl.selectFrom(Tables.STUDENT)
+                .orderBy(Tables.STUDENT.LASTNAME)
+                .fetchInto(Student.class);
     }
 
     /* get a student by ID */
@@ -73,7 +75,7 @@ public class StudentServiceImpl implements StudentService {
                 .set(Tables.STUDENT.FIRSTNAME, student.getFirstname())
                 .set(Tables.STUDENT.MIDDLENAME, student.getMiddlename())
                 .set(Tables.STUDENT.LASTNAME, student.getLastname())
-                .set(Tables.STUDENT.PROGRAM, student.getProgram())
+                .set(Tables.STUDENT.PROGRAM_CODE, student.getProgramCode())
                 .set(Tables.STUDENT.BIRTHDATE, student.getBirthdate())
                 .set(Tables.STUDENT.GENDER, student.getGender())
                 .set(Tables.STUDENT.SEM, student.getSem())

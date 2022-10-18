@@ -12,23 +12,25 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Icon from "@mui/material/Icon";
-import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import TablePagination from "@mui/material/TablePagination";
+import Tooltip from "@mui/material/Tooltip";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
 import * as studentService from "services/student";
+import StudentForm from "./forms";
 
 const columns = [
   { id: "studentNo", label: "Student No." },
-  { id: "firstName", label: "First Name" },
-  { id: "middleName", label: "Middle Name" },
-  { id: "lastName", label: "Last Name" },
-  { id: "gender", label: "Gender", align: "center" },
-  { id: "program", label: "Program", align: "center" },
-  { id: "yearLevel", label: "Year Level", align: "center" },
-  { id: "sem", label: "Semester", align: "center" },
+  { id: "lastname", label: "Last Name" },
+  { id: "firstname", label: "First Name" },
+  { id: "middlename", label: "Middle Name" },
+  { id: "gender", label: "Gender" },
+  { id: "yearlevel", label: "Year Level" },
+  { id: "sem", label: "Semester" },
   { id: "actions", label: "Actions", align: "center" },
 ];
 
@@ -36,6 +38,10 @@ function Students() {
   const [students, setStudents] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -60,7 +66,6 @@ function Students() {
   // Fetch data from server
   useEffect(async () => {
     await studentService.getStudents().then((response) => {
-      // console.log(response);
       setStudents(response.data);
     });
   }, []);
@@ -87,23 +92,30 @@ function Students() {
                 <MDTypography variant="h6" color="white">
                   Students
                 </MDTypography>
-                <MDBox
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  width="2.5rem"
-                  height="2.5rem"
-                  bgColor="white"
-                  shadow="sm"
-                  borderRadius="50%"
-                  color="dark"
-                >
-                  <Tooltip title="Add new program" placement="top">
-                    <Icon fontSize="medium" color="inherit">
-                      add_rounded
-                    </Icon>
-                  </Tooltip>
-                </MDBox>
+                <IconButton onClick={handleOpen}>
+                  <MDBox
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    width="2.5rem"
+                    height="2.5rem"
+                    bgColor="white"
+                    shadow="sm"
+                    borderRadius="50%"
+                    color="dark"
+                  >
+                    <Tooltip title="Add new program" placement="top">
+                      <Icon fontSize="medium" color="inherit">
+                        add_rounded
+                      </Icon>
+                    </Tooltip>
+                  </MDBox>
+                </IconButton>
+                <Dialog open={open} onClose={handleClose} fullWidth>
+                  <DialogContent>
+                    <StudentForm />
+                  </DialogContent>
+                </Dialog>
               </MDBox>
               <MDBox pt={3}>
                 <TableContainer>
@@ -151,6 +163,16 @@ function Students() {
                                 color="text"
                                 fontWeight="medium"
                               >
+                                {student.lastname}
+                              </MDTypography>
+                            </TableCell>
+                            <TableCell>
+                              <MDTypography
+                                display="block"
+                                variant="button"
+                                color="text"
+                                fontWeight="medium"
+                              >
                                 {student.firstname}
                               </MDTypography>
                             </TableCell>
@@ -171,30 +193,10 @@ function Students() {
                                 color="text"
                                 fontWeight="medium"
                               >
-                                {student.lastname}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
                                 {student.gender}
                               </MDTypography>
                             </TableCell>
-                            <TableCell align="center">
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {student.program}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell align="center">
+                            <TableCell>
                               <MDTypography
                                 display="block"
                                 variant="button"
@@ -204,7 +206,7 @@ function Students() {
                                 {student.yearlevel}
                               </MDTypography>
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell>
                               <MDTypography
                                 display="block"
                                 variant="button"
@@ -219,11 +221,8 @@ function Students() {
                                 <IconButton>
                                   <EditRoundedIcon color="primary" />
                                 </IconButton>
-                                <IconButton>
-                                  <DeleteRoundedIcon
-                                    color="error"
-                                    onClick={() => handleDeleteStudent(student.studentId)}
-                                  />
+                                <IconButton onClick={() => handleDeleteStudent(student.studentId)}>
+                                  <DeleteRoundedIcon color="error" />
                                 </IconButton>
                               </ButtonGroup>
                             </TableCell>

@@ -18,33 +18,17 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import TablePagination from "@mui/material/TablePagination";
 import Tooltip from "@mui/material/Tooltip";
-import Backdrop from "@mui/material/Backdrop";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
 import * as programService from "services/program";
-import AddProgram from "./forms";
+import ProgramForm from "./forms";
 
 const columns = [
   { id: "programCode", label: "Program Code" },
   { id: "programTitle", label: "Program Title" },
   { id: "major", label: "Major" },
-  { id: "courseCount", label: "Total No. of Courses", align: "center" },
-  { id: "unitCount", label: "Total No. of Units", align: "center" },
   { id: "actions", label: "Actions", align: "center" },
 ];
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  maxWidth: 350,
-  bgcolor: "background.paper",
-  borderRadius: "10px",
-  boxShadow: 24,
-  p: 4,
-};
 
 function Programs() {
   const [programs, setPrograms] = useState([]);
@@ -78,7 +62,6 @@ function Programs() {
   // Fetch data from server
   useEffect(async () => {
     await programService.getPrograms().then((response) => {
-      // console.log(response);
       setPrograms(response.data);
     });
   }, []);
@@ -124,23 +107,11 @@ function Programs() {
                     </Tooltip>
                   </MDBox>
                 </IconButton>
-                <Modal
-                  aria-labelledby="transition-modal-title"
-                  aria-describedby="transition-modal-description"
-                  open={open}
-                  onClose={handleClose}
-                  closeAfterTransition
-                  BackdropComponent={Backdrop}
-                  BackdropProps={{
-                    timeout: 500,
-                  }}
-                >
-                  <Fade in={open}>
-                    <Box sx={style}>
-                      <AddProgram />
-                    </Box>
-                  </Fade>
-                </Modal>
+                <Dialog open={open} onClose={handleClose} fullWidth>
+                  <DialogContent>
+                    <ProgramForm />
+                  </DialogContent>
+                </Dialog>
               </MDBox>
               <MDBox pt={3}>
                 <TableContainer>
@@ -199,26 +170,6 @@ function Programs() {
                                 fontWeight="medium"
                               >
                                 {program.major}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {50}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {300}
                               </MDTypography>
                             </TableCell>
                             <TableCell align="center">
