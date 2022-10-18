@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
@@ -13,26 +13,24 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Icon from "@mui/material/Icon";
 import IconButton from "@mui/material/IconButton";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import TablePagination from "@mui/material/TablePagination";
 import Tooltip from "@mui/material/Tooltip";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import * as facultyService from "services/faculty";
 import Swal from "sweetalert2";
-import FacultyForm from "./forms";
+import Professor from "./Professor";
+import AddProfessorForm from "./forms/AddProfessorForm";
 
 const columns = [
   { id: "professorNo", label: "Professor No." },
   { id: "professorName", label: "Professor Name" },
   { id: "gender", label: "Gender" },
-  { id: "status", label: "Status" },
+  { id: "address", label: "Address" },
   { id: "actions", label: "Actions", align: "center" },
 ];
 
-function Faculty() {
+function Professors() {
   const [professors, setProfessors] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -50,6 +48,63 @@ function Faculty() {
     setPage(0);
   };
 
+  // Fetch data from faculty members
+  useEffect(async () => {
+    await facultyService.getProfessors().then((response) => {
+      console.log(response.data);
+      setProfessors(response.data);
+    });
+  }, []);
+
+  // Add a faculty
+  const handleAddProfessor = (professor) => {
+    facultyService
+      .addProfessor(professor)
+      .then(() => {
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: "A new faculty member has been added!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 400) {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "This record may have already been deleted.",
+          });
+        }
+      });
+  };
+
+  // Update a faculty
+  const handleEditProfessor = (professorId, updatedProfessor) => {
+    setProfessors(
+      professors.map((professor) =>
+        professor.professorId === professorId ? updatedProfessor : professor
+      )
+    );
+    facultyService.editProfessor(professorId, updatedProfessor).then(() => {
+      Swal.fire({
+        position: "top",
+        icon: "success",
+        title: "Faculty member has been updated!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    });
+  };
+
+  // delete a faculty
   const handleDeleteProfessor = async (professorId) => {
     try {
       Swal.fire({
@@ -78,13 +133,6 @@ function Faculty() {
       }
     }
   };
-
-  // Fetch data from server
-  useEffect(async () => {
-    await facultyService.getProfessors().then((response) => {
-      setProfessors(response.data);
-    });
-  }, []);
 
   return (
     <DashboardLayout>
@@ -129,7 +177,7 @@ function Faculty() {
                 </IconButton>
                 <Dialog open={open} onClose={handleClose} fullWidth>
                   <DialogContent>
-                    <FacultyForm />
+                    <AddProfessorForm onAddProfessor={handleAddProfessor} onClose={handleClose} />
                   </DialogContent>
                 </Dialog>
               </MDBox>
@@ -162,58 +210,11 @@ function Faculty() {
                             key={professor.professorId}
                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                           >
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {professor.professorNo}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {professor.professorName}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {professor.gender}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {professor.status}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <ButtonGroup>
-                                <IconButton>
-                                  <EditRoundedIcon color="primary" />
-                                </IconButton>
-                                <IconButton
-                                  onClick={() => handleDeleteProfessor(professor.professorId)}
-                                >
-                                  <DeleteRoundedIcon color="error" />
-                                </IconButton>
-                              </ButtonGroup>
-                            </TableCell>
+                            <Professor
+                              professor={professor}
+                              onEditProfessor={handleEditProfessor}
+                              onDeleteProfessor={handleDeleteProfessor}
+                            />
                           </TableRow>
                         ))}
                     </TableBody>
@@ -248,4 +249,4 @@ function Faculty() {
   );
 }
 
-export default Faculty;
+export default Professors;

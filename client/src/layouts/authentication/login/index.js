@@ -42,7 +42,6 @@ function Login({ onLogin }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(form.username + form.password);
     onLogin(form.username, form.password);
   };
 

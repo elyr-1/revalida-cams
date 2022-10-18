@@ -15,6 +15,10 @@ export function addStudent(student) {
   return http.post("/student", studentClone);
 }
 
+export function editStudent(studentId, student) {
+  return http.patch(`/student/${studentId}`, student);
+}
+
 export function deleteStudent(studentId) {
   return http.delete(`/student/${studentId}`);
 }

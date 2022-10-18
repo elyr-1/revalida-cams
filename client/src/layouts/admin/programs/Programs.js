@@ -13,17 +13,14 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Icon from "@mui/material/Icon";
 import IconButton from "@mui/material/IconButton";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import TablePagination from "@mui/material/TablePagination";
 import Tooltip from "@mui/material/Tooltip";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import * as programService from "services/program";
 import Swal from "sweetalert2";
-import AddProgram from "./pages/add-program";
-// import EditProgram from "./pages/edit-program";
+import Program from "./Program";
+import AddProgramForm from "./forms/AddProgramForm";
 
 const columns = [
   { id: "programCode", label: "Program Code" },
@@ -36,13 +33,10 @@ function Programs() {
   const [programs, setPrograms] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [openAddDialog, setOpenAddDialog] = useState(false);
-  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const handleOpenAddDialog = () => setOpenAddDialog(true);
-  const handleCloseAddDialog = () => setOpenAddDialog(false);
-  const handleOpenEditDialog = () => setOpenEditDialog(true);
-  const handleCloseEditDialog = () => setOpenEditDialog(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -53,13 +47,60 @@ function Programs() {
     setPage(0);
   };
 
+  // Fetch all programs
   useEffect(async () => {
     await programService.getPrograms().then((response) => {
-      console.log(response.data);
       setPrograms(response.data);
     });
   }, []);
 
+  // Add a program
+  const handleAddProgram = (program) => {
+    programService
+      .addProgram(program)
+      .then(() => {
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: "A new program has been added!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 400) {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "This record may have already been deleted.",
+          });
+        }
+      });
+  };
+
+  // Update a program
+  const handleEditProgram = (programId, updatedProgram) => {
+    setPrograms(
+      programs.map((program) => (program.programId === programId ? updatedProgram : program))
+    );
+    programService.editProgram(programId, updatedProgram).then(() => {
+      Swal.fire({
+        position: "top",
+        icon: "success",
+        title: "Program has been updated!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    });
+  };
+
+  // Delete a program
   const handleDeleteProgram = async (programId) => {
     try {
       Swal.fire({
@@ -111,7 +152,7 @@ function Programs() {
                 <MDTypography variant="h6" color="white">
                   Programs
                 </MDTypography>
-                <IconButton onClick={handleOpenAddDialog}>
+                <IconButton onClick={handleOpen}>
                   <MDBox
                     display="flex"
                     justifyContent="center"
@@ -130,9 +171,9 @@ function Programs() {
                     </Tooltip>
                   </MDBox>
                 </IconButton>
-                <Dialog open={openAddDialog} onClose={handleCloseAddDialog} fullWidth>
+                <Dialog open={open} onClose={handleClose} fullWidth>
                   <DialogContent>
-                    <AddProgram onClose={handleCloseAddDialog} />
+                    <AddProgramForm onAddProgram={handleAddProgram} onClose={handleClose} />
                   </DialogContent>
                 </Dialog>
               </MDBox>
@@ -165,56 +206,11 @@ function Programs() {
                             key={program.programId}
                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                           >
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {program.programCode}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {program.programTitle}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {program.major}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <ButtonGroup>
-                                <IconButton onClick={handleOpenEditDialog}>
-                                  <EditRoundedIcon color="primary" />
-                                </IconButton>
-                                <Dialog
-                                  open={openEditDialog}
-                                  onClose={handleCloseEditDialog}
-                                  fullWidth
-                                >
-                                  <DialogContent>
-                                    {/* <EditProgram onClose={handleCloseEditDialog} /> */}
-                                    <h1>Edit</h1>
-                                  </DialogContent>
-                                </Dialog>
-                                <IconButton onClick={() => handleDeleteProgram(program.programId)}>
-                                  <DeleteRoundedIcon color="error" />
-                                </IconButton>
-                              </ButtonGroup>
-                            </TableCell>
+                            <Program
+                              program={program}
+                              onEditProgram={handleEditProgram}
+                              onDeleteProgram={handleDeleteProgram}
+                            />
                           </TableRow>
                         ))}
                     </TableBody>

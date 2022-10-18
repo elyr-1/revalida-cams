@@ -3,39 +3,39 @@ import { useState } from "react";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
-import MDSnackbar from "components/MDSnackbar";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Joi from "joi";
-import * as studentService from "services/student";
 
-function StudentForm() {
+function AddStudentForm({ onAddStudent, onClose }) {
   const [form, setForm] = useState({
+    id: 0,
     studentNo: "",
     firstname: "",
     middlename: "",
     lastname: "",
+    birthdate: "",
     gender: "",
-    yearLevel: 0,
+    yearlevel: 0,
     sem: 0,
+    programCode: "",
   });
-
-  const [successSB, setSuccessSB] = useState(false);
-  const openSuccessSB = () => setSuccessSB(true);
-  const closeSuccessSB = () => setSuccessSB(false);
 
   const [errors, setErrors] = useState({});
 
   const schema = Joi.object({
+    id: Joi.number().min(1).required(),
     studentNo: Joi.string().min(1).max(30).required(),
     firstname: Joi.string().min(1).required(),
     middlename: Joi.string().allow("").optional(),
     lastname: Joi.string().min(1).required(),
+    birthdate: Joi.date().required(),
     gender: Joi.string().allow("").optional(),
-    yearlevel: Joi.number().min(1).optional(),
-    sem: Joi.number().min(1).optional(),
+    yearlevel: Joi.number().min(1).required(),
+    sem: Joi.number().min(1).required(),
+    programCode: Joi.string().min(1).required(),
   });
 
   const handleChange = (event) => {
@@ -57,25 +57,9 @@ function StudentForm() {
     }
   };
 
-  const handleAddStudent = (student) => {
-    studentService
-      .addStudent(student)
-      .then((response) => {
-        console.log(response);
-        setTimeout(() => {
-          window.location.reload();
-        }, 500);
-      })
-      .catch((error) => {
-        if (error.response && error.response.status === 400) {
-          alert(error.response.data.message[0]);
-        }
-      });
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleAddStudent(form);
+    onAddStudent(form);
     console.log(form);
   };
 
@@ -83,19 +67,6 @@ function StudentForm() {
     const result = schema.validate(form);
     return !!result.error;
   };
-
-  const renderSuccessSB = (
-    <MDSnackbar
-      color="info"
-      icon="check"
-      title="Student Saved"
-      content="New student has been added successfully!"
-      dateTime=""
-      open={successSB}
-      onClose={closeSuccessSB}
-      close={closeSuccessSB}
-    />
-  );
 
   return (
     <Grid component="form" onSubmit={handleSubmit}>
@@ -105,6 +76,19 @@ function StudentForm() {
         <CardContent>
           <MDBox pt={1} pb={1} px={1}>
             <MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="number"
+                  label="User ID"
+                  variant="standard"
+                  fullWidth
+                  name="id"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
               <MDBox mb={2}>
                 <MDInput
                   type="text"
@@ -159,6 +143,19 @@ function StudentForm() {
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
+                  type="date"
+                  label=""
+                  variant="standard"
+                  fullWidth
+                  name="birthdate"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
                   type="text"
                   label="Gender"
                   variant="standard"
@@ -196,18 +193,30 @@ function StudentForm() {
                   onChange={handleChange}
                 />
               </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Program Code"
+                  variant="standard"
+                  fullWidth
+                  name="programCode"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
               <MDBox mt={4} mb={1}>
                 <MDButton
                   variant="gradient"
                   color="info"
                   fullWidth
                   type="submit"
-                  disabled={!isFormInvalid()}
-                  onClick={openSuccessSB}
+                  disabled={isFormInvalid()}
+                  onClick={onClose}
                 >
                   save
                 </MDButton>
-                {renderSuccessSB}
               </MDBox>
             </MDBox>
           </MDBox>
@@ -217,4 +226,4 @@ function StudentForm() {
   );
 }
 
-export default StudentForm;
+export default AddStudentForm;

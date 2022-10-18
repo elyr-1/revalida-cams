@@ -14,7 +14,8 @@ const columns = [
   { id: "userName", label: "Username" },
   { id: "firstName", label: "First Name" },
   { id: "lastName", label: "Last Name" },
-  { id: "userType", label: "User Type" },
+  { id: "gender", label: "Gender" },
+  { id: "address", label: "Address" },
 ];
 
 function AdminUsers() {
@@ -34,7 +35,7 @@ function AdminUsers() {
   // Fetch data from server
   useEffect(async () => {
     await adminService.getAdminUsers().then((response) => {
-      // console.log(response);
+      console.log(response.data);
       setAdminUsers(response.data);
     });
   }, []);
@@ -90,7 +91,7 @@ function AdminUsers() {
                           color="text"
                           fontWeight="medium"
                         >
-                          {adminUser.username}
+                          {adminUser.middlename}
                         </MDTypography>
                       </TableCell>
                       <TableCell>
@@ -120,7 +121,17 @@ function AdminUsers() {
                           color="text"
                           fontWeight="medium"
                         >
-                          {adminUser.type}
+                          {adminUser.gender}
+                        </MDTypography>
+                      </TableCell>
+                      <TableCell>
+                        <MDTypography
+                          display="block"
+                          variant="button"
+                          color="text"
+                          fontWeight="medium"
+                        >
+                          {adminUser.address}
                         </MDTypography>
                       </TableCell>
                     </TableRow>

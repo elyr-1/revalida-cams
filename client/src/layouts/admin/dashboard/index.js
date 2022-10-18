@@ -6,14 +6,14 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 import * as programService from "services/program";
-import * as courseService from "services/course";
+import * as subjectService from "services/subject";
 import * as facultyService from "services/faculty";
 import * as studentService from "services/student";
 import AdminUsers from "./components/users";
 
 function Dashboard() {
   const [programs, setPrograms] = useState([]);
-  const [courses, setCourses] = useState([]);
+  const [subjects, setSubjects] = useState([]);
   const [professors, setProfessors] = useState([]);
   const [students, setStudents] = useState([]);
 
@@ -24,8 +24,8 @@ function Dashboard() {
   }, []);
 
   useEffect(async () => {
-    await courseService.getCourses().then((response) => {
-      setCourses(response.data);
+    await subjectService.getSubjects().then((response) => {
+      setSubjects(response.data);
     });
   }, []);
 
@@ -66,7 +66,7 @@ function Dashboard() {
               <ComplexStatisticsCard
                 icon="library_books"
                 title="Courses"
-                count={courses.length}
+                count={subjects.length}
                 percentage={{
                   color: "success",
                   amount: "+5%",

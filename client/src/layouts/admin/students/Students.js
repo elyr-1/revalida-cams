@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
@@ -13,23 +13,21 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Icon from "@mui/material/Icon";
 import IconButton from "@mui/material/IconButton";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import TablePagination from "@mui/material/TablePagination";
 import Tooltip from "@mui/material/Tooltip";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import * as studentService from "services/student";
 import Swal from "sweetalert2";
-import StudentForm from "./forms";
+import Student from "./Student";
+import AddStudentForm from "./forms/AddStudentForm";
 
 const columns = [
   { id: "studentNo", label: "Student No." },
   { id: "lastname", label: "Last Name" },
   { id: "firstname", label: "First Name" },
-  { id: "middlename", label: "Middle Name" },
   { id: "gender", label: "Gender" },
+  { id: "programCode", label: "Program Code" },
   { id: "yearlevel", label: "Year Level" },
   { id: "sem", label: "Semester" },
   { id: "actions", label: "Actions", align: "center" },
@@ -53,6 +51,60 @@ function Students() {
     setPage(0);
   };
 
+  // Fetch all students
+  useEffect(async () => {
+    await studentService.getStudents().then((response) => {
+      setStudents(response.data);
+    });
+  }, []);
+
+  // Add a student
+  const handleAddStudent = (student) => {
+    studentService
+      .addStudent(student)
+      .then(() => {
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: "A new student has been added!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 400) {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "This record may have already been deleted.",
+          });
+        }
+      });
+  };
+
+  // Update a student
+  const handleEditStudent = (studentId, updatedStudent) => {
+    setStudents(
+      students.map((student) => (student.studentId === studentId ? updatedStudent : student))
+    );
+    studentService.editStudent(studentId, updatedStudent).then(() => {
+      Swal.fire({
+        position: "top",
+        icon: "success",
+        title: "Student has been updated!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    });
+  };
+
+  // Delete a student
   const handleDeleteStudent = (studentId) => {
     try {
       Swal.fire({
@@ -81,13 +133,6 @@ function Students() {
       }
     }
   };
-
-  // Fetch data from server
-  useEffect(async () => {
-    await studentService.getStudents().then((response) => {
-      setStudents(response.data);
-    });
-  }, []);
 
   return (
     <DashboardLayout>
@@ -132,7 +177,7 @@ function Students() {
                 </IconButton>
                 <Dialog open={open} onClose={handleClose} fullWidth>
                   <DialogContent>
-                    <StudentForm />
+                    <AddStudentForm onAddStudent={handleAddStudent} onClose={handleClose} />
                   </DialogContent>
                 </Dialog>
               </MDBox>
@@ -165,86 +210,11 @@ function Students() {
                             key={student.studentId}
                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                           >
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {student.studentNo}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {student.lastname}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {student.firstname}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {student.middlename}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {student.gender}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {student.yearlevel}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {student.sem}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <ButtonGroup>
-                                <IconButton>
-                                  <EditRoundedIcon color="primary" />
-                                </IconButton>
-                                <IconButton onClick={() => handleDeleteStudent(student.studentId)}>
-                                  <DeleteRoundedIcon color="error" />
-                                </IconButton>
-                              </ButtonGroup>
-                            </TableCell>
+                            <Student
+                              student={student}
+                              onEditStudent={handleEditStudent}
+                              onDeleteStudent={handleDeleteStudent}
+                            />
                           </TableRow>
                         ))}
                     </TableBody>

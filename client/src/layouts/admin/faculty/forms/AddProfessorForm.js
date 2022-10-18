@@ -9,21 +9,23 @@ import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Joi from "joi";
 
-function ProgramForm({ initialValue, onSubmit, onClose }) {
-  const [form, setForm] = useState(
-    initialValue || {
-      programCode: "",
-      programTitle: "",
-      major: "",
-    }
-  );
+function AddProfessorForm({ onAddProfessor, onClose }) {
+  const [form, setForm] = useState({
+    id: 0,
+    professorNo: "",
+    professorName: "",
+    gender: "",
+    address: "",
+  });
 
   const [errors, setErrors] = useState({});
 
   const schema = Joi.object({
-    programCode: Joi.string().min(1).max(30).required(),
-    programTitle: Joi.string().min(1).required(),
-    major: Joi.string().allow("").optional(),
+    id: Joi.number().required(),
+    professorNo: Joi.string().min(1).max(30).required(),
+    professorName: Joi.string().min(1).required(),
+    gender: Joi.string().allow("").optional(),
+    address: Joi.string().allow("").optional(),
   });
 
   const handleChange = (event) => {
@@ -47,8 +49,7 @@ function ProgramForm({ initialValue, onSubmit, onClose }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit(form);
-    console.log(form);
+    onAddProfessor(form);
   };
 
   const isFormInvalid = () => {
@@ -59,21 +60,29 @@ function ProgramForm({ initialValue, onSubmit, onClose }) {
   return (
     <Grid component="form" onSubmit={handleSubmit}>
       <Grid item>
-        <CardHeader
-          title={`${initialValue ? "Edit" : "Add"} Program`}
-          sx={{ textAlign: "center" }}
-        />
+        <CardHeader title="Add New Faculty Member" sx={{ textAlign: "center" }} />
         <Divider />
         <CardContent>
           <MDBox pt={1} pb={1} px={1}>
             <MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="text"
-                  label="Program Code"
+                  type="number"
+                  label="User ID"
                   variant="standard"
                   fullWidth
-                  name="programCode"
+                  name="id"
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Professor No."
+                  variant="standard"
+                  fullWidth
+                  name="professorNo"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -83,10 +92,10 @@ function ProgramForm({ initialValue, onSubmit, onClose }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Program Title"
+                  label="Professor Name"
                   variant="standard"
                   fullWidth
-                  name="programTitle"
+                  name="professorName"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -96,10 +105,23 @@ function ProgramForm({ initialValue, onSubmit, onClose }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Major"
+                  label="Gender"
                   variant="standard"
                   fullWidth
-                  name="major"
+                  name="gender"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Address"
+                  variant="standard"
+                  fullWidth
+                  name="address"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -126,4 +148,4 @@ function ProgramForm({ initialValue, onSubmit, onClose }) {
   );
 }
 
-export default ProgramForm;
+export default AddProfessorForm;

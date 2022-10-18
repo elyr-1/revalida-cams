@@ -13,28 +13,26 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Icon from "@mui/material/Icon";
 import IconButton from "@mui/material/IconButton";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import TablePagination from "@mui/material/TablePagination";
 import Tooltip from "@mui/material/Tooltip";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import * as courseService from "services/course";
+import * as subjectService from "services/subject";
 import Swal from "sweetalert2";
-import CourseForm from "./form";
+import AddSubjectForm from "./forms/AddSubjectForm";
+import Subject from "./Subject";
 
 const columns = [
+  { id: "programCode", label: "Program Code" },
   { id: "subjectCode", label: "Subject Code" },
   { id: "subjectTitle", label: "Subject Title" },
   { id: "units", label: "Units" },
   { id: "preRequisites", label: "Pre-requisites" },
-  { id: "programCode", label: "Program Code" },
   { id: "actions", label: "Actions", align: "center" },
 ];
 
-function Courses() {
-  const [courses, setCourses] = useState([]);
+function Subjects() {
+  const [subjects, setSubjects] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = useState(false);
@@ -51,7 +49,61 @@ function Courses() {
     setPage(0);
   };
 
-  const handleDeleteCourse = async (subjectId) => {
+  // Fetch all subjects
+  useEffect(async () => {
+    await subjectService.getSubjects().then((response) => {
+      setSubjects(response.data);
+    });
+  }, []);
+
+  // Add a subject
+  const handleAddSubject = async (subject) => {
+    await subjectService
+      .addSubject(subject)
+      .then(() => {
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: "A new subject has been added!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 400) {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "This record may have already been deleted.",
+          });
+        }
+      });
+  };
+
+  // Update a subject
+  const handleEditSubject = (subjectId, updatedSubject) => {
+    setSubjects(
+      subjects.map((subject) => (subject.subjectId === subjectId ? updatedSubject : subject))
+    );
+    subjectService.editSubject(subjectId, updatedSubject).then(() => {
+      Swal.fire({
+        position: "top",
+        icon: "success",
+        title: "Subject has been updated!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    });
+  };
+
+  // Delete a subject
+  const handleDeleteSubject = async (subjectId) => {
     try {
       Swal.fire({
         title: "Are you sure?",
@@ -62,8 +114,8 @@ function Courses() {
         confirmButtonText: "Delete",
       }).then((result) => {
         if (result.isConfirmed) {
-          courseService.deleteCourse(subjectId);
-          setCourses(courses.filter((course) => course.subjectId !== subjectId));
+          subjectService.deleteSubject(subjectId);
+          setSubjects(subjects.filter((subject) => subject.subjectId !== subjectId));
           Swal.fire("Deleted", "Record has been deleted.", "success");
         } else if (result.isDenied) {
           Swal.fire("Deletion has been cancelled", "", "info");
@@ -79,13 +131,6 @@ function Courses() {
       }
     }
   };
-
-  // Fetch data from server
-  useEffect(async () => {
-    await courseService.getCourses().then((response) => {
-      setCourses(response.data);
-    });
-  }, []);
 
   return (
     <DashboardLayout>
@@ -107,7 +152,7 @@ function Courses() {
                 justifyContent="space-between"
               >
                 <MDTypography variant="h6" color="white">
-                  Courses
+                  Subjects
                 </MDTypography>
                 <IconButton onClick={handleOpen}>
                   <MDBox
@@ -121,7 +166,7 @@ function Courses() {
                     borderRadius="50%"
                     color="dark"
                   >
-                    <Tooltip title="Add new course" placement="top">
+                    <Tooltip title="Add new subject" placement="top">
                       <Icon fontSize="medium" color="inherit">
                         add_rounded
                       </Icon>
@@ -130,7 +175,7 @@ function Courses() {
                 </IconButton>
                 <Dialog open={open} onClose={handleClose} fullWidth>
                   <DialogContent>
-                    <CourseForm />
+                    <AddSubjectForm onAddSubject={handleAddSubject} onClose={handleClose} />
                   </DialogContent>
                 </Dialog>
               </MDBox>
@@ -156,73 +201,18 @@ function Courses() {
                       </TableRow>
                     </MDBox>
                     <TableBody>
-                      {courses
+                      {subjects
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        .map((course) => (
+                        .map((subject) => (
                           <TableRow
-                            key={course.subjectId}
+                            key={subject.subjectId}
                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                           >
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {course.subjectCode}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {course.subjectTitle}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {course.units}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {course.preRequisites}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {course.programCode}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <ButtonGroup>
-                                <IconButton>
-                                  <EditRoundedIcon color="primary" />
-                                </IconButton>
-                                <IconButton onClick={() => handleDeleteCourse(course.subjectId)}>
-                                  <DeleteRoundedIcon color="error" />
-                                </IconButton>
-                              </ButtonGroup>
-                            </TableCell>
+                            <Subject
+                              subject={subject}
+                              onEditSubject={handleEditSubject}
+                              onDeleteSubject={handleDeleteSubject}
+                            />
                           </TableRow>
                         ))}
                     </TableBody>
@@ -234,7 +224,7 @@ function Courses() {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 15]}
                 component="div"
-                count={courses.length}
+                count={subjects.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
@@ -257,4 +247,4 @@ function Courses() {
   );
 }
 
-export default Courses;
+export default Subjects;
