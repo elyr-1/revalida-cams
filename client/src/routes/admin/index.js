@@ -4,7 +4,7 @@ import Subjects from "layouts/admin/subjects/Subjects";
 import Students from "layouts/admin/students/Students";
 import Professors from "layouts/admin/faculty/Professors";
 import Profile from "layouts/admin/profile";
-import Parents from "layouts/admin/parents";
+import Parents from "layouts/admin/parents/Parents";
 import Icon from "@mui/material/Icon";
 
 const adminRoutes = [

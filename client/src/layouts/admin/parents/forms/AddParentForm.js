@@ -3,33 +3,27 @@ import { useState } from "react";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
-import MDSnackbar from "components/MDSnackbar";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Joi from "joi";
-import * as facultyService from "services/faculty";
 
-function ParentForm() {
+function AddParentForm({ onAddParent, onClose }) {
   const [form, setForm] = useState({
-    professorNo: "",
-    professorName: "",
-    gender: "",
-    status: "",
+    id: 0,
+    parentNo: "",
+    parentName: "",
+    studentNo: "",
   });
-
-  const [successSB, setSuccessSB] = useState(false);
-  const openSuccessSB = () => setSuccessSB(true);
-  const closeSuccessSB = () => setSuccessSB(false);
 
   const [errors, setErrors] = useState({});
 
   const schema = Joi.object({
-    professorNo: Joi.string().min(1).max(30).required(),
-    professorName: Joi.string().min(1).required(),
-    gender: Joi.string().allow("").optional(),
-    status: Joi.string().min(1).max(30).required(),
+    id: Joi.number().min(1).required(),
+    parentNo: Joi.string().min(1).max(30).required(),
+    parentName: Joi.string().min(1).required(),
+    studentNo: Joi.string().min(1).required(),
   });
 
   const handleChange = (event) => {
@@ -51,26 +45,9 @@ function ParentForm() {
     }
   };
 
-  const handleAddProfessor = (professor) => {
-    facultyService
-      .addProfessor(professor)
-      .then((response) => {
-        console.log(response);
-        setTimeout(() => {
-          window.location.reload();
-        }, 500);
-      })
-      .catch((error) => {
-        if (error.response && error.response.status === 400) {
-          alert(error.response.data.message[0]);
-        }
-      });
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleAddProfessor(form);
-    console.log(form);
+    onAddParent(form);
   };
 
   const isFormInvalid = () => {
@@ -78,34 +55,21 @@ function ParentForm() {
     return !!result.error;
   };
 
-  const renderSuccessSB = (
-    <MDSnackbar
-      color="info"
-      icon="check"
-      title="Professor Saved"
-      content="New faculty member has been added successfully!"
-      dateTime=""
-      open={successSB}
-      onClose={closeSuccessSB}
-      close={closeSuccessSB}
-    />
-  );
-
   return (
     <Grid component="form" onSubmit={handleSubmit}>
       <Grid item>
-        <CardHeader title="Add New Course" sx={{ textAlign: "center" }} />
+        <CardHeader title="Add New Program" sx={{ textAlign: "center" }} />
         <Divider />
         <CardContent>
           <MDBox pt={1} pb={1} px={1}>
             <MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="text"
-                  label="Professor No."
+                  type="number"
+                  label="Parent ID"
                   variant="standard"
                   fullWidth
-                  name="professorNo"
+                  name="id"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -115,10 +79,10 @@ function ParentForm() {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Professor Name"
+                  label="Parent No"
                   variant="standard"
                   fullWidth
-                  name="professorName"
+                  name="parentNo"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -128,10 +92,10 @@ function ParentForm() {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Gender"
+                  label="Parent Name"
                   variant="standard"
                   fullWidth
-                  name="gender"
+                  name="parentName"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -141,29 +105,16 @@ function ParentForm() {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Status"
+                  label="Student No."
                   variant="standard"
                   fullWidth
-                  name="status"
+                  name="studentNo"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
                   onChange={handleChange}
                 />
               </MDBox>
-              {/* <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Program Code"
-                  variant="standard"
-                  fullWidth
-                  name="programCode"
-                  error={!!errors.name}
-                  helperText={errors.name}
-                  value={form.name}
-                  onChange={handleChange}
-                />
-              </MDBox> */}
               <MDBox mt={4} mb={1}>
                 <MDButton
                   variant="gradient"
@@ -171,11 +122,10 @@ function ParentForm() {
                   fullWidth
                   type="submit"
                   disabled={isFormInvalid()}
-                  onClick={openSuccessSB}
+                  onClick={onClose}
                 >
                   save
                 </MDButton>
-                {renderSuccessSB}
               </MDBox>
             </MDBox>
           </MDBox>
@@ -185,4 +135,4 @@ function ParentForm() {
   );
 }
 
-export default ParentForm;
+export default AddParentForm;

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
@@ -13,16 +13,14 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Icon from "@mui/material/Icon";
 import IconButton from "@mui/material/IconButton";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import TablePagination from "@mui/material/TablePagination";
 import Tooltip from "@mui/material/Tooltip";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import * as parentService from "services/parent";
 import Swal from "sweetalert2";
-import ParentForm from "./forms";
+import Parent from "./Parent";
+import AddParentForm from "./forms/AddParentForm";
 
 const columns = [
   { id: "parentNo", label: "Parent No." },
@@ -49,7 +47,59 @@ function Parents() {
     setPage(0);
   };
 
-  const handleDeleteParent = (parentId) => {
+  // Fetch all parents
+  useEffect(async () => {
+    await parentService.getParents().then((response) => {
+      setParents(response.data);
+    });
+  }, []);
+
+  // Add a program
+  const handleAddParent = (parent) => {
+    parentService
+      .addParent(parent)
+      .then(() => {
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: "A new Parent has been added!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 400) {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "This record may have already been deleted.",
+          });
+        }
+      });
+  };
+
+  // Update a parent
+  const handleEditParent = (parentId, updatedParent) => {
+    setParents(parents.map((parent) => (parent.parentId === parentId ? updatedParent : parent)));
+    parentService.editParent(parentId, updatedParent).then(() => {
+      Swal.fire({
+        position: "top",
+        icon: "success",
+        title: "Program has been updated!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    });
+  };
+
+  // Delete a parent
+  const handleDeleteParent = async (parentId) => {
     try {
       Swal.fire({
         title: "Are you sure?",
@@ -78,13 +128,6 @@ function Parents() {
     }
   };
 
-  // Fetch data from server
-  useEffect(async () => {
-    await parentService.getParents().then((response) => {
-      setParents(response.data);
-    });
-  }, []);
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -105,7 +148,7 @@ function Parents() {
                 justifyContent="space-between"
               >
                 <MDTypography variant="h6" color="white">
-                  Parents
+                  Programs
                 </MDTypography>
                 <IconButton onClick={handleOpen}>
                   <MDBox
@@ -119,7 +162,7 @@ function Parents() {
                     borderRadius="50%"
                     color="dark"
                   >
-                    <Tooltip title="Add new parent" placement="top">
+                    <Tooltip title="Add new program" placement="top">
                       <Icon fontSize="medium" color="inherit">
                         add_rounded
                       </Icon>
@@ -128,7 +171,7 @@ function Parents() {
                 </IconButton>
                 <Dialog open={open} onClose={handleClose} fullWidth>
                   <DialogContent>
-                    <ParentForm />
+                    <AddParentForm onAddParent={handleAddParent} onClose={handleClose} />
                   </DialogContent>
                 </Dialog>
               </MDBox>
@@ -161,56 +204,11 @@ function Parents() {
                             key={parent.parentId}
                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                           >
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {parent.parentNo}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {parent.parentName}
-                              </MDTypography>
-                            </TableCell>
-                            <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {parent.studentId}
-                              </MDTypography>
-                            </TableCell>
-                            {/* <TableCell>
-                              <MDTypography
-                                display="block"
-                                variant="button"
-                                color="text"
-                                fontWeight="medium"
-                              >
-                                {professor.status}
-                              </MDTypography>
-                            </TableCell> */}
-                            <TableCell align="center">
-                              <ButtonGroup>
-                                <IconButton>
-                                  <EditRoundedIcon color="primary" />
-                                </IconButton>
-                                <IconButton onClick={() => handleDeleteParent(parent.parentId)}>
-                                  <DeleteRoundedIcon color="error" />
-                                </IconButton>
-                              </ButtonGroup>
-                            </TableCell>
+                            <Parent
+                              parent={parent}
+                              onEditParent={handleEditParent}
+                              onDeleteParent={handleDeleteParent}
+                            />
                           </TableRow>
                         ))}
                     </TableBody>

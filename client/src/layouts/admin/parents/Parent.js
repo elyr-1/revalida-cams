@@ -10,10 +10,10 @@ import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import ViewSubjectForm from "./forms/ViewSubjectForm";
-import EditSubjectForm from "./forms/EditSubjectForm";
+import ViewParentForm from "./forms/ViewParentForm";
+import EditParentForm from "./forms/EditParentForm";
 
-function Subject({ subject, onEditSubject, onDeleteSubject }) {
+function Parent({ parent, onEditParent, onDeleteParent }) {
   const [open, setOpen] = useState(false);
   const [view, setView] = useState(false);
 
@@ -24,63 +24,49 @@ function Subject({ subject, onEditSubject, onDeleteSubject }) {
 
   useEffect(() => {
     handleClose();
-  }, [subject]);
+  }, [parent]);
 
   return (
     <>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {subject.programCode}
+          {parent.parentNo}
         </MDTypography>
       </TableCell>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {subject.subjectCode}
+          {parent.parentName}
         </MDTypography>
       </TableCell>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {subject.subjectTitle}
-        </MDTypography>
-      </TableCell>
-      <TableCell>
-        <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {subject.units}
-        </MDTypography>
-      </TableCell>
-      <TableCell>
-        <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {subject.preRequisites}
+          {parent.studentNo}
         </MDTypography>
       </TableCell>
       <TableCell align="center">
         <ButtonGroup>
-          <Tooltip title="View Subject Details" placement="top">
+          <Tooltip title="View Parent Details" placement="top">
             <IconButton onClick={handleOpenView}>
               <VisibilityRoundedIcon color="secondary" />
             </IconButton>
           </Tooltip>
           <Dialog open={view} onClose={handleCloseView} fullWidth>
             <DialogContent>
-              <ViewSubjectForm key={subject.subjectId} subject={subject} />
+              <ViewParentForm key={parent.parentId} parent={parent} />
             </DialogContent>
           </Dialog>
-          <Tooltip title="Edit Subject Details" placement="top">
+          <Tooltip title="Edit Parent Details" placement="top">
             <IconButton onClick={handleOpen}>
               <EditRoundedIcon color="primary" />
             </IconButton>
           </Tooltip>
           <Dialog open={open} onClose={handleClose} fullWidth>
             <DialogContent>
-              <EditSubjectForm
-                key={subject.subjectId}
-                subject={subject}
-                onEditSubject={onEditSubject}
-              />
+              <EditParentForm key={parent.parentId} parent={parent} onEditParent={onEditParent} />
             </DialogContent>
           </Dialog>
-          <Tooltip title="Delete Subject" placement="top">
-            <IconButton onClick={() => onDeleteSubject(subject.subjectId)}>
+          <Tooltip title="Delete Parent" placement="top">
+            <IconButton onClick={() => onDeleteParent(parent.parentId)}>
               <DeleteRoundedIcon color="error" />
             </IconButton>
           </Tooltip>
@@ -90,4 +76,4 @@ function Subject({ subject, onEditSubject, onDeleteSubject }) {
   );
 }
 
-export default Subject;
+export default Parent;
