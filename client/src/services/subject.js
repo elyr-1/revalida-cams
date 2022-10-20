@@ -4,7 +4,7 @@ export function getSubjects() {
   return http.get("/subject");
 }
 
-export function getSubject(subjectId) {
+export function getSubjectById(subjectId) {
   return http.get(`/subject/${subjectId}`);
 }
 
