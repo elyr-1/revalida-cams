@@ -1,6 +1,7 @@
 import Dashboard from "layouts/admin/dashboard";
 import Programs from "layouts/admin/programs/Programs";
 import Subjects from "layouts/admin/subjects/Subjects";
+import Schedules from "layouts/admin/schedule/Schedules";
 import Students from "layouts/admin/students/Students";
 import Professors from "layouts/admin/faculty/Professors";
 import Profile from "layouts/admin/profile";
@@ -26,11 +27,19 @@ const adminRoutes = [
   },
   {
     type: "collapse",
-    name: "Subjects",
+    name: "Courses",
     key: "subjects",
     icon: <Icon fontSize="small">library_books</Icon>,
     route: "/subjects",
     component: <Subjects />,
+  },
+  {
+    type: "collapse",
+    name: "Schedule",
+    key: "schedule",
+    icon: <Icon fontSize="small">access_time_filled</Icon>,
+    route: "/schedule",
+    component: <Schedules />,
   },
   {
     type: "collapse",

@@ -9,7 +9,7 @@ import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Joi from "joi";
 
-function AddStudentForm({ onAddStudent, onClose }) {
+function AddScheduleForm({ onAddStudent, onClose }) {
   const [form, setForm] = useState({
     id: 0,
     studentNo: "",
@@ -18,7 +18,6 @@ function AddStudentForm({ onAddStudent, onClose }) {
     lastname: "",
     birthdate: "",
     gender: "",
-    address: "",
     yearlevel: 0,
     sem: 0,
     programCode: "",
@@ -34,7 +33,6 @@ function AddStudentForm({ onAddStudent, onClose }) {
     lastname: Joi.string().min(1).required(),
     birthdate: Joi.date().required(),
     gender: Joi.string().allow("").optional(),
-    address: Joi.string().allow("").optional(),
     yearlevel: Joi.number().min(1).required(),
     sem: Joi.number().min(1).required(),
     programCode: Joi.string().min(1).required(),
@@ -146,7 +144,7 @@ function AddStudentForm({ onAddStudent, onClose }) {
               <MDBox mb={2}>
                 <MDInput
                   type="date"
-                  label="Birthdate"
+                  label=""
                   variant="standard"
                   fullWidth
                   name="birthdate"
@@ -163,19 +161,6 @@ function AddStudentForm({ onAddStudent, onClose }) {
                   variant="standard"
                   fullWidth
                   name="gender"
-                  error={!!errors.name}
-                  helperText={errors.name}
-                  value={form.name}
-                  onChange={handleChange}
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Address"
-                  variant="standard"
-                  fullWidth
-                  name="address"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -241,4 +226,4 @@ function AddStudentForm({ onAddStudent, onClose }) {
   );
 }
 
-export default AddStudentForm;
+export default AddScheduleForm;

@@ -8,20 +8,17 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
-import * as adminService from "services/admin";
+import * as programService from "services/program";
 
 const columns = [
-  { id: "userName", label: "Username" },
-  { id: "firstName", label: "First Name" },
-  { id: "lastName", label: "Last Name" },
-  { id: "gender", label: "Gender" },
-  { id: "address", label: "Address" },
+  { id: "programCode", label: "Program Code" },
+  { id: "programTitle", label: "Program Title" },
 ];
 
-function AdminUsers() {
-  const [adminUsers, setAdminUsers] = useState([]);
+function DashboardPrograms() {
+  const [programs, setPrograms] = useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(8);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -32,11 +29,10 @@ function AdminUsers() {
     setPage(0);
   };
 
-  // Fetch data from server
+  // Fetch all programs
   useEffect(async () => {
-    await adminService.getAdminUsers().then((response) => {
-      console.log(response.data);
-      setAdminUsers(response.data);
+    await programService.getPrograms().then((response) => {
+      setPrograms(response.data);
     });
   }, []);
 
@@ -46,11 +42,11 @@ function AdminUsers() {
         <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
           <MDBox>
             <MDTypography variant="h6" gutterBottom>
-              Administrators
+              Programs
             </MDTypography>
             <MDBox display="flex" alignItems="center" lineHeight={0}>
               <MDTypography variant="button" fontWeight="regular" color="text">
-                View list of administrators
+                View list of Programs offered
               </MDTypography>
             </MDBox>
           </MDBox>
@@ -77,11 +73,11 @@ function AdminUsers() {
                 </TableRow>
               </MDBox>
               <TableBody>
-                {adminUsers
+                {programs
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((adminUser) => (
+                  .map((program) => (
                     <TableRow
-                      key={adminUser.adminId}
+                      key={program.programId}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
                       <TableCell>
@@ -91,7 +87,7 @@ function AdminUsers() {
                           color="text"
                           fontWeight="medium"
                         >
-                          {adminUser.middlename}
+                          {program.programCode}
                         </MDTypography>
                       </TableCell>
                       <TableCell>
@@ -101,37 +97,7 @@ function AdminUsers() {
                           color="text"
                           fontWeight="medium"
                         >
-                          {adminUser.firstname}
-                        </MDTypography>
-                      </TableCell>
-                      <TableCell>
-                        <MDTypography
-                          display="block"
-                          variant="button"
-                          color="text"
-                          fontWeight="medium"
-                        >
-                          {adminUser.lastname}
-                        </MDTypography>
-                      </TableCell>
-                      <TableCell>
-                        <MDTypography
-                          display="block"
-                          variant="button"
-                          color="text"
-                          fontWeight="medium"
-                        >
-                          {adminUser.gender}
-                        </MDTypography>
-                      </TableCell>
-                      <TableCell>
-                        <MDTypography
-                          display="block"
-                          variant="button"
-                          color="text"
-                          fontWeight="medium"
-                        >
-                          {adminUser.address}
+                          {program.programTitle}
                         </MDTypography>
                       </TableCell>
                     </TableRow>
@@ -143,9 +109,9 @@ function AdminUsers() {
       </Card>
       <MDBox>
         <TablePagination
-          rowsPerPageOptions={[8, 16]}
+          rowsPerPageOptions={[5, 10]}
           component="div"
-          count={adminUsers.length}
+          count={programs.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -164,4 +130,4 @@ function AdminUsers() {
   );
 }
 
-export default AdminUsers;
+export default DashboardPrograms;

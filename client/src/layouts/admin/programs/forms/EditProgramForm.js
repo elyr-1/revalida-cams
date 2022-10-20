@@ -10,11 +10,10 @@ import CardContent from "@mui/material/CardContent";
 
 function EditProgramForm({ program, onEditProgram }) {
   const id = program.programId;
-  const [programCode, setProgramCode] = useState(program.programCode);
   const [programTitle, setProgramTitle] = useState(program.programTitle);
   const [major, setMajor] = useState(program.major);
 
-  const updatedProgram = { ...program, programCode, programTitle, major };
+  const updatedProgram = { ...program, programTitle, major };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -36,9 +35,7 @@ function EditProgramForm({ program, onEditProgram }) {
                   variant="standard"
                   fullWidth
                   name="programCode"
-                  value={programCode}
-                  onChange={(e) => setProgramCode(e.target.value)}
-                  required
+                  value={program.programCode}
                 />
               </MDBox>
               <MDBox mb={2}>

@@ -8,9 +8,7 @@ import Sidenav from "examples/Sidenav";
 import Configurator from "examples/Configurator";
 import theme from "assets/theme";
 import themeDark from "assets/theme-dark";
-// import studentRoutes from "routes/student";
 import adminRoutes from "routes/admin";
-// import facultyRoutes from "routes/faculty";
 import Login from "layouts/authentication/login";
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 import brandWhite from "assets/images/logo-ct.png";
@@ -108,7 +106,7 @@ export default function App() {
 
   const handleLogin = (username, password) => {
     authUsers.forEach((user) => {
-      if (user.username === username || user.password === password) {
+      if (user.username === username && user.password === password && user.roleId === 1) {
         Swal.fire({
           position: "top-center",
           icon: "success",
@@ -117,14 +115,12 @@ export default function App() {
           timer: 1500,
         });
         navigate("/dashboard/admin");
-      } else {
-        navigate("/login");
-        // Swal.fire({
-        //   icon: "error",
-        //   title: "Error",
-        //   text: "Username or password is incorrect",
-        // });
       }
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Error",
+      //   text: "Username or password is incorrect",
+      // });
     });
   };
 

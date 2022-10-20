@@ -15,6 +15,7 @@ function AddProfessorForm({ onAddProfessor, onClose }) {
     professorNo: "",
     professorName: "",
     gender: "",
+    birthdate: "",
     address: "",
   });
 
@@ -25,11 +26,11 @@ function AddProfessorForm({ onAddProfessor, onClose }) {
     professorNo: Joi.string().min(1).max(30).required(),
     professorName: Joi.string().min(1).required(),
     gender: Joi.string().allow("").optional(),
+    birthdate: Joi.date().required(),
     address: Joi.string().allow("").optional(),
   });
 
   const handleChange = (event) => {
-    console.log(event.currentTarget.value);
     setForm({ ...form, [event.currentTarget.name]: event.currentTarget.value });
 
     const { error } = schema
@@ -109,6 +110,19 @@ function AddProfessorForm({ onAddProfessor, onClose }) {
                   variant="standard"
                   fullWidth
                   name="gender"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="date"
+                  label="Birthdate"
+                  variant="standard"
+                  fullWidth
+                  name="birthdate"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}

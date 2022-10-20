@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
@@ -17,21 +17,24 @@ import TablePagination from "@mui/material/TablePagination";
 import Tooltip from "@mui/material/Tooltip";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import * as subjectService from "services/subject";
+import * as studentService from "services/student";
 import Swal from "sweetalert2";
-import AddSubjectForm from "./forms/AddSubjectForm";
-import Subject from "./Subject";
+import Schedule from "./Schedule";
+import AddScheduleForm from "./forms/AddScheduleForm";
 
 const columns = [
+  { id: "studentNo", label: "Student No." },
+  { id: "lastname", label: "Last Name" },
+  { id: "firstname", label: "First Name" },
+  { id: "gender", label: "Gender" },
   { id: "programCode", label: "Program Code" },
-  { id: "subjectCode", label: "Subject Code" },
-  { id: "subjectTitle", label: "Subject Title" },
-  { id: "units", label: "Units" },
+  { id: "yearlevel", label: "Year Level" },
+  { id: "sem", label: "Semester" },
   { id: "actions", label: "Actions", align: "center" },
 ];
 
-function Subjects() {
-  const [subjects, setSubjects] = useState([]);
+function Schedules() {
+  const [students, setStudents] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = useState(false);
@@ -48,22 +51,22 @@ function Subjects() {
     setPage(0);
   };
 
-  // Fetch all subjects
+  // Fetch all students
   useEffect(async () => {
-    await subjectService.getSubjects().then((response) => {
-      setSubjects(response.data);
+    await studentService.getStudents().then((response) => {
+      setStudents(response.data);
     });
   }, []);
 
-  // Add a subject
-  const handleAddSubject = async (subject) => {
-    await subjectService
-      .addSubject(subject)
+  // Add a student
+  const handleAddStudent = (student) => {
+    studentService
+      .addStudent(student)
       .then(() => {
         Swal.fire({
           position: "top",
           icon: "success",
-          title: "A new subject has been added!",
+          title: "A new student has been added!",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -82,16 +85,16 @@ function Subjects() {
       });
   };
 
-  // Update a subject
-  const handleEditSubject = (subjectId, updatedSubject) => {
-    setSubjects(
-      subjects.map((subject) => (subject.subjectId === subjectId ? updatedSubject : subject))
+  // Update a student
+  const handleEditStudent = (studentId, updatedStudent) => {
+    setStudents(
+      students.map((student) => (student.studentId === studentId ? updatedStudent : student))
     );
-    subjectService.editSubject(subjectId, updatedSubject).then(() => {
+    studentService.editStudent(studentId, updatedStudent).then(() => {
       Swal.fire({
         position: "top",
         icon: "success",
-        title: "Subject has been updated!",
+        title: "Student has been updated!",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -101,8 +104,8 @@ function Subjects() {
     });
   };
 
-  // Delete a subject
-  const handleDeleteSubject = async (subjectId) => {
+  // Delete a student
+  const handleDeleteStudent = (studentId) => {
     try {
       Swal.fire({
         title: "Are you sure?",
@@ -113,8 +116,8 @@ function Subjects() {
         confirmButtonText: "Delete",
       }).then((result) => {
         if (result.isConfirmed) {
-          subjectService.deleteSubject(subjectId);
-          setSubjects(subjects.filter((subject) => subject.subjectId !== subjectId));
+          studentService.deleteStudent(studentId);
+          setStudents(students.filter((student) => student.studentId !== studentId));
           Swal.fire("Deleted", "Record has been deleted.", "success");
         } else if (result.isDenied) {
           Swal.fire("Deletion has been cancelled", "", "info");
@@ -151,7 +154,7 @@ function Subjects() {
                 justifyContent="space-between"
               >
                 <MDTypography variant="h6" color="white">
-                  Courses
+                  Students
                 </MDTypography>
                 <IconButton onClick={handleOpen}>
                   <MDBox
@@ -165,7 +168,7 @@ function Subjects() {
                     borderRadius="50%"
                     color="dark"
                   >
-                    <Tooltip title="Add new subject" placement="top">
+                    <Tooltip title="Add new student" placement="top">
                       <Icon fontSize="medium" color="inherit">
                         add_rounded
                       </Icon>
@@ -174,7 +177,7 @@ function Subjects() {
                 </IconButton>
                 <Dialog open={open} onClose={handleClose} fullWidth>
                   <DialogContent>
-                    <AddSubjectForm onAddSubject={handleAddSubject} onClose={handleClose} />
+                    <AddScheduleForm onAddStudent={handleAddStudent} onClose={handleClose} />
                   </DialogContent>
                 </Dialog>
               </MDBox>
@@ -200,17 +203,17 @@ function Subjects() {
                       </TableRow>
                     </MDBox>
                     <TableBody>
-                      {subjects
+                      {students
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        .map((subject) => (
+                        .map((student) => (
                           <TableRow
-                            key={subject.subjectId}
+                            key={student.studentId}
                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                           >
-                            <Subject
-                              subject={subject}
-                              onEditSubject={handleEditSubject}
-                              onDeleteSubject={handleDeleteSubject}
+                            <Schedule
+                              student={student}
+                              onEditStudent={handleEditStudent}
+                              onDeleteStudent={handleDeleteStudent}
                             />
                           </TableRow>
                         ))}
@@ -223,7 +226,7 @@ function Subjects() {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 15]}
                 component="div"
-                count={subjects.length}
+                count={students.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
@@ -246,4 +249,4 @@ function Subjects() {
   );
 }
 
-export default Subjects;
+export default Schedules;

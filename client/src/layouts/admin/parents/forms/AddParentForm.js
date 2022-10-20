@@ -27,7 +27,6 @@ function AddParentForm({ onAddParent, onClose }) {
   });
 
   const handleChange = (event) => {
-    console.log(event.currentTarget.value);
     setForm({ ...form, [event.currentTarget.name]: event.currentTarget.value });
 
     const { error } = schema
@@ -58,7 +57,7 @@ function AddParentForm({ onAddParent, onClose }) {
   return (
     <Grid component="form" onSubmit={handleSubmit}>
       <Grid item>
-        <CardHeader title="Add New Program" sx={{ textAlign: "center" }} />
+        <CardHeader title="Add New Parent" sx={{ textAlign: "center" }} />
         <Divider />
         <CardContent>
           <MDBox pt={1} pb={1} px={1}>

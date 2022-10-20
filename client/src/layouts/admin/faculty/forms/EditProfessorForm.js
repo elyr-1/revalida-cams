@@ -13,9 +13,10 @@ function EditProfessorForm({ professor, onEditProfessor }) {
   const [professorNo, setProfessorNo] = useState(professor.professorNo);
   const [professorName, setProfessorName] = useState(professor.professorName);
   const [gender, setGender] = useState(professor.gender);
+  const [birthdate, setBirthdate] = useState(professor.birthdate);
   const [address, setAddress] = useState(professor.address);
 
-  const updatedProfessor = { ...professor, professorNo, professorName, gender, address };
+  const updatedProfessor = { ...professor, professorNo, professorName, gender, birthdate, address };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -63,6 +64,17 @@ function EditProfessorForm({ professor, onEditProfessor }) {
                   name="gender"
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="date"
+                  label="Birthdate"
+                  variant="standard"
+                  fullWidth
+                  name="birthdate"
+                  value={birthdate}
+                  onChange={(e) => setBirthdate(e.target.value)}
                 />
               </MDBox>
               <MDBox mb={2}>

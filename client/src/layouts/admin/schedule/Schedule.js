@@ -5,15 +5,15 @@ import TableCell from "@mui/material/TableCell";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import ViewSubjectForm from "./forms/ViewSubjectForm";
-import EditSubjectForm from "./forms/EditSubjectForm";
+import ViewScheduleForm from "./forms/ViewScheduleForm";
+import EditScheduleForm from "./forms/EditScheduleForm";
 
-function Subject({ subject, onEditSubject, onDeleteSubject }) {
+function Schedule({ student, onEditStudent, onDeleteStudent }) {
   const [open, setOpen] = useState(false);
   const [view, setView] = useState(false);
 
@@ -24,58 +24,73 @@ function Subject({ subject, onEditSubject, onDeleteSubject }) {
 
   useEffect(() => {
     handleClose();
-  }, [subject]);
+  }, [student]);
 
   return (
     <>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {subject.programCode}
+          {student.studentNo}
         </MDTypography>
       </TableCell>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {subject.subjectCode}
+          {student.lastname}
         </MDTypography>
       </TableCell>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {subject.subjectTitle}
+          {student.firstname}
         </MDTypography>
       </TableCell>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {subject.units}
+          {student.gender}
+        </MDTypography>
+      </TableCell>
+      <TableCell>
+        <MDTypography display="block" variant="button" color="text" fontWeight="medium">
+          {student.programCode}
+        </MDTypography>
+      </TableCell>
+      <TableCell>
+        <MDTypography display="block" variant="button" color="text" fontWeight="medium">
+          {student.yearlevel}
+        </MDTypography>
+      </TableCell>
+      <TableCell>
+        <MDTypography display="block" variant="button" color="text" fontWeight="medium">
+          {student.sem}
         </MDTypography>
       </TableCell>
       <TableCell align="center">
         <ButtonGroup>
-          <Tooltip title="View Subject Details" placement="top">
+          <Tooltip title="View Student Details" placement="top">
             <IconButton onClick={handleOpenView}>
               <VisibilityRoundedIcon color="secondary" />
             </IconButton>
           </Tooltip>
           <Dialog open={view} onClose={handleCloseView} fullWidth>
             <DialogContent>
-              <ViewSubjectForm key={subject.subjectId} subject={subject} />
+              <ViewScheduleForm key={student.studentId} student={student} />
             </DialogContent>
           </Dialog>
-          <Tooltip title="Edit Subject Details" placement="top">
+          <Tooltip title="Edit Student Details" placement="top">
             <IconButton onClick={handleOpen}>
               <EditRoundedIcon color="primary" />
             </IconButton>
           </Tooltip>
           <Dialog open={open} onClose={handleClose} fullWidth>
             <DialogContent>
-              <EditSubjectForm
-                key={subject.subjectId}
-                subject={subject}
-                onEditSubject={onEditSubject}
+              <EditScheduleForm
+                key={student.studentId}
+                student={student}
+                onEditStudent={onEditStudent}
               />
             </DialogContent>
           </Dialog>
-          <Tooltip title="Delete Subject" placement="top">
-            <IconButton onClick={() => onDeleteSubject(subject.subjectId)}>
+          <Tooltip title="Delete Student" placement="top">
+            <IconButton onClick={() => onDeleteStudent(student.studentId)}>
               <DeleteRoundedIcon color="error" />
             </IconButton>
           </Tooltip>
@@ -85,4 +100,4 @@ function Subject({ subject, onEditSubject, onDeleteSubject }) {
   );
 }
 
-export default Subject;
+export default Schedule;

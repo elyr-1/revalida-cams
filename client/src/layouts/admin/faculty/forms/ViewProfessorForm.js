@@ -18,6 +18,16 @@ function ViewProfessorForm({ professor }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
+                  label="User ID"
+                  variant="standard"
+                  fullWidth
+                  name="id"
+                  value={professor.id}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
                   label="Professor No."
                   variant="standard"
                   fullWidth
@@ -43,6 +53,16 @@ function ViewProfessorForm({ professor }) {
                   fullWidth
                   name="gender"
                   value={professor.gender}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Birthdate"
+                  variant="standard"
+                  fullWidth
+                  name="birthdate"
+                  value={professor.birthdate}
                 />
               </MDBox>
               <MDBox mb={2}>

@@ -24,7 +24,7 @@ function EditParentForm({ parent, onEditParent }) {
   return (
     <Grid component="form" onSubmit={handleSubmit}>
       <Grid item>
-        <CardHeader title="Edit Program" sx={{ textAlign: "center" }} />
+        <CardHeader title="Edit Parent" sx={{ textAlign: "center" }} />
         <Divider />
         <CardContent>
           <MDBox pt={1} pb={1} px={1}>

@@ -6,7 +6,7 @@ import Divider from "@mui/material/Divider";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 
-function ViewStudentForm({ student }) {
+function ViewScheduleForm({ student }) {
   return (
     <Grid>
       <Grid item>
@@ -135,4 +135,4 @@ function ViewStudentForm({ student }) {
   );
 }
 
-export default ViewStudentForm;
+export default ViewScheduleForm;

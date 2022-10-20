@@ -148,7 +148,7 @@ function Parents() {
                 justifyContent="space-between"
               >
                 <MDTypography variant="h6" color="white">
-                  Programs
+                  Parents
                 </MDTypography>
                 <IconButton onClick={handleOpen}>
                   <MDBox

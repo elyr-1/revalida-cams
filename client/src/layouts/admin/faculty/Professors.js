@@ -51,7 +51,6 @@ function Professors() {
   // Fetch data from faculty members
   useEffect(async () => {
     await facultyService.getProfessors().then((response) => {
-      console.log(response.data);
       setProfessors(response.data);
     });
   }, []);
