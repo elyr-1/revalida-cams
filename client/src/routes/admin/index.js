@@ -1,11 +1,11 @@
 import Dashboard from "layouts/admin/dashboard";
-import Programs from "layouts/admin/programs";
-import Courses from "layouts/admin/courses";
-import Students from "layouts/admin/students";
-import Faculty from "layouts/admin/faculty";
+import Programs from "layouts/admin/programs/Programs";
+import Subjects from "layouts/admin/subjects/Subjects";
+import Schedules from "layouts/admin/schedule/Schedules";
+import Students from "layouts/admin/students/Students";
+import Professors from "layouts/admin/faculty/Professors";
 import Profile from "layouts/admin/profile";
-import Parents from "layouts/admin/parents";
-import Notifications from "layouts/admin/notifications";
+import Parents from "layouts/admin/parents/Parents";
 import Icon from "@mui/material/Icon";
 
 const adminRoutes = [
@@ -28,10 +28,18 @@ const adminRoutes = [
   {
     type: "collapse",
     name: "Courses",
-    key: "courses",
+    key: "subjects",
     icon: <Icon fontSize="small">library_books</Icon>,
-    route: "/courses",
-    component: <Courses />,
+    route: "/subjects",
+    component: <Subjects />,
+  },
+  {
+    type: "collapse",
+    name: "Schedule",
+    key: "schedule",
+    icon: <Icon fontSize="small">access_time_filled</Icon>,
+    route: "/schedule",
+    component: <Schedules />,
   },
   {
     type: "collapse",
@@ -39,7 +47,7 @@ const adminRoutes = [
     key: "faculty",
     icon: <Icon fontSize="small">engineering</Icon>,
     route: "/faculty",
-    component: <Faculty />,
+    component: <Professors />,
   },
   {
     type: "collapse",
@@ -64,14 +72,6 @@ const adminRoutes = [
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",
     component: <Profile />,
-  },
-  {
-    type: "collapse",
-    name: "Notifs",
-    key: "notifs",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/notifs",
-    component: <Notifications />,
   },
 ];
 
