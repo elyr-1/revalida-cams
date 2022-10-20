@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
@@ -8,16 +8,18 @@ import Sidenav from "examples/Sidenav";
 import Configurator from "examples/Configurator";
 import theme from "assets/theme";
 import themeDark from "assets/theme-dark";
+import Swal from "sweetalert2";
+import Login from "layouts/authentication/login";
 import facultyRoutes from "routes/faculty";
+
 // import studentRoutes from "routes/student";
 // import adminRoutes from "routes/admin";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
-
-// Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
+import * as authService from "services/auth";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -100,6 +102,37 @@ export default function App() {
       </Icon>
     </MDBox>
   );
+  const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(async () => {
+    await authService.getUsers().then((response) => {
+      setUsers(response.data);
+      users.map((user) => user);
+    });
+  }, []);
+
+  const authUsers = users;
+
+  const handleLogin = (username, password) => {
+    authUsers.forEach((user) => {
+      if (user.username === username && user.password === password && user.roleId === 1) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Login Success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/dashboard/faculty");
+      }
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Error",
+      //   text: "Username or password is incorrect",
+      // });
+    });
+  };
 
   return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
@@ -121,7 +154,8 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(facultyRoutes)}
-        <Route path="*" element={<Navigate to="/dashboard/faculty" />} />
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login onLogin={handleLogin} />} />
       </Routes>
     </ThemeProvider>
   );
