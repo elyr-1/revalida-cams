@@ -9,8 +9,9 @@ import Configurator from "examples/Configurator";
 import theme from "assets/theme";
 import themeDark from "assets/theme-dark";
 // import studentRoutes from "routes/student";
-import adminRoutes from "routes/admin";
+// import adminRoutes from "routes/admin";
 // import facultyRoutes from "routes/faculty";
+import parentRoutes from "routes/parent";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
@@ -110,7 +111,7 @@ export default function App() {
             color={sidenavColor}
             brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
             brandName="Eight Institute"
-            routes={adminRoutes}
+            routes={parentRoutes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
           />
@@ -120,8 +121,8 @@ export default function App() {
       )}
       {layout === "vr" && <Configurator />}
       <Routes>
-        {getRoutes(adminRoutes)}
-        <Route path="*" element={<Navigate to="/dashboard/admin" />} />
+        {getRoutes(parentRoutes)}
+        <Route path="*" element={<Navigate to="/dashboard/parent" />} />
       </Routes>
     </ThemeProvider>
   );
