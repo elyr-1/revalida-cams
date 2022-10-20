@@ -18,6 +18,10 @@ export function addParent(parent) {
   return http.post("/parent", parentClone);
 }
 
+export function editParent(parentId, parent) {
+  return http.patch(`/parent/${parentId}`, parent);
+}
+
 export function deleteParent(parentId) {
   return http.delete(`parent/${parentId}`);
 }
