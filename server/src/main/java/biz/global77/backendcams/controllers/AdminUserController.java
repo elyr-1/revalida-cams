@@ -40,7 +40,7 @@ public class AdminUserController {
     }
 
     @PatchMapping("/{adminId}")
-    public ResponseEntity<AdminUser> updateAdminUser(@PathVariable Integer adminId, @RequestBody AdminUser admin) {
+    public ResponseEntity<AdminUser> updateAdminUser(@PathVariable(value = "adminId") Integer adminId, @RequestBody AdminUser admin) {
         return ResponseEntity.ok().body(adminUserServiceImpl.updateAdminUser(adminId, admin));
     }
 

@@ -1,48 +1,48 @@
-//package biz.global77.backendcams.controllers;
-//
-//import biz.global77.backendcams.security.JwtUtils;
-//import biz.global77.backendcams.security.UserAuthenticationDetails;
-//import biz.global77.backendcams.security.UserAuthenticationResponse;
-//import biz.global77.backendcams.services.UserDetailsImpl;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.HttpHeaders;
-//import org.springframework.http.ResponseCookie;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.security.authentication.AuthenticationManager;
-//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.util.List;
-//import java.util.stream.Collectors;
-//
-//@RestController
-//@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"})
-//@RequestMapping("/api/auth")
-//public class AuthController {
-//
-//    @Autowired
-//    private AuthenticationManager authenticationManager;
-//
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
-//
-//    @Autowired
-//    private JwtUtils jwtUtils;
-//
-//    @PostMapping("/login")
-//    public ResponseEntity<?> authenticateUser(@RequestBody UserAuthenticationDetails userAuthenticationDetails) {
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(userAuthenticationDetails.getUsername(), userAuthenticationDetails.getPassword()));
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-//        ResponseCookie cookie = jwtUtils.generateJwtCookie(userDetails);
-//        List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
-//        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
-//                .body(new UserAuthenticationResponse());
-//    }
-//
-//
-//}
+package biz.global77.backendcams.controllers;
+
+import biz.global77.backendcams.services.UserServiceImpl;
+import com.tej.JooQDemo.jooq.sample.model.tables.pojos.Users;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.List;
+
+@RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("/api/auth")
+public class AuthController {
+
+    @Autowired
+    private UserServiceImpl userService;
+
+    @GetMapping
+    public ResponseEntity<List<Users>> getUsers() {
+        return ResponseEntity.ok().body(userService.getUsers());
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<Users> getUser(@PathVariable(value = "userId") Integer userId) {
+        return ResponseEntity.ok().body(userService.getUserById(userId));
+    }
+
+    @PostMapping
+    public ResponseEntity<Users> addAdminUser(@RequestBody Users user) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/auth").toUriString());
+        return ResponseEntity.created(uri).body(userService.insertUser(user));
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(@RequestBody @PathVariable(value = "userId") Integer userId) {
+        userService.deleteUserById(userId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{userId}")
+    public ResponseEntity<Users> updateUser(@PathVariable(value = "userId") Integer userId, @RequestBody Users user) {
+        return ResponseEntity.ok().body(userService.updateUser(userId, user));
+    }
+
+}

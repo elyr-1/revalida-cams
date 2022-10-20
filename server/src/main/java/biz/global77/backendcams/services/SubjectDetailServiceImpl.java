@@ -1,11 +1,11 @@
 package biz.global77.backendcams.services;
 
-import com.tej.JooQDemo.jooq.sample.model.Tables;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.SubjectDetailHistory;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import static com.tej.JooQDemo.jooq.sample.model.Tables.*;
 
 /* CRUD functions for subject detail history */
 @Service
@@ -18,19 +18,23 @@ public class SubjectDetailServiceImpl implements SubjectDetailService {
     /* add subject detail */
     @Override
     public SubjectDetailHistory insertSubjectDetail(SubjectDetailHistory subjectDetail) {
-        dsl.insertInto(Tables.SUBJECT_DETAIL_HISTORY,
-                Tables.SUBJECT_DETAIL_HISTORY.ACADEMIC_YEAR,
-                Tables.SUBJECT_DETAIL_HISTORY.SEM,
-                Tables.SUBJECT_DETAIL_HISTORY.SCHEDULE,
-                Tables.SUBJECT_DETAIL_HISTORY.SECTION,
-                Tables.SUBJECT_DETAIL_HISTORY.YEARLEVEL,
-                Tables.SUBJECT_DETAIL_HISTORY.STATUS,
-                Tables.SUBJECT_DETAIL_HISTORY.PROFESSOR_NO,
-                Tables.SUBJECT_DETAIL_HISTORY.SUBJECT_CODE)
+        dsl.insertInto(SUBJECT_DETAIL_HISTORY,
+                SUBJECT_DETAIL_HISTORY.ACADEMIC_YEAR,
+                SUBJECT_DETAIL_HISTORY.SEM,
+                SUBJECT_DETAIL_HISTORY.SCHEDULE_FROM,
+                SUBJECT_DETAIL_HISTORY.SCHEDULE_TO,
+                SUBJECT_DETAIL_HISTORY.DAY,
+                SUBJECT_DETAIL_HISTORY.SECTION,
+                SUBJECT_DETAIL_HISTORY.YEARLEVEL,
+                SUBJECT_DETAIL_HISTORY.STATUS,
+                SUBJECT_DETAIL_HISTORY.PROFESSOR_NO,
+                SUBJECT_DETAIL_HISTORY.SUBJECT_CODE)
         .values(
                 subjectDetail.getAcademicYear(),
                 subjectDetail.getSem(),
-                subjectDetail.getSchedule(),
+                subjectDetail.getScheduleFrom(),
+                subjectDetail.getScheduleTo(),
+                subjectDetail.getDay(),
                 subjectDetail.getSection(),
                 subjectDetail.getYearlevel(),
                 subjectDetail.getStatus(),
@@ -43,32 +47,34 @@ public class SubjectDetailServiceImpl implements SubjectDetailService {
     /* get all subject details history */
     @Override
     public List<SubjectDetailHistory> getSubjectDetails() {
-        return dsl.selectFrom(Tables.SUBJECT_DETAIL_HISTORY)
-                .orderBy(Tables.SUBJECT_DETAIL_HISTORY.SUBJECT_CODE)
+        return dsl.selectFrom(SUBJECT_DETAIL_HISTORY)
+                .orderBy(SUBJECT_DETAIL_HISTORY.SUBJECT_CODE)
                 .fetchInto(SubjectDetailHistory.class);
     }
 
     /* get subject detail by ID */
     @Override
     public SubjectDetailHistory getSubjectDetailById(Integer sessionId) {
-        return dsl.selectFrom(Tables.SUBJECT_DETAIL_HISTORY)
-                .where(Tables.SUBJECT_DETAIL_HISTORY.SESSION_ID.eq(sessionId))
+        return dsl.selectFrom(SUBJECT_DETAIL_HISTORY)
+                .where(SUBJECT_DETAIL_HISTORY.SESSION_ID.eq(sessionId))
                 .fetchOneInto(SubjectDetailHistory.class);
     }
 
     /* update subject detail */
     @Override
     public SubjectDetailHistory updateSubjectDetail(Integer sessionId, SubjectDetailHistory subjectDetail) {
-        dsl.update(Tables.SUBJECT_DETAIL_HISTORY)
-                .set(Tables.SUBJECT_DETAIL_HISTORY.ACADEMIC_YEAR, subjectDetail.getAcademicYear())
-                .set(Tables.SUBJECT_DETAIL_HISTORY.SEM, subjectDetail.getSem())
-                .set(Tables.SUBJECT_DETAIL_HISTORY.SCHEDULE, subjectDetail.getSchedule())
-                .set(Tables.SUBJECT_DETAIL_HISTORY.SECTION, subjectDetail.getSection())
-                .set(Tables.SUBJECT_DETAIL_HISTORY.YEARLEVEL, subjectDetail.getYearlevel())
-                .set(Tables.SUBJECT_DETAIL_HISTORY.STATUS, subjectDetail.getStatus())
-                .set(Tables.SUBJECT_DETAIL_HISTORY.PROFESSOR_NO, subjectDetail.getProfessorNo())
-                .set(Tables.SUBJECT_DETAIL_HISTORY.SUBJECT_CODE, subjectDetail.getSubjectCode())
-                .where(Tables.SUBJECT_DETAIL_HISTORY.SESSION_ID.eq(sessionId))
+        dsl.update(SUBJECT_DETAIL_HISTORY)
+                .set(SUBJECT_DETAIL_HISTORY.ACADEMIC_YEAR, subjectDetail.getAcademicYear())
+                .set(SUBJECT_DETAIL_HISTORY.SEM, subjectDetail.getSem())
+                .set(SUBJECT_DETAIL_HISTORY.SCHEDULE_FROM, subjectDetail.getScheduleFrom())
+                .set(SUBJECT_DETAIL_HISTORY.SCHEDULE_TO, subjectDetail.getScheduleTo())
+                .set(SUBJECT_DETAIL_HISTORY.DAY, subjectDetail.getDay())
+                .set(SUBJECT_DETAIL_HISTORY.SECTION, subjectDetail.getSection())
+                .set(SUBJECT_DETAIL_HISTORY.YEARLEVEL, subjectDetail.getYearlevel())
+                .set(SUBJECT_DETAIL_HISTORY.STATUS, subjectDetail.getStatus())
+                .set(SUBJECT_DETAIL_HISTORY.PROFESSOR_NO, subjectDetail.getProfessorNo())
+                .set(SUBJECT_DETAIL_HISTORY.SUBJECT_CODE, subjectDetail.getSubjectCode())
+                .where(SUBJECT_DETAIL_HISTORY.SESSION_ID.eq(sessionId))
                 .execute();
         return subjectDetail;
     }
@@ -76,8 +82,8 @@ public class SubjectDetailServiceImpl implements SubjectDetailService {
     /* delete subject detail */
     @Override
     public void deleteSubjectDetailById(Integer sessionId) {
-        dsl.deleteFrom(Tables.SUBJECT_DETAIL_HISTORY)
-                .where(Tables.SUBJECT_DETAIL_HISTORY.SESSION_ID.eq(sessionId))
+        dsl.deleteFrom(SUBJECT_DETAIL_HISTORY)
+                .where(SUBJECT_DETAIL_HISTORY.SESSION_ID.eq(sessionId))
                 .execute();
     }
 

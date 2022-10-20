@@ -1,11 +1,11 @@
 package biz.global77.backendcams.services;
 
-import com.tej.JooQDemo.jooq.sample.model.Tables;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.Professor;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import static com.tej.JooQDemo.jooq.sample.model.Tables.*;
 
 /* CRUD functions for professor */
 @Service
@@ -18,14 +18,14 @@ public class ProfessorServiceImpl implements ProfessorService {
     /* add a professor */
     @Override
     public Professor insertProfessor(Professor professor) {
-        dsl.insertInto(Tables.PROFESSOR,
-                Tables.PROFESSOR.PROFESSOR_NO,
-                Tables.PROFESSOR.PROFESSOR_NAME,
-                Tables.PROFESSOR.GENDER,
-                Tables.PROFESSOR.BIRTHDATE,
-                Tables.PROFESSOR.ADDRESS,
-                Tables.PROFESSOR.IS_ACTIVE,
-                Tables.PROFESSOR.ID)
+        dsl.insertInto(PROFESSOR,
+                PROFESSOR.PROFESSOR_NO,
+                PROFESSOR.PROFESSOR_NAME,
+                PROFESSOR.GENDER,
+                PROFESSOR.BIRTHDATE,
+                PROFESSOR.ADDRESS,
+                PROFESSOR.IS_ACTIVE,
+                PROFESSOR.ID)
         .values(
                 professor.getProfessorNo(),
                 professor.getProfessorName(),
@@ -41,31 +41,31 @@ public class ProfessorServiceImpl implements ProfessorService {
     /* get all professors */
     @Override
     public List<Professor> getProfessors() {
-        return dsl.selectFrom(Tables.PROFESSOR)
-                .orderBy(Tables.PROFESSOR.PROFESSOR_NO)
+        return dsl.selectFrom(PROFESSOR)
+                .orderBy(PROFESSOR.PROFESSOR_NO)
                 .fetchInto(Professor.class);
     }
 
     /* get professor by ID */
     @Override
     public Professor getProfessorById(Integer professorId) {
-        return dsl.selectFrom(Tables.PROFESSOR)
-                .where(Tables.PROFESSOR.PROFESSOR_ID.eq(professorId))
+        return dsl.selectFrom(PROFESSOR)
+                .where(PROFESSOR.PROFESSOR_ID.eq(professorId))
                 .fetchOneInto(Professor.class);
     }
 
     /* update professor detail(s) */
     @Override
     public Professor updateProfessor(Integer professorId, Professor professor) {
-        dsl.update(Tables.PROFESSOR)
-                .set(Tables.PROFESSOR.PROFESSOR_NO, professor.getProfessorNo())
-                .set(Tables.PROFESSOR.PROFESSOR_NAME, professor.getProfessorName())
-                .set(Tables.PROFESSOR.GENDER, professor.getGender())
-                .set(Tables.PROFESSOR.BIRTHDATE, professor.getBirthdate())
-                .set(Tables.PROFESSOR.ADDRESS, professor.getAddress())
-                .set(Tables.PROFESSOR.IS_ACTIVE, professor.getIsActive())
-                .set(Tables.PROFESSOR.ID, professor.getId())
-                .where(Tables.PROFESSOR.PROFESSOR_ID.eq(professorId))
+        dsl.update(PROFESSOR)
+                .set(PROFESSOR.PROFESSOR_NO, professor.getProfessorNo())
+                .set(PROFESSOR.PROFESSOR_NAME, professor.getProfessorName())
+                .set(PROFESSOR.GENDER, professor.getGender())
+                .set(PROFESSOR.BIRTHDATE, professor.getBirthdate())
+                .set(PROFESSOR.ADDRESS, professor.getAddress())
+                .set(PROFESSOR.IS_ACTIVE, professor.getIsActive())
+                .set(PROFESSOR.ID, professor.getId())
+                .where(PROFESSOR.PROFESSOR_ID.eq(professorId))
                 .execute();
         return professor;
     }
@@ -73,8 +73,8 @@ public class ProfessorServiceImpl implements ProfessorService {
     /* delete professor by ID */
     @Override
     public void deleteProfessorById(Integer professorId) {
-        dsl.deleteFrom(Tables.PROFESSOR)
-                .where(Tables.PROFESSOR.PROFESSOR_ID.eq(professorId))
+        dsl.deleteFrom(PROFESSOR)
+                .where(PROFESSOR.PROFESSOR_ID.eq(professorId))
                 .execute();
     }
 
