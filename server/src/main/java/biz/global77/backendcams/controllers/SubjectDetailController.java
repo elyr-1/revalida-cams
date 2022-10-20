@@ -6,13 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.net.URI;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/api/subject-detail-history") /* API entry point */
+@CrossOrigin(origins = "*")
+@RequestMapping("/api/schedule") /* API entry point */
 public class SubjectDetailController {
 
     @Autowired
@@ -40,7 +39,7 @@ public class SubjectDetailController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{sessionId}")
+    @PatchMapping("/{sessionId}")
     public ResponseEntity<SubjectDetailHistory> updateSubjectDetail(@PathVariable(value = "sessionId") Integer sessionId, @RequestBody SubjectDetailHistory subjectDetail) {
         return ResponseEntity.ok().body(subjectDetailServiceImpl.updateSubjectDetail(sessionId, subjectDetail));
     }

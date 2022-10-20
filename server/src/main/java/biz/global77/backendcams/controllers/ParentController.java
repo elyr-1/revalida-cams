@@ -10,7 +10,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/parent") /* API entry point */
 public class ParentController {
 
@@ -33,7 +33,7 @@ public class ParentController {
         return ResponseEntity.created(uri).body(parentServiceImpl.insertParent(parent));
     }
 
-    @PutMapping("/{parentId}")
+    @PatchMapping("/{parentId}")
     public ResponseEntity<Parent> updateParent(@PathVariable(value = "parentId") Integer parentId, @RequestBody Parent parent) {
         return ResponseEntity.ok().body(parentServiceImpl.updateParent(parentId, parent));
     }

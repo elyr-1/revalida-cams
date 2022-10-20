@@ -1,21 +1,11 @@
 import { useState, useEffect } from "react";
-
-// prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
-
-// @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
-
-// Material Dashboard 2 React base styles
 import breakpoints from "assets/theme/base/breakpoints";
-
-// Images
 import burceMars from "assets/images/bruce-mars.jpg";
 import backgroundImage from "assets/images/profile-banner.png";
 
@@ -23,7 +13,6 @@ function Header({ children }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
 
   useEffect(() => {
-    // A function that sets the orientation state of the tabs.
     function handleTabsOrientation() {
       return window.innerWidth < breakpoints.values.sm
         ? setTabsOrientation("vertical")
@@ -76,7 +65,7 @@ function Header({ children }) {
                 Sample Name
               </MDTypography>
               <MDTypography variant="button" color="text" fontWeight="regular">
-                Sample Position
+                Administrator
               </MDTypography>
             </MDBox>
           </Grid>
