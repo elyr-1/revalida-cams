@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
@@ -8,7 +8,7 @@ import Sidenav from "examples/Sidenav";
 import Configurator from "examples/Configurator";
 import theme from "assets/theme";
 import themeDark from "assets/theme-dark";
-import adminRoutes from "routes";
+import adminRoutes from "routes/admin";
 import Login from "layouts/authentication/login";
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 import brandWhite from "assets/images/logo-ct.png";
@@ -92,17 +92,36 @@ export default function App() {
     </MDBox>
   );
 
-  const handleLogin = async (username, password) => {
-    try {
-      const response = await authService.login(username, password);
-      console.log(response);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Username or password is incorrect",
-      });
-    }
+  const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(async () => {
+    await authService.getUsers().then((response) => {
+      setUsers(response.data);
+      users.map((user) => user);
+    });
+  }, []);
+
+  const authUsers = users;
+
+  const handleLogin = (username, password) => {
+    authUsers.forEach((user) => {
+      if (user.username === username && user.password === password && user.roleId === 1) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Login Success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/dashboard/admin");
+      }
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Error",
+      //   text: "Username or password is incorrect",
+      // });
+    });
   };
 
   return (

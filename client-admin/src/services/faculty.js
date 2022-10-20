@@ -18,6 +18,10 @@ export function addProfessor(professor) {
   return http.post("/professor", professorClone);
 }
 
+export function editProfessor(professorId, professor) {
+  return http.patch(`/professor/${professorId}`, professor);
+}
+
 export function deleteProfessor(professorId) {
   return http.delete(`professor/${professorId}`);
 }

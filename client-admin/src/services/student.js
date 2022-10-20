@@ -5,6 +5,10 @@ export function getStudents() {
   return http.get("/student");
 }
 
+export function getStudentById(studentId) {
+  return http.get(`/student/${studentId}`);
+}
+
 export function addStudent(student) {
   const studentClone = { ...student };
   Object.keys(student).forEach((key) => {
@@ -13,6 +17,10 @@ export function addStudent(student) {
     }
   });
   return http.post("/student", studentClone);
+}
+
+export function editStudent(studentId, student) {
+  return http.patch(`/student/${studentId}`, student);
 }
 
 export function deleteStudent(studentId) {
