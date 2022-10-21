@@ -10,7 +10,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/subject")
 public class SubjectController {
 
@@ -28,7 +28,7 @@ public class SubjectController {
     }
 
     @PostMapping
-    public ResponseEntity<Subject> addSubject(Subject subject) {
+    public ResponseEntity<Subject> addSubject(@RequestBody Subject subject) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/subject").toUriString());
         return ResponseEntity.created(uri).body(subjectServiceImpl.insertSubject(subject));
     }
@@ -39,7 +39,7 @@ public class SubjectController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{subjectId}")
+    @PatchMapping("/{subjectId}")
     public ResponseEntity<Subject> updateSubject(@PathVariable(value = "subjectId") Integer subjectId, @RequestBody Subject subject) {
         return ResponseEntity.ok().body(subjectServiceImpl.updateSubject(subjectId, subject));
     }

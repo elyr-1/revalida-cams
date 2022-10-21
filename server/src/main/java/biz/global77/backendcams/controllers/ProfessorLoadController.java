@@ -10,7 +10,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/professor-load") /* API entry point */
 public class ProfessorLoadController {
 
@@ -39,7 +39,7 @@ public class ProfessorLoadController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{loadId}")
+    @PatchMapping("/{loadId}")
     public ResponseEntity<ProfessorLoad> updateProfessorLoad(@PathVariable(value = "loadId") Integer loadId, @RequestBody ProfessorLoad professorLoad) {
         return ResponseEntity.ok().body(professorLoadServiceImpl.updateProfessorLoad(loadId, professorLoad));
     }

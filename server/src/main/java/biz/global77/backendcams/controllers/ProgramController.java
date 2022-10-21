@@ -2,6 +2,8 @@ package biz.global77.backendcams.controllers;
 
 import biz.global77.backendcams.services.ProgramServiceImpl;
 import com.tej.JooQDemo.jooq.sample.model.tables.pojos.Program;
+import org.jooq.Record;
+import org.jooq.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +12,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/program") /* API entry point */
 public class ProgramController {
 
@@ -39,7 +41,7 @@ public class ProgramController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{programId}")
+    @PatchMapping("/{programId}")
     public ResponseEntity<Program> updateProgram(@PathVariable(value = "programId") Integer programId, @RequestBody Program program) {
         return ResponseEntity.ok().body(programServiceImpl.updateProgram(programId, program));
     }
