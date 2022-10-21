@@ -38,11 +38,11 @@ function Programs() {
       <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
         <MDBox>
           <MDTypography variant="h6" gutterBottom>
-            SUBJECTS
+            SCHEDULE
           </MDTypography>
           <MDBox display="flex" alignItems="center" lineHeight={0}>
             <MDTypography variant="button" fontWeight="regular" color="text">
-              Enrolled Subjects
+              schedules enrolled
             </MDTypography>
           </MDBox>
         </MDBox>

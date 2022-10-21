@@ -13,26 +13,25 @@ import MDTypography from "components/MDTypography";
 export default function data() {
   return {
     columns: [
-      { Header: "student No", accessor: "studentNo", width: "15%", align: "left" },
-      { Header: "fullname", accessor: "fullName", width: "15%", align: "left" },
+      { Header: "professor name", accessor: "professorname", width: "15%", align: "left" },
+      { Header: "subject", accessor: "subject", width: "15%", align: "left" },
       { Header: "course code", accessor: "subjectCode", width: "15%", align: "left" },
-      { Header: "subject", accessor: "subject", align: "left" },
+      { Header: "units", accessor: "units", align: "left" },
       { Header: "yearlevel", accessor: "yearlevel", align: "center" },
-      { Header: "semester", accessor: "semester", align: "center" },
-      { Header: "units", accessor: "units", align: "center" },
-      { Header: "action", accessor: "action", align: "center" },
+      { Header: "date", accessor: "date", align: "center" },
+      { Header: "time", accessor: "time", align: "center" },
     ],
 
     rows: [
       {
-        studentNo: (
+        professorname: (
           <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-            PM-17-00617-A
+            Jason Macabante
           </MDTypography>
         ),
-        fullName: (
+        subject: (
           <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-            Jayson Derollo
+            Fundamentals of Algebra
           </MDTypography>
         ),
         subjectCode: (
@@ -40,9 +39,9 @@ export default function data() {
             Math102
           </MDTypography>
         ),
-        subject: (
+        units: (
           <MDTypography display="block" variant="button" fontWeight="medium">
-            Fundamentals of Algebra
+            3
           </MDTypography>
         ),
         yearlevel: (
@@ -50,19 +49,14 @@ export default function data() {
             4th year
           </MDTypography>
         ),
-        semester: (
+        date: (
           <MDTypography display="block" variant="button" fontWeight="medium">
-            2
+            Oct 20, 2022
           </MDTypography>
         ),
-        units: (
+        time: (
           <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
-            3
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography component="a" href="#" variant="button" color="error" fontWeight="medium">
-            Edit
+            2:00 PM - 5:00 PM
           </MDTypography>
         ),
       },

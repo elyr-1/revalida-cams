@@ -1,5 +1,5 @@
 import Dashboard from "layouts/faculty/dashboard";
-import Evaluation from "layouts/faculty/evaluation";
+import Evaluation from "layouts/faculty/evaluation/Students";
 import Students from "layouts/faculty/students";
 import Profile from "layouts/faculty/profile";
 import Icon from "@mui/material/Icon";
