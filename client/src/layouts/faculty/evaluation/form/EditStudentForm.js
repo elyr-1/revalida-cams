@@ -15,7 +15,7 @@ function EditStudentForm({ student, onEditStudent }) {
   const [firstname, setFirstname] = useState(student.firstname);
   const [middlename, setMiddlename] = useState(student.middlename);
   const [lastname, setLastname] = useState(student.lastname);
-  const [birthdate, setBirthdate] = useState(student.birthdate);
+  // const [birthdate, setBirthdate] = useState(student.birthdate);
   const [gender, setGender] = useState(student.gender);
   // const [address, setAddress] = useState(student.address);
   const [yearlevel, setYearlevel] = useState(student.yearlevel);
@@ -94,7 +94,7 @@ function EditStudentForm({ student, onEditStudent }) {
                   onChange={(e) => setLastname(e.target.value)}
                 />
               </MDBox>
-              <MDBox mb={2}>
+              {/* <MDBox mb={2}>
                 <MDInput
                   type="date"
                   label="Birthdate"
@@ -104,18 +104,7 @@ function EditStudentForm({ student, onEditStudent }) {
                   value={birthdate}
                   onChange={(e) => setBirthdate(e.target.value)}
                 />
-                {/* <KeyboardDatePicker
-                  //   id={id}
-                  label="Birth Date"
-                  format="MM/dd/yyyy"
-                  name="birthdate"
-                  value={birthdate}
-                  onChange={(date) => {
-                    setBirthdate(date);
-                  }}
-                  fullWidth
-                /> */}
-              </MDBox>
+              </MDBox> */}
               <MDBox mb={2}>
                 <MDInput
                   type="text"

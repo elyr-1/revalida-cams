@@ -15,7 +15,7 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                icon="weekend"
+                icon="supervisor_account"
                 title="PRESENT"
                 count="50"
                 percentage={{
@@ -45,7 +45,7 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="success"
-                icon="leaderboard"
+                icon="school"
                 title="PASSED"
                 count="25"
                 percentage={{
