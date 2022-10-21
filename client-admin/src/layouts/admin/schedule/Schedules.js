@@ -17,24 +17,22 @@ import TablePagination from "@mui/material/TablePagination";
 import Tooltip from "@mui/material/Tooltip";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import * as studentService from "services/student";
+import * as scheduleService from "services/schedule";
 import Swal from "sweetalert2";
 import Schedule from "./Schedule";
 import AddScheduleForm from "./forms/AddScheduleForm";
 
 const columns = [
-  { id: "studentNo", label: "Student No." },
-  { id: "lastname", label: "Last Name" },
-  { id: "firstname", label: "First Name" },
-  { id: "gender", label: "Gender" },
-  { id: "programCode", label: "Program Code" },
+  { id: "subjectCode", label: "Subject Code" },
+  { id: "time", label: "Time" },
+  { id: "day", label: "Day" },
   { id: "yearlevel", label: "Year Level" },
-  { id: "sem", label: "Semester" },
+  { id: "professorNo", label: "Professor No." },
   { id: "actions", label: "Actions", align: "center" },
 ];
 
 function Schedules() {
-  const [students, setStudents] = useState([]);
+  const [schedules, setSchedules] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = useState(false);
@@ -53,20 +51,21 @@ function Schedules() {
 
   // Fetch all students
   useEffect(async () => {
-    await studentService.getStudents().then((response) => {
-      setStudents(response.data);
+    await scheduleService.getSchedule().then((response) => {
+      setSchedules(response.data);
+      // console.log(response.data);
     });
   }, []);
 
-  // Add a student
-  const handleAddStudent = (student) => {
-    studentService
-      .addStudent(student)
+  // Add a schedule
+  const handleAddSchedule = (schedule) => {
+    scheduleService
+      .addSchedule(schedule)
       .then(() => {
         Swal.fire({
           position: "top",
           icon: "success",
-          title: "A new student has been added!",
+          title: "A new schedule has been added!",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -85,16 +84,16 @@ function Schedules() {
       });
   };
 
-  // Update a student
-  const handleEditStudent = (studentId, updatedStudent) => {
-    setStudents(
-      students.map((student) => (student.studentId === studentId ? updatedStudent : student))
+  // Update a schedule
+  const handleEditSchedule = (sessionId, updatedSchedule) => {
+    setSchedules(
+      schedules.map((schedule) => (schedule.sessionId === sessionId ? updatedSchedule : schedule))
     );
-    studentService.editStudent(studentId, updatedStudent).then(() => {
+    scheduleService.editSchedule(sessionId, updatedSchedule).then(() => {
       Swal.fire({
         position: "top",
         icon: "success",
-        title: "Student has been updated!",
+        title: "Schedule has been updated!",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -104,8 +103,8 @@ function Schedules() {
     });
   };
 
-  // Delete a student
-  const handleDeleteStudent = (studentId) => {
+  // Delete a schedule
+  const handleDeleteSchedule = (sessionId) => {
     try {
       Swal.fire({
         title: "Are you sure?",
@@ -116,8 +115,8 @@ function Schedules() {
         confirmButtonText: "Delete",
       }).then((result) => {
         if (result.isConfirmed) {
-          studentService.deleteStudent(studentId);
-          setStudents(students.filter((student) => student.studentId !== studentId));
+          scheduleService.deleteSchedule(sessionId);
+          setSchedules(schedules.filter((schedule) => schedule.sessionId !== sessionId));
           Swal.fire("Deleted", "Record has been deleted.", "success");
         } else if (result.isDenied) {
           Swal.fire("Deletion has been cancelled", "", "info");
@@ -154,7 +153,7 @@ function Schedules() {
                 justifyContent="space-between"
               >
                 <MDTypography variant="h6" color="white">
-                  Students
+                  Schedule
                 </MDTypography>
                 <IconButton onClick={handleOpen}>
                   <MDBox
@@ -177,7 +176,7 @@ function Schedules() {
                 </IconButton>
                 <Dialog open={open} onClose={handleClose} fullWidth>
                   <DialogContent>
-                    <AddScheduleForm onAddStudent={handleAddStudent} onClose={handleClose} />
+                    <AddScheduleForm onAddSchedule={handleAddSchedule} onClose={handleClose} />
                   </DialogContent>
                 </Dialog>
               </MDBox>
@@ -203,17 +202,17 @@ function Schedules() {
                       </TableRow>
                     </MDBox>
                     <TableBody>
-                      {students
+                      {schedules
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        .map((student) => (
+                        .map((schedule) => (
                           <TableRow
-                            key={student.studentId}
+                            key={schedule.sessionId}
                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                           >
                             <Schedule
-                              student={student}
-                              onEditStudent={handleEditStudent}
-                              onDeleteStudent={handleDeleteStudent}
+                              schedule={schedule}
+                              onEditSchedule={handleEditSchedule}
+                              onDeleteSchedule={handleDeleteSchedule}
                             />
                           </TableRow>
                         ))}
@@ -226,7 +225,7 @@ function Schedules() {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 15]}
                 component="div"
-                count={students.length}
+                count={schedules.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

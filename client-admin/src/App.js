@@ -93,19 +93,17 @@ export default function App() {
   );
 
   const [users, setUsers] = useState([]);
+  // const [auth, setAuth] = useState(false);
   const navigate = useNavigate();
 
   useEffect(async () => {
     await authService.getUsers().then((response) => {
       setUsers(response.data);
-      users.map((user) => user);
     });
   }, []);
 
-  const authUsers = users;
-
   const handleLogin = (username, password) => {
-    authUsers.forEach((user) => {
+    users.forEach((user) => {
       if (user.username === username && user.password === password && user.roleId === 1) {
         Swal.fire({
           position: "top-center",
@@ -114,13 +112,16 @@ export default function App() {
           showConfirmButton: false,
           timer: 1500,
         });
+        // setAuth(true);
         navigate("/dashboard/admin");
       }
-      // Swal.fire({
-      //   icon: "error",
-      //   title: "Error",
-      //   text: "Username or password is incorrect",
-      // });
+      if (user.username !== username || user.password !== password) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Username or password is incorrect",
+        });
+      }
     });
   };
 

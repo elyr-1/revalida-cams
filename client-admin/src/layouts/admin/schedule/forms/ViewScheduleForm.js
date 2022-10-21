@@ -6,11 +6,11 @@ import Divider from "@mui/material/Divider";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 
-function ViewScheduleForm({ student }) {
+function ViewScheduleForm({ schedule }) {
   return (
     <Grid>
       <Grid item>
-        <CardHeader title="Student Details" sx={{ textAlign: "center" }} />
+        <CardHeader title="Schedule Details" sx={{ textAlign: "center" }} />
         <Divider />
         <CardContent>
           <MDBox pt={1} pb={1} px={1}>
@@ -18,92 +18,21 @@ function ViewScheduleForm({ student }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Student No."
+                  label="Subject Code"
                   variant="standard"
                   fullWidth
-                  name="studentNo"
-                  value={student.studentNo}
+                  name="subjectCode"
+                  value={schedule.subjectCode}
                 />
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="First Name"
+                  label="Academic Year"
                   variant="standard"
                   fullWidth
-                  name="firstname"
-                  value={student.firstname}
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Middle Name"
-                  variant="standard"
-                  fullWidth
-                  name="middlename"
-                  value={student.middlename}
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Last Name"
-                  variant="standard"
-                  fullWidth
-                  name="lastname"
-                  value={student.lastname}
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="date"
-                  label="Birthdate"
-                  variant="standard"
-                  fullWidth
-                  name="birthdate"
-                  value={student.birthdate}
-                />
-                {/* <KeyboardDatePicker
-                  //   id={id}
-                  label="Birth Date"
-                  format="MM/dd/yyyy"
-                  name="birthdate"
-                  value={birthdate}
-                  onChange={(date) => {
-                    setBirthdate(date);
-                  }}
-                  fullWidth
-                /> */}
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Gender"
-                  variant="standard"
-                  fullWidth
-                  name="gender"
-                  value={student.gender}
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Address"
-                  variant="standard"
-                  fullWidth
-                  name="address"
-                  value={student.address}
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Year Level"
-                  variant="standard"
-                  fullWidth
-                  name="yearlevel"
-                  value={student.yearlevel}
+                  name="academicYear"
+                  value={schedule.academicYear}
                 />
               </MDBox>
               <MDBox mb={2}>
@@ -113,17 +42,67 @@ function ViewScheduleForm({ student }) {
                   variant="standard"
                   fullWidth
                   name="sem"
-                  value={student.sem}
+                  value={schedule.sem}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="time"
+                  label="Start Time"
+                  variant="standard"
+                  fullWidth
+                  name="scheduleFrom"
+                  value={schedule.scheduleFrom}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="time"
+                  label="End Time"
+                  variant="standard"
+                  fullWidth
+                  name="scheduleTo"
+                  value={schedule.scheduleTo}
                 />
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Program Code"
+                  label="Day"
                   variant="standard"
                   fullWidth
-                  name="programCode"
-                  value={student.programCode}
+                  name="day"
+                  value={schedule.day}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Section"
+                  variant="standard"
+                  fullWidth
+                  name="section"
+                  value={schedule.section}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="number"
+                  label="Year Level"
+                  variant="standard"
+                  fullWidth
+                  name="yearlevel"
+                  value={schedule.yearlevel}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Professor No."
+                  variant="standard"
+                  fullWidth
+                  name="professorNo"
+                  value={schedule.professorNo}
                 />
               </MDBox>
               <Divider />

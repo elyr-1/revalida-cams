@@ -9,30 +9,40 @@ import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 // import KeyboardDatePicker from "@material-ui/pickers/DatePicker";
 
-function EditScheduleForm({ student, onEditStudent }) {
-  const id = student.studentId;
-  const [studentNo, setStudentNo] = useState(student.studentNo);
-  const [firstname, setFirstname] = useState(student.firstname);
-  const [middlename, setMiddlename] = useState(student.middlename);
-  const [lastname, setLastname] = useState(student.lastname);
-  const [birthdate, setBirthdate] = useState(student.birthdate);
-  const [gender, setGender] = useState(student.gender);
-  const [address, setAddress] = useState(student.address);
-  const [yearlevel, setYearlevel] = useState(student.yearlevel);
-  const [sem, setSem] = useState(student.sem);
-  const [programCode, setProgramCode] = useState(student.programCode);
+function EditScheduleForm({ schedule, onEditSchedule }) {
+  const id = schedule.sessionId;
+  const [subjectCode, setSubjectCode] = useState(schedule.subjectCode);
+  const [academicYear, setAcademicYear] = useState(schedule.academicYear);
+  const [sem, setSem] = useState(schedule.sem);
+  const [scheduleFrom, setScheduleFrom] = useState(schedule.scheduleFrom);
+  const [scheduleTo, setScheduleTo] = useState(schedule.scheduleTo);
+  const [day, setDay] = useState(schedule.day);
+  const [section, setSection] = useState(schedule.address);
+  const [yearlevel, setYearlevel] = useState(schedule.yearlevel);
+  const [professorNo, setProfessorNo] = useState(schedule.professorNo);
 
-  const updatedStudent = { ...student, studentNo, firstname, middlename, lastname, programCode };
+  const updatedSchedule = {
+    ...schedule,
+    subjectCode,
+    academicYear,
+    sem,
+    scheduleFrom,
+    scheduleTo,
+    day,
+    section,
+    yearlevel,
+    professorNo,
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onEditStudent(id, updatedStudent);
+    onEditSchedule(id, updatedSchedule);
   };
 
   return (
     <Grid component="form" onSubmit={handleSubmit}>
       <Grid item>
-        <CardHeader title="Edit Student" sx={{ textAlign: "center" }} />
+        <CardHeader title="Edit Schedule" sx={{ textAlign: "center" }} />
         <Divider />
         <CardContent>
           <MDBox pt={1} pb={1} px={1}>
@@ -40,91 +50,81 @@ function EditScheduleForm({ student, onEditStudent }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Student No."
+                  label="Subject Code"
                   variant="standard"
                   fullWidth
-                  name="studentNo"
-                  value={studentNo}
-                  onChange={(e) => setStudentNo(e.target.value)}
+                  name="subjectCode"
+                  value={subjectCode}
+                  onChange={(e) => setSubjectCode(e.target.value)}
                   required
                 />
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="text"
-                  label="First Name"
+                  type="number"
+                  label="Academic Year"
                   variant="standard"
                   fullWidth
-                  name="firstname"
-                  value={firstname}
-                  onChange={(e) => setFirstname(e.target.value)}
+                  name="academicyear"
+                  value={academicYear}
+                  onChange={(e) => setAcademicYear(e.target.value)}
                   required
                 />
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="text"
-                  label="Middle Name"
+                  type="number"
+                  label="Semester"
                   variant="standard"
                   fullWidth
-                  name="middlename"
-                  value={middlename}
-                  onChange={(e) => setMiddlename(e.target.value)}
+                  name="sem"
+                  value={sem}
+                  onChange={(e) => setSem(e.target.value)}
+                  required
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="time"
+                  label="Start Time"
+                  variant="standard"
+                  fullWidth
+                  name="scheduleFrom"
+                  value={scheduleFrom}
+                  onChange={(e) => setScheduleFrom(e.target.value)}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="time"
+                  label="End Time"
+                  variant="standard"
+                  fullWidth
+                  name="scheduleTo"
+                  value={scheduleTo}
+                  onChange={(e) => setScheduleTo(e.target.value)}
                 />
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Last Name"
+                  label="Day"
                   variant="standard"
                   fullWidth
-                  name="lastname"
-                  value={lastname}
-                  onChange={(e) => setLastname(e.target.value)}
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="date"
-                  label="Birthdate"
-                  variant="standard"
-                  fullWidth
-                  name="birthdate"
-                  value={birthdate}
-                  onChange={(e) => setBirthdate(e.target.value)}
-                />
-                {/* <KeyboardDatePicker
-                  //   id={id}
-                  label="Birth Date"
-                  format="MM/dd/yyyy"
-                  name="birthdate"
-                  value={birthdate}
-                  onChange={(date) => {
-                    setBirthdate(date);
-                  }}
-                  fullWidth
-                /> */}
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Gender"
-                  variant="standard"
-                  fullWidth
-                  name="gender"
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
+                  name="day"
+                  value={day}
+                  onChange={(e) => setDay(e.target.value)}
                 />
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Address"
+                  label="Section"
                   variant="standard"
                   fullWidth
-                  name="address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  name="section"
+                  value={section}
+                  onChange={(e) => setSection(e.target.value)}
                 />
               </MDBox>
               <MDBox mb={2}>
@@ -141,23 +141,12 @@ function EditScheduleForm({ student, onEditStudent }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Semester"
+                  label="Professor No."
                   variant="standard"
                   fullWidth
-                  name="sem"
-                  value={sem}
-                  onChange={(e) => setSem(e.target.value)}
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Program Code"
-                  variant="standard"
-                  fullWidth
-                  name="programCode"
-                  value={programCode}
-                  onChange={(e) => setProgramCode(e.target.value)}
+                  name="professorNo"
+                  value={professorNo}
+                  onChange={(e) => setProfessorNo(e.target.value)}
                 />
               </MDBox>
               <MDBox mt={4} mb={1}>
