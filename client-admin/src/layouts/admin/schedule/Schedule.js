@@ -13,7 +13,7 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import ViewScheduleForm from "./forms/ViewScheduleForm";
 import EditScheduleForm from "./forms/EditScheduleForm";
 
-function Schedule({ student, onEditStudent, onDeleteStudent }) {
+function Schedule({ schedule, onEditSchedule, onDeleteSchedule }) {
   const [open, setOpen] = useState(false);
   const [view, setView] = useState(false);
 
@@ -24,58 +24,48 @@ function Schedule({ student, onEditStudent, onDeleteStudent }) {
 
   useEffect(() => {
     handleClose();
-  }, [student]);
+  }, [schedule]);
 
   return (
     <>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {student.studentNo}
+          {schedule.subjectCode}
         </MDTypography>
       </TableCell>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {student.lastname}
+          {schedule.scheduleFrom} - {schedule.scheduleTo}
         </MDTypography>
       </TableCell>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {student.firstname}
+          {schedule.day}
         </MDTypography>
       </TableCell>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {student.gender}
+          {schedule.yearlevel}
         </MDTypography>
       </TableCell>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {student.programCode}
-        </MDTypography>
-      </TableCell>
-      <TableCell>
-        <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {student.yearlevel}
-        </MDTypography>
-      </TableCell>
-      <TableCell>
-        <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {student.sem}
+          {schedule.professorNo}
         </MDTypography>
       </TableCell>
       <TableCell align="center">
         <ButtonGroup>
-          <Tooltip title="View Student Details" placement="top">
+          <Tooltip title="View Schedule Details" placement="top">
             <IconButton onClick={handleOpenView}>
               <VisibilityRoundedIcon color="secondary" />
             </IconButton>
           </Tooltip>
           <Dialog open={view} onClose={handleCloseView} fullWidth>
             <DialogContent>
-              <ViewScheduleForm key={student.studentId} student={student} />
+              <ViewScheduleForm key={schedule.sessionId} schedule={schedule} />
             </DialogContent>
           </Dialog>
-          <Tooltip title="Edit Student Details" placement="top">
+          <Tooltip title="Edit Schedule Details" placement="top">
             <IconButton onClick={handleOpen}>
               <EditRoundedIcon color="primary" />
             </IconButton>
@@ -83,14 +73,14 @@ function Schedule({ student, onEditStudent, onDeleteStudent }) {
           <Dialog open={open} onClose={handleClose} fullWidth>
             <DialogContent>
               <EditScheduleForm
-                key={student.studentId}
-                student={student}
-                onEditStudent={onEditStudent}
+                key={schedule.sessionId}
+                schedule={schedule}
+                onEditSchedule={onEditSchedule}
               />
             </DialogContent>
           </Dialog>
-          <Tooltip title="Delete Student" placement="top">
-            <IconButton onClick={() => onDeleteStudent(student.studentId)}>
+          <Tooltip title="Delete Schedule" placement="top">
+            <IconButton onClick={() => onDeleteSchedule(schedule.scheduleId)}>
               <DeleteRoundedIcon color="error" />
             </IconButton>
           </Tooltip>

@@ -9,33 +9,31 @@ import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Joi from "joi";
 
-function AddScheduleForm({ onAddStudent, onClose }) {
+function AddScheduleForm({ onAddSchedule, onClose }) {
   const [form, setForm] = useState({
-    id: 0,
-    studentNo: "",
-    firstname: "",
-    middlename: "",
-    lastname: "",
-    birthdate: "",
-    gender: "",
-    yearlevel: 0,
+    subjectCode: "",
+    academicYear: 0,
     sem: 0,
-    programCode: "",
+    scheduleFrom: "",
+    scheduleTo: "",
+    day: "",
+    section: 0,
+    yearlevel: 0,
+    professorNo: "",
   });
 
   const [errors, setErrors] = useState({});
 
   const schema = Joi.object({
-    id: Joi.number().min(1).required(),
-    studentNo: Joi.string().min(1).max(30).required(),
-    firstname: Joi.string().min(1).required(),
-    middlename: Joi.string().allow("").optional(),
-    lastname: Joi.string().min(1).required(),
-    birthdate: Joi.date().required(),
-    gender: Joi.string().allow("").optional(),
+    subjectCode: Joi.string().min(1).max(30).required(),
+    academicYear: Joi.number().min(1).required(),
+    sem: Joi.number().allow("").optional(),
+    scheduleFrom: Joi.string().min(1).required(),
+    scheduleTo: Joi.string().required(),
+    day: Joi.string().allow("").optional(),
+    section: Joi.number().min(1).required(),
     yearlevel: Joi.number().min(1).required(),
-    sem: Joi.number().min(1).required(),
-    programCode: Joi.string().min(1).required(),
+    professorNo: Joi.string().min(1).required(),
   });
 
   const handleChange = (event) => {
@@ -59,7 +57,7 @@ function AddScheduleForm({ onAddStudent, onClose }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onAddStudent(form);
+    onAddSchedule(form);
     console.log(form);
   };
 
@@ -71,18 +69,31 @@ function AddScheduleForm({ onAddStudent, onClose }) {
   return (
     <Grid component="form" onSubmit={handleSubmit}>
       <Grid item>
-        <CardHeader title="Add New Student" sx={{ textAlign: "center" }} />
+        <CardHeader title="Add New Schedule" sx={{ textAlign: "center" }} />
         <Divider />
         <CardContent>
           <MDBox pt={1} pb={1} px={1}>
             <MDBox>
               <MDBox mb={2}>
                 <MDInput
+                  type="text"
+                  label="Subject Code"
+                  variant="standard"
+                  fullWidth
+                  name="subjectCode"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
                   type="number"
-                  label="User ID"
+                  label="Academic Year"
                   variant="standard"
                   fullWidth
-                  name="id"
+                  name="academicYear"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -92,10 +103,36 @@ function AddScheduleForm({ onAddStudent, onClose }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Student No."
+                  label="Semester"
                   variant="standard"
                   fullWidth
-                  name="studentNo"
+                  name="sem"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="time"
+                  label="Start Time"
+                  variant="standard"
+                  fullWidth
+                  name="scheduleFrom"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="time"
+                  label="End Time"
+                  variant="standard"
+                  fullWidth
+                  name="scheduleTo"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -105,10 +142,10 @@ function AddScheduleForm({ onAddStudent, onClose }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="First Name"
+                  label="Day"
                   variant="standard"
                   fullWidth
-                  name="firstname"
+                  name="day"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -117,50 +154,11 @@ function AddScheduleForm({ onAddStudent, onClose }) {
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="text"
-                  label="Middle Name"
+                  type="number"
+                  label="Section"
                   variant="standard"
                   fullWidth
-                  name="middlename"
-                  error={!!errors.name}
-                  helperText={errors.name}
-                  value={form.name}
-                  onChange={handleChange}
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Last Name"
-                  variant="standard"
-                  fullWidth
-                  name="lastname"
-                  error={!!errors.name}
-                  helperText={errors.name}
-                  value={form.name}
-                  onChange={handleChange}
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="date"
-                  label=""
-                  variant="standard"
-                  fullWidth
-                  name="birthdate"
-                  error={!!errors.name}
-                  helperText={errors.name}
-                  value={form.name}
-                  onChange={handleChange}
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Gender"
-                  variant="standard"
-                  fullWidth
-                  name="gender"
+                  name="section"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -182,24 +180,11 @@ function AddScheduleForm({ onAddStudent, onClose }) {
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="number"
-                  label="Semester"
-                  variant="standard"
-                  fullWidth
-                  name="sem"
-                  error={!!errors.name}
-                  helperText={errors.name}
-                  value={form.name}
-                  onChange={handleChange}
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
                   type="text"
-                  label="Program Code"
+                  label="Professor No"
                   variant="standard"
                   fullWidth
-                  name="programCode"
+                  name="professorNo"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
