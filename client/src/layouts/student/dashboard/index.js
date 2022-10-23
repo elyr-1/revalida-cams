@@ -21,8 +21,7 @@ function Dashboard() {
                 count={281}
                 percentage={{
                   color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
+                  label: "No absences",
                 }}
               />
             </MDBox>
@@ -30,13 +29,14 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
+                color="info"
                 icon="leaderboard"
                 title="Tasks Completed"
-                count="2,300"
+                count="10"
                 percentage={{
-                  color: "success",
-                  amount: "+3%",
-                  label: "than last month",
+                  color: "error",
+                  amount: "1",
+                  label: "missing",
                 }}
               />
             </MDBox>
@@ -47,11 +47,11 @@ function Dashboard() {
                 color="success"
                 icon="store"
                 title="Projects Completed"
-                count="34k"
+                count="2"
                 percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
+                  color: "error",
+                  amount: "1",
+                  label: "missing",
                 }}
               />
             </MDBox>
@@ -59,14 +59,14 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="primary"
+                color="error"
                 icon="person_add"
-                title="Missing"
-                count="+91"
+                title="Missing Task"
+                count="2"
                 percentage={{
-                  color: "success",
-                  amount: "",
-                  label: "Just updated",
+                  color: "error",
+                  amount: "2",
+                  label: "missing tasks",
                 }}
               />
             </MDBox>

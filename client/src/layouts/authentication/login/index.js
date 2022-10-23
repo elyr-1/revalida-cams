@@ -55,7 +55,7 @@ function Login({ onLogin }) {
       <Card onSubmit={handleSubmit}>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          bgColor="error"
           borderRadius="lg"
           coloredShadow="success"
           mx={2}
@@ -97,11 +97,11 @@ function Login({ onLogin }) {
               />
             </MDBox>
 
-            <MDBox mt={4} mb={1}>
+            <MDBox mt={4}>
               <MDButton
                 variant="gradient"
                 type="submit"
-                color="info"
+                color="error"
                 fullWidth
                 disabled={isFormInvalid()}
               >

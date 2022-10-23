@@ -70,7 +70,7 @@ const colors = {
   },
 
   error: {
-    main: "#F44335",
+    main: "#841c1c",
     focus: "#f65f53",
   },
 
@@ -124,7 +124,7 @@ const colors = {
 
     error: {
       main: "#EF5350",
-      state: "#E53935",
+      state: "#841c1c",
     },
 
     light: {

@@ -8,7 +8,9 @@ import Sidenav from "examples/Sidenav";
 import Configurator from "examples/Configurator";
 import theme from "assets/theme";
 import themeDark from "assets/theme-dark";
-import adminRoutes from "routes/admin";
+// import facultyRoutes from "routes/faculty";
+// import adminRoutes from "routes/admin";
+import studentRoutes from "routes/student";
 import Login from "layouts/authentication/login";
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 import brandWhite from "assets/images/logo-ct.png";
@@ -94,7 +96,6 @@ export default function App() {
 
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
-
   useEffect(async () => {
     await authService.getUsers().then((response) => {
       setUsers(response.data);
@@ -116,6 +117,36 @@ export default function App() {
         });
         navigate("/dashboard/admin");
       }
+      if (user.username === username && user.password === password && user.roleId === 2) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Login Success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/dashboard/faculty");
+      }
+      if (user.username === username && user.password === password && user.roleId === 3) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Login Success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/dashboard/student");
+      }
+      if (user.username === username && user.password === password && user.roleId === 4) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Login Success!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/dashboard/parent");
+      }
       // Swal.fire({
       //   icon: "error",
       //   title: "Error",
@@ -123,6 +154,21 @@ export default function App() {
       // });
     });
   };
+
+  // const navigationRoutes = () => {
+  //   const roleId = 1;
+  //   if (roleId === 1) {
+  //     return adminRoutes;
+  //   }
+  //   if (roleId === 2) {
+  //     return facultyRoutes;
+  //   }
+  //   if (roleId === 3) {
+  //     return studentRoutes;
+  //   }
+
+  //   return null;
+  // };
 
   return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
@@ -133,7 +179,7 @@ export default function App() {
             color={sidenavColor}
             brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
             brandName="Eight Institute"
-            routes={adminRoutes}
+            routes={studentRoutes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
           />
@@ -143,7 +189,7 @@ export default function App() {
       )}
       {layout === "vr" && <Configurator />}
       <Routes>
-        {getRoutes(adminRoutes)}
+        {getRoutes(studentRoutes)}
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
       </Routes>
