@@ -15,33 +15,33 @@ import java.util.List;
 public class StudentController {
 
     @Autowired
-    private StudentServiceImpl studentServiceImpl;
+    private StudentServiceImpl studentService;
 
     @GetMapping
     public ResponseEntity<List<Student>> getStudents() {
-        return ResponseEntity.ok().body(studentServiceImpl.getStudents());
+        return ResponseEntity.ok().body(studentService.getStudents());
     }
 
     @GetMapping("/{studentId}")
     public ResponseEntity<Student> getStudent(@PathVariable(value = "studentId") Integer studentId) {
-        return ResponseEntity.ok().body(studentServiceImpl.getStudentById(studentId));
+        return ResponseEntity.ok().body(studentService.getStudentById(studentId));
     }
 
     @PostMapping
     public ResponseEntity<Student> addStudent(@RequestBody Student student) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/student").toUriString());
-        return ResponseEntity.created(uri).body(studentServiceImpl.insertStudent(student));
+        return ResponseEntity.created(uri).body(studentService.insertStudent(student));
     }
 
     @DeleteMapping("/{studentId}")
     public ResponseEntity<Void> deleteStudent(@PathVariable(value = "studentId") Integer studentId) {
-        studentServiceImpl.deleteStudentById(studentId);
+        studentService.deleteStudentById(studentId);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{studentId}")
     public ResponseEntity<Student> updateStudent(@PathVariable(value = "studentId") Integer studentId, @RequestBody Student student) {
-        return ResponseEntity.ok().body(studentServiceImpl.updateStudent(studentId, student));
+        return ResponseEntity.ok().body(studentService.updateStudent(studentId, student));
     }
 
 }
