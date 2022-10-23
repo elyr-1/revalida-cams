@@ -1,74 +1,83 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable react/function-component-definition */
-import MDBox from "components/MDBox";
+import { useEffect, useState } from "react";
 import MDTypography from "components/MDTypography";
-import MDBadge from "components/MDBadge";
+import TableCell from "@mui/material/TableCell";
+import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import ViewProgramForm from "";
+import EditProgramForm from "./forms/EditProgramForm";
 
-export default function gradesData() {
-  return {
-    columns: [
-      { Header: "subject code", accessor: "subjectCode", width: "15%", align: "left" },
-      { Header: "subject name", accessor: "subjectName", align: "left" },
-      { Header: "units", accessor: "units", align: "center" },
-      { Header: "status", accessor: "status", align: "center" },
-      { Header: "grade", accessor: "grade", align: "center" },
-    ],
+function Program({ program, onEditProgram, onDeleteProgram }) {
+  const [open, setOpen] = useState(false);
+  const [view, setView] = useState(false);
 
-    rows: [
-      {
-        subjectCode: (
-          <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-            PHYS101
-          </MDTypography>
-        ),
-        subjectName: (
-          <MDTypography display="block" variant="button" fontWeight="medium">
-            Physics 1 : Quantum Mechanics
-          </MDTypography>
-        ),
-        units: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            3
-          </MDTypography>
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="passed" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        grade: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            2.00
-          </MDTypography>
-        ),
-      },
-      {
-        subjectCode: (
-          <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-            COM101
-          </MDTypography>
-        ),
-        subjectName: (
-          <MDTypography display="block" variant="button" fontWeight="medium">
-            C Programming
-          </MDTypography>
-        ),
-        units: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            3
-          </MDTypography>
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="passed" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        grade: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            1.00
-          </MDTypography>
-        ),
-      },
-    ],
-  };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const handleOpenView = () => setView(true);
+  const handleCloseView = () => setView(false);
+
+  useEffect(() => {
+    handleClose();
+  }, [program]);
+
+  return (
+    <>
+      <TableCell>
+        <MDTypography display="block" variant="button" color="text" fontWeight="medium">
+          {program.programCode}
+        </MDTypography>
+      </TableCell>
+      <TableCell>
+        <MDTypography display="block" variant="button" color="text" fontWeight="medium">
+          {program.programTitle}
+        </MDTypography>
+      </TableCell>
+      <TableCell>
+        <MDTypography display="block" variant="button" color="text" fontWeight="medium">
+          {program.major}
+        </MDTypography>
+      </TableCell>
+      <TableCell align="center">
+        <ButtonGroup>
+          <Tooltip title="View Program Details" placement="top">
+            <IconButton onClick={handleOpenView}>
+              <VisibilityRoundedIcon color="secondary" />
+            </IconButton>
+          </Tooltip>
+          <Dialog open={view} onClose={handleCloseView} fullWidth>
+            <DialogContent>
+              <ViewProgramForm key={program.programId} program={program} />
+            </DialogContent>
+          </Dialog>
+          <Tooltip title="Edit Program Details" placement="top">
+            <IconButton onClick={handleOpen}>
+              <EditRoundedIcon color="primary" />
+            </IconButton>
+          </Tooltip>
+          <Dialog open={open} onClose={handleClose} fullWidth>
+            <DialogContent>
+              <EditProgramForm
+                key={program.programId}
+                program={program}
+                onEditProgram={onEditProgram}
+              />
+            </DialogContent>
+          </Dialog>
+          <Tooltip title="Delete Program" placement="top">
+            <IconButton onClick={() => onDeleteProgram(program.programId)}>
+              <DeleteRoundedIcon color="error" />
+            </IconButton>
+          </Tooltip>
+        </ButtonGroup>
+      </TableCell>
+    </>
+  );
 }
+
+export default Program;
