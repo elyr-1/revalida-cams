@@ -25,14 +25,6 @@ function PlatformSettings() {
       </MDBox>
       <MDBox p={2}>
         <MDTypography variant="caption" fontWeight="bold" color="text" textTransform="uppercase">
-          Email
-        </MDTypography>
-        <MDBox pt={1} px={2}>
-          <MDInput type="email" label="Email" fullWidth />
-        </MDBox>
-      </MDBox>
-      <MDBox p={2}>
-        <MDTypography variant="caption" fontWeight="bold" color="text" textTransform="uppercase">
           Username
         </MDTypography>
         <MDBox pt={1} px={2}>

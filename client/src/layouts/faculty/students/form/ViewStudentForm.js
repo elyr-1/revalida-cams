@@ -64,17 +64,6 @@ function ViewStudentForm({ student }) {
                   name="birthdate"
                   value={student.birthdate}
                 />
-                {/* <KeyboardDatePicker
-                  //   id={id}
-                  label="Birth Date"
-                  format="MM/dd/yyyy"
-                  name="birthdate"
-                  value={birthdate}
-                  onChange={(date) => {
-                    setBirthdate(date);
-                  }}
-                  fullWidth
-                /> */}
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
@@ -86,16 +75,6 @@ function ViewStudentForm({ student }) {
                   value={student.gender}
                 />
               </MDBox>
-              {/* <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Address"
-                  variant="standard"
-                  fullWidth
-                  name="address"
-                  value={student.address}
-                />
-              </MDBox> */}
               <MDBox mb={2}>
                 <MDInput
                   type="text"
