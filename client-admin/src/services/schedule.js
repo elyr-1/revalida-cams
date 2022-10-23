@@ -5,8 +5,8 @@ export function getSchedule() {
   return http.get("/schedule");
 }
 
-export function getScheduleById(sessionId) {
-  return http.get(`/schedule/${sessionId}`);
+export function getScheduleById(scheduleId) {
+  return http.get(`/schedule/${scheduleId}`);
 }
 
 export function addSchedule(schedule) {
@@ -19,10 +19,10 @@ export function addSchedule(schedule) {
   return http.post("/schedule", scheduleClone);
 }
 
-export function editSchedule(sessionId, schedule) {
-  return http.patch(`/schedule/${sessionId}`, schedule);
+export function editSchedule(scheduleId, schedule) {
+  return http.patch(`/schedule/${scheduleId}`, schedule);
 }
 
-export function deleteSchedule(sessionId) {
-  return http.delete(`schedule/${sessionId}`);
+export function deleteSchedule(scheduleId) {
+  return http.delete(`schedule/${scheduleId}`);
 }

@@ -18,6 +18,16 @@ function ViewParentForm({ parent }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
+                  label="User ID"
+                  variant="standard"
+                  fullWidth
+                  name="userId"
+                  value={parent.userId}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
                   label="Parent No."
                   variant="standard"
                   fullWidth
@@ -33,6 +43,16 @@ function ViewParentForm({ parent }) {
                   fullWidth
                   name="parentName"
                   value={parent.parentName}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="number"
+                  label="Student ID"
+                  variant="standard"
+                  fullWidth
+                  name="parentName"
+                  value={parent.studentId}
                 />
               </MDBox>
               <MDBox mb={2}>

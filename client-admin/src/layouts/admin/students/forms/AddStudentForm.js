@@ -11,7 +11,7 @@ import Joi from "joi";
 
 function AddStudentForm({ onAddStudent, onClose }) {
   const [form, setForm] = useState({
-    id: 0,
+    userId: 0,
     studentNo: "",
     firstname: "",
     middlename: "",
@@ -19,29 +19,32 @@ function AddStudentForm({ onAddStudent, onClose }) {
     birthdate: "",
     gender: "",
     address: "",
-    yearlevel: 0,
+    yearlevel: "",
     sem: 0,
-    programCode: "",
+    programId: 0,
+    program: "",
+    sectionId: 0,
   });
 
   const [errors, setErrors] = useState({});
 
   const schema = Joi.object({
-    id: Joi.number().min(1).required(),
+    userId: Joi.number().min(1).required(),
     studentNo: Joi.string().min(1).max(30).required(),
     firstname: Joi.string().min(1).required(),
     middlename: Joi.string().allow("").optional(),
     lastname: Joi.string().min(1).required(),
-    birthdate: Joi.date().required(),
+    birthdate: Joi.date().allow("").optional(),
     gender: Joi.string().allow("").optional(),
     address: Joi.string().allow("").optional(),
-    yearlevel: Joi.number().min(1).required(),
+    yearlevel: Joi.string().min(1).required(),
     sem: Joi.number().min(1).required(),
-    programCode: Joi.string().min(1).required(),
+    programId: Joi.number().min(1).required(),
+    program: Joi.string().allow("").optional(),
+    sectionId: Joi.number().min(1).required(),
   });
 
   const handleChange = (event) => {
-    console.log(event.currentTarget.value);
     setForm({ ...form, [event.currentTarget.name]: event.currentTarget.value });
 
     const { error } = schema
@@ -62,7 +65,6 @@ function AddStudentForm({ onAddStudent, onClose }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     onAddStudent(form);
-    console.log(form);
   };
 
   const isFormInvalid = () => {
@@ -84,7 +86,7 @@ function AddStudentForm({ onAddStudent, onClose }) {
                   label="User ID"
                   variant="standard"
                   fullWidth
-                  name="id"
+                  name="userId"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -184,7 +186,7 @@ function AddStudentForm({ onAddStudent, onClose }) {
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="number"
+                  type="text"
                   label="Year Level"
                   variant="standard"
                   fullWidth
@@ -210,11 +212,37 @@ function AddStudentForm({ onAddStudent, onClose }) {
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="text"
-                  label="Program Code"
+                  type="number"
+                  label="Program ID"
                   variant="standard"
                   fullWidth
-                  name="programCode"
+                  name="programId"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Program"
+                  variant="standard"
+                  fullWidth
+                  name="program"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="number"
+                  label="Section ID"
+                  variant="standard"
+                  fullWidth
+                  name="sectionId"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}

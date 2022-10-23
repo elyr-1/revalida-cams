@@ -10,13 +10,24 @@ import CardContent from "@mui/material/CardContent";
 
 function EditSubjectForm({ subject, onEditSubject }) {
   const id = subject.subjectId;
-  const [programCode, setProgramCode] = useState(subject.programCode);
   const [subjectCode, setSubjectCode] = useState(subject.subjectCode);
   const [subjectTitle, setSubjectTitle] = useState(subject.subjectTitle);
   const [units, setUnits] = useState(subject.units);
   const [preRequisites, setPreRequisites] = useState(subject.preRequisites);
+  const [yearLevel, setYearLevel] = useState(subject.yearLevel);
+  const [sem, setSem] = useState(subject.sem);
+  const [programId, setProgramId] = useState(subject.programId);
 
-  const updatedSubject = { subjectCode, subjectTitle, units, preRequisites, programCode };
+  const updatedSubject = {
+    ...subject,
+    subjectCode,
+    subjectTitle,
+    units,
+    preRequisites,
+    yearLevel,
+    sem,
+    programId,
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -30,17 +41,6 @@ function EditSubjectForm({ subject, onEditSubject }) {
         <Divider />
         <CardContent>
           <MDBox pt={1} pb={1} px={1}>
-            <MDBox mb={2}>
-              <MDInput
-                type="text"
-                label="Program Code"
-                variant="standard"
-                fullWidth
-                name="programCode"
-                value={programCode}
-                onChange={(e) => setProgramCode(e.target.value)}
-              />
-            </MDBox>
             <MDBox>
               <MDBox mb={2}>
                 <MDInput
@@ -86,6 +86,39 @@ function EditSubjectForm({ subject, onEditSubject }) {
                   name="preRequisites"
                   value={preRequisites}
                   onChange={(e) => setPreRequisites(e.target.value)}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Year Level"
+                  variant="standard"
+                  fullWidth
+                  name="yearLevel"
+                  value={yearLevel}
+                  onChange={(e) => setYearLevel(e.target.value)}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="number"
+                  label="Semester"
+                  variant="standard"
+                  fullWidth
+                  name="sem"
+                  value={sem}
+                  onChange={(e) => setSem(e.target.value)}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="number"
+                  label="Program ID"
+                  variant="standard"
+                  fullWidth
+                  name="programId"
+                  value={programId}
+                  onChange={(e) => setProgramId(e.target.value)}
                 />
               </MDBox>
               <MDBox mt={4} mb={1}>

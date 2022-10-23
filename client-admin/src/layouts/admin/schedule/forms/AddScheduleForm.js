@@ -11,33 +11,32 @@ import Joi from "joi";
 
 function AddScheduleForm({ onAddSchedule, onClose }) {
   const [form, setForm] = useState({
-    subjectCode: "",
-    academicYear: 0,
+    subjectId: 0,
+    academicYear: "",
     sem: 0,
     scheduleFrom: "",
     scheduleTo: "",
     day: "",
-    section: 0,
-    yearlevel: 0,
-    professorNo: "",
+    sectionId: 0,
+    yearlevel: "",
+    professorId: 0,
   });
 
   const [errors, setErrors] = useState({});
 
   const schema = Joi.object({
-    subjectCode: Joi.string().min(1).max(30).required(),
-    academicYear: Joi.number().min(1).required(),
+    subjectId: Joi.number().min(1).max(30).required(),
+    academicYear: Joi.string().allow("").optional(),
     sem: Joi.number().allow("").optional(),
-    scheduleFrom: Joi.string().min(1).required(),
-    scheduleTo: Joi.string().required(),
+    scheduleFrom: Joi.string().allow("").optional(),
+    scheduleTo: Joi.string().allow("").optional(),
     day: Joi.string().allow("").optional(),
-    section: Joi.number().min(1).required(),
-    yearlevel: Joi.number().min(1).required(),
-    professorNo: Joi.string().min(1).required(),
+    sectionId: Joi.number().min(1).required(),
+    yearlevel: Joi.string().min(1).required(),
+    professorId: Joi.number().min(1).required(),
   });
 
   const handleChange = (event) => {
-    console.log(event.currentTarget.value);
     setForm({ ...form, [event.currentTarget.name]: event.currentTarget.value });
 
     const { error } = schema
@@ -58,7 +57,6 @@ function AddScheduleForm({ onAddSchedule, onClose }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     onAddSchedule(form);
-    console.log(form);
   };
 
   const isFormInvalid = () => {
@@ -76,11 +74,25 @@ function AddScheduleForm({ onAddSchedule, onClose }) {
             <MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="text"
-                  label="Subject Code"
+                  type="number"
+                  label="Subject ID"
                   variant="standard"
                   fullWidth
-                  name="subjectCode"
+                  name="subjectId"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Year Level"
+                  variant="standard"
+                  fullWidth
+                  name="yearlevel"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -89,7 +101,7 @@ function AddScheduleForm({ onAddSchedule, onClose }) {
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="number"
+                  type="text"
                   label="Academic Year"
                   variant="standard"
                   fullWidth
@@ -102,7 +114,7 @@ function AddScheduleForm({ onAddSchedule, onClose }) {
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="text"
+                  type="number"
                   label="Semester"
                   variant="standard"
                   fullWidth
@@ -155,40 +167,29 @@ function AddScheduleForm({ onAddSchedule, onClose }) {
               <MDBox mb={2}>
                 <MDInput
                   type="number"
-                  label="Section"
+                  label="Section ID"
                   variant="standard"
                   fullWidth
-                  name="section"
+                  name="sectionId"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
                   onChange={handleChange}
+                  required
                 />
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
                   type="number"
-                  label="Year Level"
+                  label="Professor ID"
                   variant="standard"
                   fullWidth
-                  name="yearlevel"
+                  name="professorId"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
                   onChange={handleChange}
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Professor No"
-                  variant="standard"
-                  fullWidth
-                  name="professorNo"
-                  error={!!errors.name}
-                  helperText={errors.name}
-                  value={form.name}
-                  onChange={handleChange}
+                  required
                 />
               </MDBox>
               <MDBox mt={4} mb={1}>

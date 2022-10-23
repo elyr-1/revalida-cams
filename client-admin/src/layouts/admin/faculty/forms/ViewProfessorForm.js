@@ -22,7 +22,7 @@ function ViewProfessorForm({ professor }) {
                   variant="standard"
                   fullWidth
                   name="id"
-                  value={professor.id}
+                  value={professor.userId}
                 />
               </MDBox>
               <MDBox mb={2}>

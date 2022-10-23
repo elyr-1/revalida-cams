@@ -115,13 +115,13 @@ export default function App() {
         // setAuth(true);
         navigate("/dashboard/admin");
       }
-      if (user.username !== username || user.password !== password) {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Username or password is incorrect",
-        });
-      }
+      // if (user.username !== username || user.password !== password) {
+      //   Swal.fire({
+      //     icon: "error",
+      //     title: "Error",
+      //     text: "Username or password is incorrect",
+      //   });
+      // }
     });
   };
 
@@ -134,7 +134,7 @@ export default function App() {
             color={sidenavColor}
             brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
             brandName="Eight Institute"
-            routes={parentRoutes}
+            routes={adminRoutes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
           />

@@ -11,19 +11,19 @@ import Joi from "joi";
 
 function AddParentForm({ onAddParent, onClose }) {
   const [form, setForm] = useState({
-    id: 0,
+    userId: 0,
     parentNo: "",
     parentName: "",
-    studentNo: "",
+    studentId: 0,
   });
 
   const [errors, setErrors] = useState({});
 
   const schema = Joi.object({
-    id: Joi.number().min(1).required(),
+    userId: Joi.number().min(1).required(),
     parentNo: Joi.string().min(1).max(30).required(),
     parentName: Joi.string().min(1).required(),
-    studentNo: Joi.string().min(1).required(),
+    studentId: Joi.number().min(1).required(),
   });
 
   const handleChange = (event) => {
@@ -65,10 +65,10 @@ function AddParentForm({ onAddParent, onClose }) {
               <MDBox mb={2}>
                 <MDInput
                   type="number"
-                  label="Parent ID"
+                  label="User ID"
                   variant="standard"
                   fullWidth
-                  name="id"
+                  name="userId"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}
@@ -103,11 +103,11 @@ function AddParentForm({ onAddParent, onClose }) {
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="text"
-                  label="Student No."
+                  type="number"
+                  label="Student ID"
                   variant="standard"
                   fullWidth
-                  name="studentNo"
+                  name="studentId"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}

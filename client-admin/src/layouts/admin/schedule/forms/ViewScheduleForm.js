@@ -28,6 +28,16 @@ function ViewScheduleForm({ schedule }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
+                  label="Year Level"
+                  variant="standard"
+                  fullWidth
+                  name="yearlevel"
+                  value={schedule.yearlevel}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
                   label="Academic Year"
                   variant="standard"
                   fullWidth
@@ -77,22 +87,32 @@ function ViewScheduleForm({ schedule }) {
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="text"
-                  label="Section"
+                  type="number"
+                  label="Subject ID"
                   variant="standard"
                   fullWidth
-                  name="section"
-                  value={schedule.section}
+                  name="subjectId"
+                  value={schedule.subjectId}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Subject Code"
+                  variant="standard"
+                  fullWidth
+                  name="subjectCode"
+                  value={schedule.subjectCode}
                 />
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
                   type="number"
-                  label="Year Level"
+                  label="Professor ID"
                   variant="standard"
                   fullWidth
-                  name="yearlevel"
-                  value={schedule.yearlevel}
+                  name="professorId"
+                  value={schedule.professorId}
                 />
               </MDBox>
               <MDBox mb={2}>
@@ -103,6 +123,26 @@ function ViewScheduleForm({ schedule }) {
                   fullWidth
                   name="professorNo"
                   value={schedule.professorNo}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="number"
+                  label="Section ID"
+                  variant="standard"
+                  fullWidth
+                  name="sectionId"
+                  value={schedule.sectionId}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Section No."
+                  variant="standard"
+                  fullWidth
+                  name="sectionNo"
+                  value={schedule.sectionNo}
                 />
               </MDBox>
               <Divider />

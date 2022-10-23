@@ -14,16 +14,6 @@ function ViewSubjectForm({ subject }) {
         <Divider />
         <CardContent>
           <MDBox pt={1} pb={1} px={1}>
-            <MDBox mb={2}>
-              <MDInput
-                type="text"
-                label="Program Code"
-                variant="standard"
-                fullWidth
-                name="programCode"
-                value={subject.programCode}
-              />
-            </MDBox>
             <MDBox>
               <MDBox mb={2}>
                 <MDInput
@@ -63,6 +53,36 @@ function ViewSubjectForm({ subject }) {
                   fullWidth
                   name="preRequisites"
                   value={subject.preRequisites}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Year Level"
+                  variant="standard"
+                  fullWidth
+                  name="yearlevel"
+                  value={subject.yearLevel}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="number"
+                  label="Semester"
+                  variant="standard"
+                  fullWidth
+                  name="sem"
+                  value={subject.sem}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="number"
+                  label="Program ID"
+                  variant="standard"
+                  fullWidth
+                  name="preRequisites"
+                  value={subject.programId}
                 />
               </MDBox>
               <Divider />

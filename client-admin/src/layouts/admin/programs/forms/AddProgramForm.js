@@ -25,7 +25,6 @@ function AddProgramForm({ onAddProgram, onClose }) {
   });
 
   const handleChange = (event) => {
-    console.log(event.currentTarget.value);
     setForm({ ...form, [event.currentTarget.name]: event.currentTarget.value });
 
     const { error } = schema
