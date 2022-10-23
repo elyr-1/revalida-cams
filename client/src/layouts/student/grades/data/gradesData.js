@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import MDTypography from "components/MDTypography";
 import TableCell from "@mui/material/TableCell";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
@@ -10,8 +10,8 @@ import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import ViewProgramForm from "";
-import EditProgramForm from "./forms/EditProgramForm";
+import ViewProgramForm from "../forms/ViewProgramForm";
+import EditProgramForm from "../forms/EditProgramForm";
 
 function Program({ program, onEditProgram, onDeleteProgram }) {
   const [open, setOpen] = useState(false);
@@ -21,10 +21,6 @@ function Program({ program, onEditProgram, onDeleteProgram }) {
   const handleClose = () => setOpen(false);
   const handleOpenView = () => setView(true);
   const handleCloseView = () => setView(false);
-
-  useEffect(() => {
-    handleClose();
-  }, [program]);
 
   return (
     <>

@@ -11,10 +11,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import Icon from "@mui/material/Icon";
-import IconButton from "@mui/material/IconButton";
 import TablePagination from "@mui/material/TablePagination";
-import Tooltip from "@mui/material/Tooltip";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import * as programService from "services/program";
@@ -23,9 +20,9 @@ import Program from "./data/gradesData";
 import AddProgramForm from "./forms/AddProgramForm";
 
 const columns = [
-  { id: "programCode", label: "Program Code" },
-  { id: "programTitle", label: "Program Title" },
-  { id: "major", label: "Major" },
+  { id: "subjectCode", label: "Subject Code" },
+  { id: "subjectTitle", label: "Subject Name" },
+  { id: "grade", label: "Grade" },
   { id: "actions", label: "Actions", align: "center" },
 ];
 
@@ -35,7 +32,6 @@ function Programs() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const handleChangePage = (event, newPage) => {
@@ -143,34 +139,15 @@ function Programs() {
                 py={3}
                 px={2}
                 variant="gradient"
-                bgColor="info"
+                bgColor="error"
                 borderRadius="lg"
                 coloredShadow="info"
                 display="flex"
                 justifyContent="space-between"
               >
                 <MDTypography variant="h6" color="white">
-                  Programs
+                  Grades
                 </MDTypography>
-                <IconButton onClick={handleOpen}>
-                  <MDBox
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    width="2.5rem"
-                    height="2.5rem"
-                    bgColor="white"
-                    shadow="sm"
-                    borderRadius="50%"
-                    color="dark"
-                  >
-                    <Tooltip title="Add new program" placement="top">
-                      <Icon fontSize="medium" color="inherit">
-                        add_rounded
-                      </Icon>
-                    </Tooltip>
-                  </MDBox>
-                </IconButton>
                 <Dialog open={open} onClose={handleClose} fullWidth>
                   <DialogContent>
                     <AddProgramForm onAddProgram={handleAddProgram} onClose={handleClose} />
