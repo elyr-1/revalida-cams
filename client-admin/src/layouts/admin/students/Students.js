@@ -23,13 +23,14 @@ import Student from "./Student";
 import AddStudentForm from "./forms/AddStudentForm";
 
 const columns = [
+  { id: "studentId", label: "Student ID" },
   { id: "studentNo", label: "Student No." },
   { id: "lastname", label: "Last Name" },
   { id: "firstname", label: "First Name" },
   { id: "gender", label: "Gender" },
-  { id: "programCode", label: "Program Code" },
+  { id: "program", label: "Program" },
   { id: "yearlevel", label: "Year Level" },
-  { id: "sem", label: "Semester" },
+  { id: "section", label: "Section" },
   { id: "actions", label: "Actions", align: "center" },
 ];
 
@@ -54,6 +55,7 @@ function Students() {
   // Fetch all students
   useEffect(async () => {
     await studentService.getStudents().then((response) => {
+      console.log(response.data);
       setStudents(response.data);
     });
   }, []);

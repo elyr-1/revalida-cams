@@ -7,6 +7,7 @@ import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
+// import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 // import KeyboardDatePicker from "@material-ui/pickers/DatePicker";
 
 function EditStudentForm({ student, onEditStudent }) {
@@ -20,9 +21,25 @@ function EditStudentForm({ student, onEditStudent }) {
   const [address, setAddress] = useState(student.address);
   const [yearlevel, setYearlevel] = useState(student.yearlevel);
   const [sem, setSem] = useState(student.sem);
-  const [programCode, setProgramCode] = useState(student.programCode);
+  const [programId, setProgramId] = useState(student.programId);
+  const [program, setProgram] = useState(student.program);
+  const [sectionId, setSectionId] = useState(student.sectionId);
 
-  const updatedStudent = { ...student, studentNo, firstname, middlename, lastname, programCode };
+  const updatedStudent = {
+    ...student,
+    studentNo,
+    firstname,
+    middlename,
+    lastname,
+    birthdate,
+    gender,
+    address,
+    yearlevel,
+    sem,
+    programId,
+    program,
+    sectionId,
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -93,17 +110,6 @@ function EditStudentForm({ student, onEditStudent }) {
                   value={birthdate}
                   onChange={(e) => setBirthdate(e.target.value)}
                 />
-                {/* <KeyboardDatePicker
-                  //   id={id}
-                  label="Birth Date"
-                  format="MM/dd/yyyy"
-                  name="birthdate"
-                  value={birthdate}
-                  onChange={(date) => {
-                    setBirthdate(date);
-                  }}
-                  fullWidth
-                /> */}
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
@@ -151,13 +157,35 @@ function EditStudentForm({ student, onEditStudent }) {
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="text"
-                  label="Program Code"
+                  type="number"
+                  label="Program ID"
                   variant="standard"
                   fullWidth
-                  name="programCode"
-                  value={programCode}
-                  onChange={(e) => setProgramCode(e.target.value)}
+                  name="programId"
+                  value={programId}
+                  onChange={(e) => setProgramId(e.target.value)}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Program"
+                  variant="standard"
+                  fullWidth
+                  name="program"
+                  value={program}
+                  onChange={(e) => setProgram(e.target.value)}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="number"
+                  label="Section ID"
+                  variant="standard"
+                  fullWidth
+                  name="sectionId"
+                  value={sectionId}
+                  onChange={(e) => setSectionId(e.target.value)}
                 />
               </MDBox>
               <MDBox mt={4} mb={1}>

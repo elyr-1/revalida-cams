@@ -15,7 +15,9 @@ function AddSubjectForm({ onAddSubject, onClose }) {
     subjectTitle: "",
     units: 0,
     preRequisites: "",
-    programCode: "",
+    yearLevel: "",
+    sem: 0,
+    programId: 0,
   });
 
   const [errors, setErrors] = useState({});
@@ -25,11 +27,12 @@ function AddSubjectForm({ onAddSubject, onClose }) {
     subjectTitle: Joi.string().min(1).required(),
     units: Joi.number().min(1).required(),
     preRequisites: Joi.string().allow("").optional(),
-    programCode: Joi.string().min(1).max(30).required(),
+    yearLevel: Joi.string().min(1).required(),
+    sem: Joi.number().min(1).required(),
+    programId: Joi.number().min(1).required(),
   });
 
   const handleChange = (event) => {
-    console.log(event.currentTarget.value);
     setForm({ ...form, [event.currentTarget.name]: event.currentTarget.value });
 
     const { error } = schema
@@ -64,19 +67,6 @@ function AddSubjectForm({ onAddSubject, onClose }) {
         <Divider />
         <CardContent>
           <MDBox pt={1} pb={1} px={1}>
-            <MDBox mb={2}>
-              <MDInput
-                type="text"
-                label="Program Code"
-                variant="standard"
-                fullWidth
-                name="programCode"
-                error={!!errors.name}
-                helperText={errors.name}
-                value={form.name}
-                onChange={handleChange}
-              />
-            </MDBox>
             <MDBox>
               <MDBox mb={2}>
                 <MDInput
@@ -124,6 +114,45 @@ function AddSubjectForm({ onAddSubject, onClose }) {
                   variant="standard"
                   fullWidth
                   name="preRequisites"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Year Level"
+                  variant="standard"
+                  fullWidth
+                  name="yearLevel"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="number"
+                  label="Semester"
+                  variant="standard"
+                  fullWidth
+                  name="sem"
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="number"
+                  label="Program ID"
+                  variant="standard"
+                  fullWidth
+                  name="programId"
                   error={!!errors.name}
                   helperText={errors.name}
                   value={form.name}

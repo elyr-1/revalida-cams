@@ -23,10 +23,12 @@ import AddSubjectForm from "./forms/AddSubjectForm";
 import Subject from "./Subject";
 
 const columns = [
-  { id: "programCode", label: "Program Code" },
+  { id: "subjectId", label: "Subject ID" },
+  { id: "program", label: "Program" },
   { id: "subjectCode", label: "Subject Code" },
   { id: "subjectTitle", label: "Subject Title" },
   { id: "units", label: "Units" },
+  { id: "yearlevel", label: "Year Level / Semester", align: "center" },
   { id: "actions", label: "Actions", align: "center" },
 ];
 

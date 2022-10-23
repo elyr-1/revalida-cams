@@ -30,6 +30,11 @@ function Student({ student, onEditStudent, onDeleteStudent }) {
     <>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
+          {student.studentId}
+        </MDTypography>
+      </TableCell>
+      <TableCell>
+        <MDTypography display="block" variant="button" color="text" fontWeight="medium">
           {student.studentNo}
         </MDTypography>
       </TableCell>
@@ -50,7 +55,7 @@ function Student({ student, onEditStudent, onDeleteStudent }) {
       </TableCell>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {student.programCode}
+          {student.program}
         </MDTypography>
       </TableCell>
       <TableCell>
@@ -60,7 +65,7 @@ function Student({ student, onEditStudent, onDeleteStudent }) {
       </TableCell>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {student.sem}
+          {student.section}
         </MDTypography>
       </TableCell>
       <TableCell align="center">

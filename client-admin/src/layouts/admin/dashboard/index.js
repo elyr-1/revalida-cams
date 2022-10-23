@@ -22,7 +22,6 @@ function Dashboard() {
   useEffect(async () => {
     await programService.getPrograms().then((response) => {
       setPrograms(response.data);
-      console.log(response.data);
     });
   }, []);
 
@@ -65,11 +64,11 @@ function Dashboard() {
                 icon="workspace_premium"
                 title="Programs"
                 count={programs.length}
-                // percentage={{
-                //   color: "success",
-                //   amount: "+5%",
-                //   label: "more than last academic year",
-                // }}
+                percentage={{
+                  color: "success",
+                  amount: "+5%",
+                  label: "more than last academic year",
+                }}
               />
             </MDBox>
           </Grid>
@@ -79,11 +78,11 @@ function Dashboard() {
                 icon="library_books"
                 title="Courses"
                 count={subjects.length}
-                // percentage={{
-                //   color: "success",
-                //   amount: "+5%",
-                //   label: "more than last academic year",
-                // }}
+                percentage={{
+                  color: "success",
+                  amount: "+5%",
+                  label: "more than last academic year",
+                }}
               />
             </MDBox>
           </Grid>
@@ -94,11 +93,11 @@ function Dashboard() {
                 icon="supervisor_account"
                 title="Faculty Members"
                 count={professors.length}
-                // percentage={{
-                //   color: "success",
-                //   amount: "+10%",
-                //   label: "more than last semester",
-                // }}
+                percentage={{
+                  color: "success",
+                  amount: "+10%",
+                  label: "more than last semester",
+                }}
               />
             </MDBox>
           </Grid>
@@ -109,11 +108,11 @@ function Dashboard() {
                 icon="school"
                 title="Students"
                 count={students.length}
-                // percentage={{
-                //   color: "success",
-                //   amount: "+20%",
-                //   label: "more than last semester",
-                // }}
+                percentage={{
+                  color: "success",
+                  amount: "+20%",
+                  label: "more than last semester",
+                }}
               />
             </MDBox>
           </Grid>

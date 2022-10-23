@@ -30,6 +30,11 @@ function Parent({ parent, onEditParent, onDeleteParent }) {
     <>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
+          {parent.parentId}
+        </MDTypography>
+      </TableCell>
+      <TableCell>
+        <MDTypography display="block" variant="button" color="text" fontWeight="medium">
           {parent.parentNo}
         </MDTypography>
       </TableCell>

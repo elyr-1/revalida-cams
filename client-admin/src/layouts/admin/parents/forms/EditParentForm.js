@@ -12,9 +12,9 @@ function EditParentForm({ parent, onEditParent }) {
   const id = parent.parentId;
   const [parentNo, setParentNo] = useState(parent.parentNo);
   const [parentName, setParentName] = useState(parent.parentName);
-  const [studentNo, setStudentNo] = useState(parent.studentNo);
+  const [studentId, setStudentId] = useState(parent.studentId);
 
-  const updatedParent = { ...parent, parentNo, parentName, studentNo };
+  const updatedParent = { ...parent, parentNo, parentName, studentId };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -56,12 +56,12 @@ function EditParentForm({ parent, onEditParent }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Student No."
+                  label="Student ID"
                   variant="standard"
                   fullWidth
-                  name="studentNo"
-                  value={studentNo}
-                  onChange={(e) => setStudentNo(e.target.value)}
+                  name="studentId"
+                  value={studentId}
+                  onChange={(e) => setStudentId(e.target.value)}
                   required
                 />
               </MDBox>

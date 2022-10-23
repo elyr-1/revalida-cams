@@ -8,3 +8,5 @@ export function getUsers() {
 export function login(username, password) {
   return http.post("/auth", { username, password });
 }
+
+export function getCurrentUser() {}

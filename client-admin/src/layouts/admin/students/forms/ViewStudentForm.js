@@ -18,6 +18,16 @@ function ViewStudentForm({ student }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
+                  label="User ID"
+                  variant="standard"
+                  fullWidth
+                  name="userId"
+                  value={student.userId}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
                   label="Student No."
                   variant="standard"
                   fullWidth
@@ -64,17 +74,6 @@ function ViewStudentForm({ student }) {
                   name="birthdate"
                   value={student.birthdate}
                 />
-                {/* <KeyboardDatePicker
-                  //   id={id}
-                  label="Birth Date"
-                  format="MM/dd/yyyy"
-                  name="birthdate"
-                  value={birthdate}
-                  onChange={(date) => {
-                    setBirthdate(date);
-                  }}
-                  fullWidth
-                /> */}
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
@@ -119,11 +118,41 @@ function ViewStudentForm({ student }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Program Code"
+                  label="Program ID"
                   variant="standard"
                   fullWidth
-                  name="programCode"
-                  value={student.programCode}
+                  name="programId"
+                  value={student.programId}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Program"
+                  variant="standard"
+                  fullWidth
+                  name="program"
+                  value={student.program}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="number"
+                  label="Section ID"
+                  variant="standard"
+                  fullWidth
+                  name="sectionId"
+                  value={student.sectionId}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Section"
+                  variant="standard"
+                  fullWidth
+                  name="section"
+                  value={student.section}
                 />
               </MDBox>
               <Divider />

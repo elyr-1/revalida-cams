@@ -23,6 +23,7 @@ import Parent from "./Parent";
 import AddParentForm from "./forms/AddParentForm";
 
 const columns = [
+  { id: "parentId", label: "Parent ID" },
   { id: "parentNo", label: "Parent No." },
   { id: "parentName", label: "Parent Name" },
   { id: "studentNo", label: "Student No." },
@@ -88,7 +89,7 @@ function Parents() {
       Swal.fire({
         position: "top",
         icon: "success",
-        title: "Program has been updated!",
+        title: "Parent has been updated!",
         showConfirmButton: false,
         timer: 1500,
       });

@@ -4,7 +4,7 @@ import Subjects from "layouts/admin/subjects/Subjects";
 import Schedules from "layouts/admin/schedule/Schedules";
 import Students from "layouts/admin/students/Students";
 import Professors from "layouts/admin/faculty/Professors";
-import Profile from "layouts/admin/profile";
+// import Profile from "layouts/admin/profile";
 import Parents from "layouts/admin/parents/Parents";
 import Icon from "@mui/material/Icon";
 
@@ -65,14 +65,14 @@ const adminRoutes = [
     route: "/parents",
     component: <Parents />,
   },
-  {
-    type: "collapse",
-    name: "Profile",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: <Profile />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Profile",
+  //   key: "profile",
+  //   icon: <Icon fontSize="small">person</Icon>,
+  //   route: "/profile",
+  //   component: <Profile />,
+  // },
 ];
 
 export default adminRoutes;

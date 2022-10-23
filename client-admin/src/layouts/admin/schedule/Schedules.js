@@ -23,10 +23,11 @@ import Schedule from "./Schedule";
 import AddScheduleForm from "./forms/AddScheduleForm";
 
 const columns = [
+  { id: "scheduleId", label: "Schedule ID" },
   { id: "subjectCode", label: "Subject Code" },
   { id: "time", label: "Time" },
   { id: "day", label: "Day" },
-  { id: "yearlevel", label: "Year Level" },
+  { id: "section", label: "Section" },
   { id: "professorNo", label: "Professor No." },
   { id: "actions", label: "Actions", align: "center" },
 ];
@@ -85,11 +86,11 @@ function Schedules() {
   };
 
   // Update a schedule
-  const handleEditSchedule = (sessionId, updatedSchedule) => {
+  const handleEditSchedule = (scheduleId, updatedSchedule) => {
     setSchedules(
-      schedules.map((schedule) => (schedule.sessionId === sessionId ? updatedSchedule : schedule))
+      schedules.map((schedule) => (schedule.scheduleId === scheduleId ? updatedSchedule : schedule))
     );
-    scheduleService.editSchedule(sessionId, updatedSchedule).then(() => {
+    scheduleService.editSchedule(scheduleId, updatedSchedule).then(() => {
       Swal.fire({
         position: "top",
         icon: "success",
@@ -104,7 +105,7 @@ function Schedules() {
   };
 
   // Delete a schedule
-  const handleDeleteSchedule = (sessionId) => {
+  const handleDeleteSchedule = (scheduleId) => {
     try {
       Swal.fire({
         title: "Are you sure?",
@@ -115,8 +116,8 @@ function Schedules() {
         confirmButtonText: "Delete",
       }).then((result) => {
         if (result.isConfirmed) {
-          scheduleService.deleteSchedule(sessionId);
-          setSchedules(schedules.filter((schedule) => schedule.sessionId !== sessionId));
+          scheduleService.deleteSchedule(scheduleId);
+          setSchedules(schedules.filter((schedule) => schedule.scheduleId !== scheduleId));
           Swal.fire("Deleted", "Record has been deleted.", "success");
         } else if (result.isDenied) {
           Swal.fire("Deletion has been cancelled", "", "info");
@@ -206,7 +207,7 @@ function Schedules() {
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((schedule) => (
                           <TableRow
-                            key={schedule.sessionId}
+                            key={schedule.scheduleId}
                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                           >
                             <Schedule

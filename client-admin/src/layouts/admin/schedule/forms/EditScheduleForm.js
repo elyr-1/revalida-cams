@@ -10,28 +10,28 @@ import CardContent from "@mui/material/CardContent";
 // import KeyboardDatePicker from "@material-ui/pickers/DatePicker";
 
 function EditScheduleForm({ schedule, onEditSchedule }) {
-  const id = schedule.sessionId;
-  const [subjectCode, setSubjectCode] = useState(schedule.subjectCode);
+  const id = schedule.scheduleId;
+  const [subjectId, setSubjectId] = useState(schedule.subjectId);
   const [academicYear, setAcademicYear] = useState(schedule.academicYear);
   const [sem, setSem] = useState(schedule.sem);
   const [scheduleFrom, setScheduleFrom] = useState(schedule.scheduleFrom);
   const [scheduleTo, setScheduleTo] = useState(schedule.scheduleTo);
   const [day, setDay] = useState(schedule.day);
-  const [section, setSection] = useState(schedule.address);
+  const [sectionId, setSectionId] = useState(schedule.sectionId);
   const [yearlevel, setYearlevel] = useState(schedule.yearlevel);
-  const [professorNo, setProfessorNo] = useState(schedule.professorNo);
+  const [professorId, setProfessorId] = useState(schedule.professorId);
 
   const updatedSchedule = {
     ...schedule,
-    subjectCode,
+    subjectId,
     academicYear,
     sem,
     scheduleFrom,
     scheduleTo,
     day,
-    section,
+    sectionId,
     yearlevel,
-    professorNo,
+    professorId,
   };
 
   const handleSubmit = (event) => {
@@ -50,18 +50,18 @@ function EditScheduleForm({ schedule, onEditSchedule }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Subject Code"
+                  label="Subject ID"
                   variant="standard"
                   fullWidth
                   name="subjectCode"
-                  value={subjectCode}
-                  onChange={(e) => setSubjectCode(e.target.value)}
+                  value={subjectId}
+                  onChange={(e) => setSubjectId(e.target.value)}
                   required
                 />
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="number"
+                  type="text"
                   label="Academic Year"
                   variant="standard"
                   fullWidth
@@ -119,12 +119,12 @@ function EditScheduleForm({ schedule, onEditSchedule }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Section"
+                  label="Section ID"
                   variant="standard"
                   fullWidth
-                  name="section"
-                  value={section}
-                  onChange={(e) => setSection(e.target.value)}
+                  name="sectionId"
+                  value={sectionId}
+                  onChange={(e) => setSectionId(e.target.value)}
                 />
               </MDBox>
               <MDBox mb={2}>
@@ -141,12 +141,12 @@ function EditScheduleForm({ schedule, onEditSchedule }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Professor No."
+                  label="Professor ID"
                   variant="standard"
                   fullWidth
-                  name="professorNo"
-                  value={professorNo}
-                  onChange={(e) => setProfessorNo(e.target.value)}
+                  name="professorId"
+                  value={professorId}
+                  onChange={(e) => setProfessorId(e.target.value)}
                 />
               </MDBox>
               <MDBox mt={4} mb={1}>

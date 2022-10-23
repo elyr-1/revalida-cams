@@ -23,6 +23,7 @@ import Professor from "./Professor";
 import AddProfessorForm from "./forms/AddProfessorForm";
 
 const columns = [
+  { id: "professoriD", label: "Professor ID" },
   { id: "professorNo", label: "Professor No." },
   { id: "professorName", label: "Professor Name" },
   { id: "gender", label: "Gender" },

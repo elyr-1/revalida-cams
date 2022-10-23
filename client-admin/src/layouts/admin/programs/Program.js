@@ -30,6 +30,11 @@ function Program({ program, onEditProgram, onDeleteProgram }) {
     <>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
+          {program.programId}
+        </MDTypography>
+      </TableCell>
+      <TableCell>
+        <MDTypography display="block" variant="button" color="text" fontWeight="medium">
           {program.programCode}
         </MDTypography>
       </TableCell>

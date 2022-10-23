@@ -23,6 +23,7 @@ import Program from "./Program";
 import AddProgramForm from "./forms/AddProgramForm";
 
 const columns = [
+  { id: "programId", label: "Program ID" },
   { id: "programCode", label: "Program Code" },
   { id: "programTitle", label: "Program Title" },
   { id: "major", label: "Major" },

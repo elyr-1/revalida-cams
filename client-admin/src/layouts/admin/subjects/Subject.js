@@ -30,7 +30,12 @@ function Subject({ subject, onEditSubject, onDeleteSubject }) {
     <>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {subject.programCode}
+          {subject.subjectId}
+        </MDTypography>
+      </TableCell>
+      <TableCell>
+        <MDTypography display="block" variant="button" color="text" fontWeight="medium">
+          {subject.program}
         </MDTypography>
       </TableCell>
       <TableCell>
@@ -46,6 +51,17 @@ function Subject({ subject, onEditSubject, onDeleteSubject }) {
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
           {subject.units}
+        </MDTypography>
+      </TableCell>
+      <TableCell>
+        <MDTypography
+          display="block"
+          variant="button"
+          color="text"
+          fontWeight="medium"
+          align="center"
+        >
+          {subject.yearLevel} / {subject.sem}
         </MDTypography>
       </TableCell>
       <TableCell align="center">

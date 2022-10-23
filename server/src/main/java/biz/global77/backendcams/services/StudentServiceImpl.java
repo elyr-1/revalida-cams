@@ -31,8 +31,10 @@ public class StudentServiceImpl implements StudentService {
                 STUDENT.ACADEMIC_YEAR,
                 STUDENT.STATUS,
                 STUDENT.IS_ACTIVE,
-                STUDENT.PROGRAM_CODE,
-                STUDENT.ID)
+                STUDENT.PROGRAM_ID,
+                STUDENT.PROGRAM,
+                STUDENT.SECTION_ID,
+                STUDENT.USER_ID)
         .values(
                 student.getStudentNo(),
                 student.getFirstname(),
@@ -46,8 +48,10 @@ public class StudentServiceImpl implements StudentService {
                 student.getAcademicYear(),
                 student.getStatus(),
                 student.getIsActive(),
-                student.getProgramCode(),
-                student.getId())
+                student.getProgramId(),
+                student.getProgram(),
+                student.getSectionId(),
+                student.getUserId())
         .execute();
         return student;
     }
@@ -55,8 +59,28 @@ public class StudentServiceImpl implements StudentService {
     /* get all students */
     @Override
     public List<Student> getStudents() {
-        return dsl.selectFrom(STUDENT)
-                .orderBy(STUDENT.PROGRAM_CODE, STUDENT.YEARLEVEL, STUDENT.LASTNAME)
+        return dsl.select(
+                STUDENT.STUDENT_ID,
+                STUDENT.STUDENT_NO,
+                STUDENT.FIRSTNAME,
+                STUDENT.MIDDLENAME,
+                STUDENT.LASTNAME,
+                STUDENT.BIRTHDATE,
+                STUDENT.GENDER,
+                STUDENT.ADDRESS,
+                STUDENT.PROGRAM,
+                STUDENT.YEARLEVEL,
+                STUDENT.SEM,
+                STUDENT.ACADEMIC_YEAR,
+                STUDENT.STATUS,
+                STUDENT.USER_ID,
+                STUDENT.PROGRAM_ID,
+                STUDENT.SECTION_ID,
+                SECTION.SECTION_NO.as("section"))
+                .from(STUDENT)
+                .innerJoin(SECTION)
+                .on(STUDENT.SECTION_ID.eq(SECTION.SECTION_ID))
+                .orderBy(STUDENT.STUDENT_ID)
                 .fetchInto(Student.class);
     }
 
@@ -84,8 +108,10 @@ public class StudentServiceImpl implements StudentService {
                 .set(STUDENT.ACADEMIC_YEAR, student.getAcademicYear())
                 .set(STUDENT.STATUS, student.getStatus())
                 .set(STUDENT.IS_ACTIVE, student.getIsActive())
-                .set(STUDENT.PROGRAM_CODE, student.getProgramCode())
-                .set(STUDENT.ID, student.getId())
+                .set(STUDENT.PROGRAM_ID, student.getProgramId())
+                .set(STUDENT.PROGRAM, student.getProgram())
+                .set(STUDENT.SECTION_ID, student.getSectionId())
+                .set(STUDENT.USER_ID, student.getUserId())
                 .where(STUDENT.STUDENT_ID.eq(studentId))
                 .execute();
         return student;

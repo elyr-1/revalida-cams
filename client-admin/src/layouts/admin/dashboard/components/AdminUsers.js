@@ -43,11 +43,11 @@ function AdminUsers() {
         <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
           <MDBox>
             <MDTypography variant="h6" gutterBottom>
-              Administrators
+              Administrator
             </MDTypography>
             <MDBox display="flex" alignItems="center" lineHeight={0}>
               <MDTypography variant="button" fontWeight="regular" color="text">
-                View list of administrators
+                Profile
               </MDTypography>
             </MDBox>
           </MDBox>

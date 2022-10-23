@@ -11,7 +11,7 @@ import Joi from "joi";
 
 function AddProfessorForm({ onAddProfessor, onClose }) {
   const [form, setForm] = useState({
-    id: 0,
+    userId: 0,
     professorNo: "",
     professorName: "",
     gender: "",
@@ -22,7 +22,7 @@ function AddProfessorForm({ onAddProfessor, onClose }) {
   const [errors, setErrors] = useState({});
 
   const schema = Joi.object({
-    id: Joi.number().required(),
+    userId: Joi.number().required(),
     professorNo: Joi.string().min(1).max(30).required(),
     professorName: Joi.string().min(1).required(),
     gender: Joi.string().allow("").optional(),
@@ -72,7 +72,7 @@ function AddProfessorForm({ onAddProfessor, onClose }) {
                   label="User ID"
                   variant="standard"
                   fullWidth
-                  name="id"
+                  name="userId"
                   value={form.name}
                   onChange={handleChange}
                 />

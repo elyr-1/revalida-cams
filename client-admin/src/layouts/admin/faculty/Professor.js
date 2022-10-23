@@ -30,6 +30,11 @@ function Professor({ professor, onEditProfessor, onDeleteProfessor }) {
     <>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
+          {professor.professorId}
+        </MDTypography>
+      </TableCell>
+      <TableCell>
+        <MDTypography display="block" variant="button" color="text" fontWeight="medium">
           {professor.professorNo}
         </MDTypography>
       </TableCell>

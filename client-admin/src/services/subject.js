@@ -8,6 +8,10 @@ export function getSubjectById(subjectId) {
   return http.get(`/subject/${subjectId}`);
 }
 
+export function getSubjectsByProgram(programId) {
+  return http.get(`/subject/program-subjects/${programId}`);
+}
+
 export function addSubject(subject) {
   const subjectClone = { ...subject };
   Object.keys(subject).forEach((key) => {

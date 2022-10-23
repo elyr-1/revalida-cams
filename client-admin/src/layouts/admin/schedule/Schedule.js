@@ -30,6 +30,11 @@ function Schedule({ schedule, onEditSchedule, onDeleteSchedule }) {
     <>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
+          {schedule.scheduleId}
+        </MDTypography>
+      </TableCell>
+      <TableCell>
+        <MDTypography display="block" variant="button" color="text" fontWeight="medium">
           {schedule.subjectCode}
         </MDTypography>
       </TableCell>
@@ -45,7 +50,7 @@ function Schedule({ schedule, onEditSchedule, onDeleteSchedule }) {
       </TableCell>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {schedule.yearlevel}
+          {schedule.sectionNo}
         </MDTypography>
       </TableCell>
       <TableCell>
@@ -62,7 +67,7 @@ function Schedule({ schedule, onEditSchedule, onDeleteSchedule }) {
           </Tooltip>
           <Dialog open={view} onClose={handleCloseView} fullWidth>
             <DialogContent>
-              <ViewScheduleForm key={schedule.sessionId} schedule={schedule} />
+              <ViewScheduleForm key={schedule.scheduleId} schedule={schedule} />
             </DialogContent>
           </Dialog>
           <Tooltip title="Edit Schedule Details" placement="top">
@@ -73,7 +78,7 @@ function Schedule({ schedule, onEditSchedule, onDeleteSchedule }) {
           <Dialog open={open} onClose={handleClose} fullWidth>
             <DialogContent>
               <EditScheduleForm
-                key={schedule.sessionId}
+                key={schedule.scheduleId}
                 schedule={schedule}
                 onEditSchedule={onEditSchedule}
               />

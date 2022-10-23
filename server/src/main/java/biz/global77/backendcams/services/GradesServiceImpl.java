@@ -24,13 +24,13 @@ public class GradesServiceImpl implements GradesService {
                 GRADES.DATE_MODIFIED,
                 GRADES.REMARKS,
                 GRADES.STATUS,
-                GRADES.SUBJECT_CODE)
+                GRADES.SUBJECT_ID)
         .values(
                 grade.getGrade(),
                 grade.getDateModified(),
                 grade.getRemarks(),
                 grade.getStatus(),
-                grade.getSubjectCode())
+                grade.getSubjectId())
         .execute();
         return grade;
     }
@@ -39,7 +39,7 @@ public class GradesServiceImpl implements GradesService {
     @Override
     public List<Grades> getGrades() {
         return dsl.selectFrom(GRADES)
-                .orderBy(GRADES.SUBJECT_CODE)
+                .orderBy(GRADES.SUBJECT_ID)
                 .fetchInto(Grades.class);
     }
 
@@ -59,7 +59,7 @@ public class GradesServiceImpl implements GradesService {
                 .set(GRADES.DATE_MODIFIED, grade.getDateModified())
                 .set(GRADES.REMARKS, grade.getRemarks())
                 .set(GRADES.STATUS, grade.getStatus())
-                .set(GRADES.SUBJECT_CODE, grade.getSubjectCode())
+                .set(GRADES.SUBJECT_ID, grade.getSubjectId())
                 .where(GRADES.GRADE_ID.eq(gradeId))
                 .execute();
         return grade;
