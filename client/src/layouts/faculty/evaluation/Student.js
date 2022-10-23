@@ -4,7 +4,6 @@ import MDTypography from "components/MDTypography";
 import TableCell from "@mui/material/TableCell";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Dialog from "@mui/material/Dialog";
@@ -13,7 +12,7 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import ViewStudentForm from "./form/ViewStudentForm";
 import EditStudentForm from "./form/EditStudentForm";
 
-function Student({ student, onEditStudent, onDeleteStudent }) {
+function Student({ student, onEditStudent }) {
   const [open, setOpen] = useState(false);
   const [view, setView] = useState(false);
 
@@ -87,7 +86,7 @@ function Student({ student, onEditStudent, onDeleteStudent }) {
           </Dialog>
           <Tooltip title="Edit Student Details" placement="top">
             <IconButton onClick={handleOpen}>
-              <EditRoundedIcon color="primary" />
+              <EditRoundedIcon color="info" />
             </IconButton>
           </Tooltip>
           <Dialog open={open} onClose={handleClose} fullWidth>
@@ -99,11 +98,6 @@ function Student({ student, onEditStudent, onDeleteStudent }) {
               />
             </DialogContent>
           </Dialog>
-          <Tooltip title="Delete Student" placement="top">
-            <IconButton onClick={() => onDeleteStudent(student.studentId)}>
-              <DeleteRoundedIcon color="error" />
-            </IconButton>
-          </Tooltip>
         </ButtonGroup>
       </TableCell>
     </>

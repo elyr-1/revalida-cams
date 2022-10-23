@@ -47,10 +47,10 @@ function Dashboard() {
                 color="success"
                 icon="school"
                 title="PASSED"
-                count="25"
+                count="0"
                 percentage={{
                   color: "success",
-                  amount: "50%",
+                  amount: "",
                   label: " OF THE STUDENTS",
                 }}
               />
@@ -62,10 +62,10 @@ function Dashboard() {
                 color="primary"
                 icon="leaderboard"
                 title="FAILED"
-                count="25"
+                count="0"
                 percentage={{
                   color: "success",
-                  amount: "50%",
+                  amount: "",
                   label: "OF THE STUDENTS",
                 }}
               />

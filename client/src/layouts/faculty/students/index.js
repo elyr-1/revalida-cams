@@ -11,16 +11,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-// import Icon from "@mui/material/Icon";
-// import IconButton from "@mui/material/IconButton";
 import TablePagination from "@mui/material/TablePagination";
-// import Tooltip from "@mui/material/Tooltip";
-// import Dialog from "@mui/material/Dialog";
-// import DialogContent from "@mui/material/DialogContent";
 import * as studentService from "services/evaluation";
 import Swal from "sweetalert2";
 import Student from "./infoData";
-// import AddStudentForm from "./form/AddStudentForm";
 
 const columns = [
   { id: "studentNo", label: "Student No." },
@@ -38,10 +32,6 @@ function Students() {
   const [students, setStudents] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  // const [open, setOpen] = useState(false);
-
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -58,33 +48,6 @@ function Students() {
       setStudents(response.data);
     });
   }, []);
-
-  // Add a student
-  // const handleAddStudent = (student) => {
-  //   studentService
-  //     .addStudent(student)
-  //     .then(() => {
-  //       Swal.fire({
-  //         position: "top",
-  //         icon: "success",
-  //         title: "A new student has been added!",
-  //         showConfirmButton: false,
-  //         timer: 1500,
-  //       });
-  //       setTimeout(() => {
-  //         window.location.reload();
-  //       }, 500);
-  //     })
-  //     .catch((error) => {
-  //       if (error.response && error.response.status === 400) {
-  //         Swal.fire({
-  //           icon: "error",
-  //           title: "Error",
-  //           text: "This record may have already been deleted.",
-  //         });
-  //       }
-  //     });
-  // };
 
   // Update a student
   const handleEditStudent = (studentId, updatedStudent) => {
@@ -103,36 +66,6 @@ function Students() {
         window.location.reload();
       }, 500);
     });
-  };
-
-  // Delete a student
-  const handleDeleteStudent = (studentId) => {
-    try {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "Do you really want to delete this record? This process cannot be undone.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#FF0000",
-        confirmButtonText: "Delete",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          studentService.deleteStudent(studentId);
-          setStudents(students.filter((student) => student.studentId !== studentId));
-          Swal.fire("Deleted", "Record has been deleted.", "success");
-        } else if (result.isDenied) {
-          Swal.fire("Deletion has been cancelled", "", "info");
-        }
-      });
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "This record may have already been deleted.",
-        });
-      }
-    }
   };
 
   return (
@@ -157,30 +90,6 @@ function Students() {
                 <MDTypography variant="h5" color="white">
                   STUDENTS
                 </MDTypography>
-                {/* <IconButton onClick={handleOpen}>
-                  <MDBox
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    width="2.5rem"
-                    height="2.5rem"
-                    bgColor="white"
-                    shadow="sm"
-                    borderRadius="50%"
-                    color="dark"
-                  >
-                    <Tooltip title="Add new student" placement="top">
-                      <Icon fontSize="medium" color="inherit">
-                        add_rounded
-                      </Icon>
-                    </Tooltip>
-                  </MDBox>
-                </IconButton> */}
-                {/* <Dialog open={open} onClose={handleClose} fullWidth>
-                  <DialogContent>
-                    <AddStudentForm onAddStudent={handleAddStudent} onClose={handleClose} />
-                  </DialogContent>
-                </Dialog> */}
               </MDBox>
               <MDBox pt={3}>
                 <TableContainer>
@@ -211,11 +120,7 @@ function Students() {
                             key={student.studentId}
                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                           >
-                            <Student
-                              student={student}
-                              onEditStudent={handleEditStudent}
-                              onDeleteStudent={handleDeleteStudent}
-                            />
+                            <Student student={student} onEditStudent={handleEditStudent} />
                           </TableRow>
                         ))}
                     </TableBody>

@@ -15,14 +15,12 @@ function EditStudentForm({ student, onEditStudent }) {
   const [firstname, setFirstname] = useState(student.firstname);
   const [middlename, setMiddlename] = useState(student.middlename);
   const [lastname, setLastname] = useState(student.lastname);
-  // const [birthdate, setBirthdate] = useState(student.birthdate);
   const [gender, setGender] = useState(student.gender);
-  // const [address, setAddress] = useState(student.address);
   const [yearlevel, setYearlevel] = useState(student.yearlevel);
   const [sem, setSem] = useState(student.sem);
   const [grade, setGrade] = useState(student.grade);
   const [remarks, setRemarks] = useState(student.remarks);
-  const [coursecode, setCourseCode] = useState(student.coursecode);
+  const [programCode, setProgramCode] = useState(student.programCode);
 
   const updatedStudent = {
     ...student,
@@ -30,7 +28,7 @@ function EditStudentForm({ student, onEditStudent }) {
     firstname,
     middlename,
     lastname,
-    coursecode,
+    programCode,
     grade,
     remarks,
   };
@@ -43,7 +41,7 @@ function EditStudentForm({ student, onEditStudent }) {
   return (
     <Grid component="form" onSubmit={handleSubmit}>
       <Grid item>
-        <CardHeader title="Edit Student" sx={{ textAlign: "center" }} />
+        <CardHeader title="Edit Student Info" sx={{ textAlign: "center" }} />
         <Divider />
         <CardContent>
           <MDBox pt={1} pb={1} px={1}>
@@ -94,17 +92,6 @@ function EditStudentForm({ student, onEditStudent }) {
                   onChange={(e) => setLastname(e.target.value)}
                 />
               </MDBox>
-              {/* <MDBox mb={2}>
-                <MDInput
-                  type="date"
-                  label="Birthdate"
-                  variant="standard"
-                  fullWidth
-                  name="birthdate"
-                  value={birthdate}
-                  onChange={(e) => setBirthdate(e.target.value)}
-                />
-              </MDBox> */}
               <MDBox mb={2}>
                 <MDInput
                   type="text"
@@ -116,17 +103,6 @@ function EditStudentForm({ student, onEditStudent }) {
                   onChange={(e) => setGender(e.target.value)}
                 />
               </MDBox>
-              {/* <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Address"
-                  variant="standard"
-                  fullWidth
-                  name="address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                />
-              </MDBox> */}
               <MDBox mb={2}>
                 <MDInput
                   type="text"
@@ -174,12 +150,12 @@ function EditStudentForm({ student, onEditStudent }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Course Code"
+                  label="Program Code"
                   variant="standard"
                   fullWidth
                   name="programCode"
-                  value={coursecode}
-                  onChange={(e) => setCourseCode(e.target.value)}
+                  value={programCode}
+                  onChange={(e) => setProgramCode(e.target.value)}
                 />
               </MDBox>
               <MDBox mt={4} mb={1}>

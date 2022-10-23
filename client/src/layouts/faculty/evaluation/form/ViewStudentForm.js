@@ -10,7 +10,7 @@ function ViewStudentForm({ student }) {
   return (
     <Grid>
       <Grid item>
-        <CardHeader title="Student Details" sx={{ textAlign: "center" }} />
+        <CardHeader title="Student Info" sx={{ textAlign: "center" }} />
         <Divider />
         <CardContent>
           <MDBox pt={1} pb={1} px={1}>
