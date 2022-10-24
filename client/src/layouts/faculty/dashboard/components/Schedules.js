@@ -12,6 +12,7 @@ import * as scheduleService from "services/schedule";
 
 const columns = [
   { id: "subjectId", label: "Subject Id" },
+  { id: "subjectCode", label: "Subject Code" },
   { id: "scheduleFrom", label: "Start Time" },
   { id: "scheduleTo", label: "End Time" },
   { id: "day", label: "Day" },
@@ -90,6 +91,16 @@ function Schedules() {
                           fontWeight="medium"
                         >
                           {schedule.subjectId}
+                        </MDTypography>
+                      </TableCell>
+                      <TableCell>
+                        <MDTypography
+                          display="block"
+                          variant="button"
+                          color="text"
+                          fontWeight="medium"
+                        >
+                          {schedule.subjectCode}
                         </MDTypography>
                       </TableCell>
 

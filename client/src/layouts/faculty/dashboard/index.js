@@ -28,8 +28,8 @@ function Dashboard() {
                 count={students.length}
                 percentage={{
                   color: "success",
-                  amount: "",
-                  label: "ATTENDANCE",
+                  amount: "+20%",
+                  label: "more than last semester",
                 }}
               />
             </MDBox>
