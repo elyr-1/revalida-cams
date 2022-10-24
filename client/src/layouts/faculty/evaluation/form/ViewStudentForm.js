@@ -77,7 +77,7 @@ function ViewStudentForm({ student }) {
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="text"
+                  type="number"
                   label="Grades"
                   variant="standard"
                   fullWidth
