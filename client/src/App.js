@@ -116,7 +116,7 @@ export default function App() {
 
   const handleLogin = (username, password) => {
     authUsers.forEach((user) => {
-      if (user.username === username && user.password === password && user.roleId === 1) {
+      if (user.username === username && user.password === password && user.roleId === 2) {
         Swal.fire({
           position: "top-center",
           icon: "success",

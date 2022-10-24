@@ -20,12 +20,11 @@ const columns = [
   { id: "studentNo", label: "Student No." },
   { id: "lastname", label: "Last Name" },
   { id: "firstname", label: "First Name" },
-  { id: "gender", label: "Gender" },
-  { id: "programcode", label: "Program Code" },
+  { id: "program", label: "Program" },
   { id: "yearlevel", label: "Year Level" },
   { id: "sem", label: "Semester" },
-  { id: "grade", label: "Grade" },
-  { id: "remarks", label: "Remarks" },
+  { id: "grades", label: "Grades" },
+  { id: "status", label: "Status" },
   { id: "actions", label: "Actions", align: "center" },
 ];
 
@@ -81,7 +80,7 @@ function Students() {
                 py={3}
                 px={2}
                 variant="gradient"
-                bgColor="error"
+                bgColor="info"
                 borderRadius="lg"
                 coloredShadow="info"
                 display="flex"

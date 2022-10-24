@@ -55,36 +55,6 @@ function ViewStudentForm({ student }) {
                   value={student.lastname}
                 />
               </MDBox>
-              {/* <MDBox mb={2}>
-                <MDInput
-                  type="date"
-                  label="Birthdate"
-                  variant="standard"
-                  fullWidth
-                  name="birthdate"
-                  value={student.birthdate}
-                />
-              </MDBox> */}
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Gender"
-                  variant="standard"
-                  fullWidth
-                  name="gender"
-                  value={student.gender}
-                />
-              </MDBox>
-              {/* <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Address"
-                  variant="standard"
-                  fullWidth
-                  name="address"
-                  value={student.address}
-                />
-              </MDBox> */}
               <MDBox mb={2}>
                 <MDInput
                   type="text"
@@ -108,21 +78,21 @@ function ViewStudentForm({ student }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Grade"
+                  label="Grades"
                   variant="standard"
                   fullWidth
-                  name="grade"
-                  value={student.grade}
+                  name="grades"
+                  value={student.grades}
                 />
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Program Code"
+                  label="Program"
                   variant="standard"
                   fullWidth
-                  name="programCode"
-                  value={student.programCode}
+                  name="program"
+                  value={student.program}
                 />
               </MDBox>
               <Divider />

@@ -19,8 +19,8 @@ function EditStudentForm({ student, onEditStudent }) {
   const [gender, setGender] = useState(student.gender);
   const [yearlevel, setYearlevel] = useState(student.yearlevel);
   const [sem, setSem] = useState(student.sem);
-  const [remarks, setRemarks] = useState(student.remarks);
-  const [programCode, setProgramCode] = useState(student.programCode);
+  const [attendance, setAttendance] = useState(student.attendance);
+  const [program, setProgram] = useState(student.program);
 
   const updatedStudent = {
     ...student,
@@ -28,8 +28,8 @@ function EditStudentForm({ student, onEditStudent }) {
     firstname,
     middlename,
     lastname,
-    programCode,
-    remarks,
+    program,
+    attendance,
   };
 
   const handleSubmit = (event) => {
@@ -138,23 +138,23 @@ function EditStudentForm({ student, onEditStudent }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Remarks"
+                  label="Attendance"
                   variant="standard"
                   fullWidth
-                  name="remarks"
-                  value={remarks}
-                  onChange={(e) => setRemarks(e.target.value)}
+                  name="attendance"
+                  value={attendance}
+                  onChange={(e) => setAttendance(e.target.value)}
                 />
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Program Code"
+                  label="Program"
                   variant="standard"
                   fullWidth
-                  name="programCode"
-                  value={programCode}
-                  onChange={(e) => setProgramCode(e.target.value)}
+                  name="program"
+                  value={program}
+                  onChange={(e) => setProgram(e.target.value)}
                 />
               </MDBox>
               <MDBox mt={4} mb={1}>

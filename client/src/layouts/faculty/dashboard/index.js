@@ -4,9 +4,17 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-import Programs from "./components/Programs";
+import { useState, useEffect } from "react";
+import * as studentService from "services/student";
+import Schedules from "./components/Schedules";
 
 function Dashboard() {
+  const [students, setStudents] = useState([]);
+  useEffect(async () => {
+    await studentService.getStudents().then((response) => {
+      setStudents(response.data);
+    });
+  }, []);
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -16,8 +24,8 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 icon="supervisor_account"
-                title="PRESENT"
-                count="50"
+                title="TOTAL NO. OF STUDENTS ENROLLED"
+                count={students.length}
                 percentage={{
                   color: "success",
                   amount: "",
@@ -26,7 +34,7 @@ function Dashboard() {
               />
             </MDBox>
           </Grid>
-          <Grid item xs={12} md={6} lg={3}>
+          {/* <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="dark"
@@ -40,14 +48,14 @@ function Dashboard() {
                 }}
               />
             </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
+          </Grid> */}
+          {/* <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="success"
                 icon="school"
                 title="PASSED"
-                count="0"
+                count={students.length}
                 percentage={{
                   color: "success",
                   amount: "",
@@ -55,8 +63,8 @@ function Dashboard() {
                 }}
               />
             </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
+          </Grid> */}
+          {/* <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="primary"
@@ -70,12 +78,12 @@ function Dashboard() {
                 }}
               />
             </MDBox>
-          </Grid>
+          </Grid> */}
         </Grid>
         <MDBox>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={12}>
-              <Programs />
+              <Schedules />
             </Grid>
           </Grid>
         </MDBox>

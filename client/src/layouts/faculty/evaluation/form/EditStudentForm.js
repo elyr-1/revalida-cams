@@ -15,12 +15,11 @@ function EditStudentForm({ student, onEditStudent }) {
   const [firstname, setFirstname] = useState(student.firstname);
   const [middlename, setMiddlename] = useState(student.middlename);
   const [lastname, setLastname] = useState(student.lastname);
-  const [gender, setGender] = useState(student.gender);
   const [yearlevel, setYearlevel] = useState(student.yearlevel);
   const [sem, setSem] = useState(student.sem);
-  const [grade, setGrade] = useState(student.grade);
-  const [remarks, setRemarks] = useState(student.remarks);
-  const [programCode, setProgramCode] = useState(student.programCode);
+  const [grades, setGrades] = useState(student.grades);
+  const [status, setStatus] = useState(student.status);
+  const [program, setProgram] = useState(student.program);
 
   const updatedStudent = {
     ...student,
@@ -28,9 +27,9 @@ function EditStudentForm({ student, onEditStudent }) {
     firstname,
     middlename,
     lastname,
-    programCode,
-    grade,
-    remarks,
+    program,
+    grades,
+    status,
   };
 
   const handleSubmit = (event) => {
@@ -95,17 +94,6 @@ function EditStudentForm({ student, onEditStudent }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Gender"
-                  variant="standard"
-                  fullWidth
-                  name="gender"
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
                   label="Year Level"
                   variant="standard"
                   fullWidth
@@ -128,34 +116,34 @@ function EditStudentForm({ student, onEditStudent }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Grade"
+                  label="Grades"
                   variant="standard"
                   fullWidth
-                  name="grade"
-                  value={grade}
-                  onChange={(e) => setGrade(e.target.value)}
+                  name="grades"
+                  value={grades}
+                  onChange={(e) => setGrades(e.target.value)}
                 />
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Remarks"
+                  label="Status"
                   variant="standard"
                   fullWidth
-                  name="remarks"
-                  value={remarks}
-                  onChange={(e) => setRemarks(e.target.value)}
+                  name="status"
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
                 />
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Program Code"
+                  label="Program"
                   variant="standard"
                   fullWidth
-                  name="programCode"
-                  value={programCode}
-                  onChange={(e) => setProgramCode(e.target.value)}
+                  name="program"
+                  value={program}
+                  onChange={(e) => setProgram(e.target.value)}
                 />
               </MDBox>
               <MDBox mt={4} mb={1}>

@@ -44,12 +44,7 @@ function Student({ student, onEditStudent }) {
       </TableCell>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {student.gender}
-        </MDTypography>
-      </TableCell>
-      <TableCell>
-        <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {student.programCode}
+          {student.program}
         </MDTypography>
       </TableCell>
       <TableCell>
@@ -64,12 +59,12 @@ function Student({ student, onEditStudent }) {
       </TableCell>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {student.grade}
+          {student.grades}
         </MDTypography>
       </TableCell>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {student.remarks}
+          {student.status}
         </MDTypography>
       </TableCell>
       <TableCell align="center">

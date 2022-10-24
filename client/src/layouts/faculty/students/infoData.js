@@ -49,7 +49,7 @@ function Student({ student, onEditStudent }) {
       </TableCell>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {student.programCode}
+          {student.program}
         </MDTypography>
       </TableCell>
       <TableCell>
@@ -64,7 +64,7 @@ function Student({ student, onEditStudent }) {
       </TableCell>
       <TableCell>
         <MDTypography display="block" variant="button" color="text" fontWeight="medium">
-          {student.remarks}
+          {student.attendance}
         </MDTypography>
       </TableCell>
       <TableCell align="center">

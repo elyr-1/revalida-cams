@@ -24,7 +24,7 @@ const columns = [
   { id: "coursecode", label: "Course Code" },
   { id: "yearlevel", label: "Year Level" },
   { id: "sem", label: "Semester" },
-  { id: "remarks", label: "Remarks" },
+  { id: "attendance", label: "Attendance" },
   { id: "actions", label: "Actions", align: "center" },
 ];
 

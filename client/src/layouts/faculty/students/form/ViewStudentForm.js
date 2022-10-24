@@ -98,21 +98,31 @@ function ViewStudentForm({ student }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Grade"
+                  label="Grades"
                   variant="standard"
                   fullWidth
-                  name="grade"
-                  value={student.grade}
+                  name="grades"
+                  value={student.grades}
                 />
+                <MDBox mb={2}>
+                  <MDInput
+                    type="text"
+                    label="Status"
+                    variant="standard"
+                    fullWidth
+                    name="status"
+                    value={student.status}
+                  />
+                </MDBox>
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Program Code"
+                  label="Program"
                   variant="standard"
                   fullWidth
-                  name="programCode"
-                  value={student.programCode}
+                  name="program"
+                  value={student.program}
                 />
               </MDBox>
               <Divider />
