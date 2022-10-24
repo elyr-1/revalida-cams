@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Users getUserById(Integer userId) {
         return dsl.selectFrom(USERS)
-                .where(USERS.USER_ID.eq(userId))
+                .where(USERS.ID.eq(userId))
                 .fetchOneInto(Users.class);
     }
 
@@ -45,14 +45,14 @@ public class UserServiceImpl implements UserService {
             .set(USERS.USERNAME, user.getUsername())
             .set(USERS.PASSWORD, user.getPassword())
             .set(USERS.ROLE_ID, user.getRoleId())
-            .where(USERS.USER_ID.eq(userId))
+            .where(USERS.ID.eq(userId))
             .execute();
         return user;
     }
 
     @Override
     public void deleteUserById(Integer userId) {
-        dsl.deleteFrom(USERS).where(USERS.USER_ID.eq(userId)).execute();
+        dsl.deleteFrom(USERS).where(USERS.ID.eq(userId)).execute();
     }
 
 }

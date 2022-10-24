@@ -1,12 +1,46 @@
+import { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import MDBox from "components/MDBox";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-import Programs from "./components/Programs";
+import * as programService from "services/program";
+import * as courseService from "services/course";
+import * as facultyService from "services/faculty";
+import * as studentService from "services/student";
+import AdminUsers from "./components/users";
 
 function Dashboard() {
+  const [programs, setPrograms] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [professors, setProfessors] = useState([]);
+  const [students, setStudents] = useState([]);
+
+  useEffect(async () => {
+    await programService.getPrograms().then((response) => {
+      setPrograms(response.data);
+    });
+  }, []);
+
+  useEffect(async () => {
+    await courseService.getCourses().then((response) => {
+      setCourses(response.data);
+    });
+  }, []);
+
+  useEffect(async () => {
+    await facultyService.getProfessors().then((response) => {
+      setProfessors(response.data);
+    });
+  }, []);
+
+  useEffect(async () => {
+    await studentService.getStudents().then((response) => {
+      setStudents(response.data);
+    });
+  }, []);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -17,8 +51,8 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="dark"
                 icon="workspace_premium"
-                title="All Programs"
-                count={20}
+                title="Programs"
+                count={programs.length}
                 percentage={{
                   color: "success",
                   amount: "+5%",
@@ -31,8 +65,8 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 icon="library_books"
-                title="All Courses"
-                count="200"
+                title="Courses"
+                count={courses.length}
                 percentage={{
                   color: "success",
                   amount: "+5%",
@@ -47,7 +81,7 @@ function Dashboard() {
                 color="success"
                 icon="supervisor_account"
                 title="Faculty Members"
-                count="100"
+                count={professors.length}
                 percentage={{
                   color: "success",
                   amount: "+10%",
@@ -62,7 +96,7 @@ function Dashboard() {
                 color="primary"
                 icon="school"
                 title="Students"
-                count="3000"
+                count={students.length}
                 percentage={{
                   color: "success",
                   amount: "+20%",
@@ -74,8 +108,8 @@ function Dashboard() {
         </Grid>
         <MDBox>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={12}>
-              <Programs />
+            <Grid item xs={12} md={12} lg={12}>
+              <AdminUsers />
             </Grid>
           </Grid>
         </MDBox>

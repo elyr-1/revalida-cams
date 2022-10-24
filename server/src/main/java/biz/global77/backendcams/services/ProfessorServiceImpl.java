@@ -25,7 +25,7 @@ public class ProfessorServiceImpl implements ProfessorService {
                 PROFESSOR.BIRTHDATE,
                 PROFESSOR.ADDRESS,
                 PROFESSOR.IS_ACTIVE,
-                PROFESSOR.USER_ID)
+                PROFESSOR.ID)
         .values(
                 professor.getProfessorNo(),
                 professor.getProfessorName(),
@@ -33,7 +33,7 @@ public class ProfessorServiceImpl implements ProfessorService {
                 professor.getBirthdate(),
                 professor.getAddress(),
                 professor.getIsActive(),
-                professor.getUserId())
+                professor.getId())
         .execute();
         return professor;
     }
@@ -64,7 +64,7 @@ public class ProfessorServiceImpl implements ProfessorService {
                 .set(PROFESSOR.BIRTHDATE, professor.getBirthdate())
                 .set(PROFESSOR.ADDRESS, professor.getAddress())
                 .set(PROFESSOR.IS_ACTIVE, professor.getIsActive())
-                .set(PROFESSOR.USER_ID, professor.getUserId())
+                .set(PROFESSOR.ID, professor.getId())
                 .where(PROFESSOR.PROFESSOR_ID.eq(professorId))
                 .execute();
         return professor;
